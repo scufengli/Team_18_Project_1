@@ -1,2 +1,2 @@
-# Playground
-Testing and practicing git/github for my friends
+# add a README.md for project Ho’omana O Apalapala
+New project Ho’omana O Apalapala
