@@ -18,7 +18,7 @@ class Player:
 
     def moveRight(self, maze):
         new_x = self.x + self.speed
-        if new_x < (maze.M - 1) * 48 and self.can_move(maze, new_x, self.y):
+        if new_x < (maze.M - 1) * 70 and self.can_move(maze, new_x, self.y):
             self.x = new_x
 
     def moveLeft(self, maze):
@@ -33,7 +33,7 @@ class Player:
 
     def moveDown(self, maze):
         new_y = self.y + self.speed
-        if new_y < (maze.N - 1) * 48 and self.can_move(maze, self.x, new_y):
+        if new_y < (maze.N - 1) * 70 and self.can_move(maze, self.x, new_y):
             self.y = new_y
 
 
