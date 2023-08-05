@@ -1,12 +1,21 @@
-from pygame.locals import *
 import pygame
+from pygame.locals import *
+
+import spritesheet
+# https://www.pygame.org/wiki/Spritesheet
+from sprite_strip_anim import SpriteStripAnim
+
+
 
 class Player:
-    x = 0
-    y = 0
-    speed = 1
-    width = 48
-    height = 48
+    def __init__(self):
+        self.x = 0
+        self.y = 0
+        self.speed = 2
+        self.width = 48
+        self.height = 48
+
+        self.frames = SpriteStripAnim('Swim.png', (0, 0, 48, 48), 6, 1, True, 5)
 
     def can_move(self, maze, new_x, new_y):
         # Check if the player can move to the new position without colliding with walls
@@ -68,22 +77,25 @@ class Maze:
 class App:
     windowWidth = 1260
     windowHeight = 700
+    clock = pygame.time.Clock()
 
     def __init__(self):
         self._running = True
         self._display_surf = None
         self._image_surf = None
         self._block_surf = None
-        self.player = Player()
-        self.maze = Maze()
 
     def on_init(self):
         pygame.init()
         self._display_surf = pygame.display.set_mode((self.windowWidth, self.windowHeight), pygame.HWSURFACE)
         pygame.display.set_caption('Pygame pythonspot.com example')
         self._running = True
+        self.player = Player()
+        self.maze = Maze()
+        '''
         self._image_surf = pygame.image.load("player.png").convert()
         self._image_surf = pygame.transform.scale(self._image_surf, (48, 48))
+        '''
         self._block_surf = pygame.image.load("block.png").convert()
         self._block_surf = pygame.transform.scale(self._block_surf, (70, 70))
 
@@ -92,7 +104,13 @@ class App:
             self._running = False
 
     def on_loop(self):
-        pass
+        self._image_surf = self.player.frames.next()
+        self.clock.tick(60)
+
+    def is_escaped(self):
+        if self.player.x > 70 and self.player.x < 140 and self.player.y > 70 and self.player.y < 140:
+            return True
+        return False
 
     def on_render(self):
         self._display_surf.fill((0, 0, 0))
@@ -125,6 +143,12 @@ class App:
 
             if keys[K_ESCAPE]:
                 self._running = False
+
+            if self.is_escaped():
+                break
+
+
+        
 
             self.on_loop()
             self.on_render()
