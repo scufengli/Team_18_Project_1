@@ -46,6 +46,7 @@ class Player(pygame.sprite.Sprite):
             self.frame_index = 0 
 
         image = animation[int(self.frame_index)]
+        image = pygame.transform.scale_by(image, 2)
 
         if self.facing_right:
             self.image = image
