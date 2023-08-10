@@ -1,10 +1,11 @@
 import pygame
-from support import import_folder
-class Player(pygame.sprite.Sprite):
+import playerBase
+
+class Player(playerBase.PlayerBase):
     def __init__(self, pos):
-        super().__init__()
+        super().__init__(pos)
+        self.animations.update({'Idle':[],'Run':[],'Crouch_Idle':[],'Crouch_Walk':[],'Hurt':[],'Jump':[],'Land':[],'Death':[], 'Fall':[]})
         self.import_character_assets()
-        self.frame_index = 0 
         self.animation_speed = 0.20
         self.image = self.animations['Idle'][self.frame_index]
 
@@ -12,12 +13,8 @@ class Player(pygame.sprite.Sprite):
         # self.image = pygame.Surface((32,64))
         # self.image.fill('red')
         # ===== END =====
-        self.rect = self.image.get_rect(topleft = pos)
-        
 
         # PLAYER MOVEMENT 
-        self.direction = pygame.math.Vector2(0,0)
-        self.speed = 8
         self.gravity = 0.8
         self.jump_speed = -16
 
@@ -29,18 +26,10 @@ class Player(pygame.sprite.Sprite):
         self.on_left = False
         self.on_right = False
 
-    def import_character_assets(self):
-        character_path = '../Graphics/Character/'
-        self.animations = {'Idle':[],'Run':[],'Crouch_Idle':[],'Crouch_Walk':[],'Hurt':[],'Jump':[],'Land':[],'Death':[], 'Fall':[]}
-
-        for animation in self.animations.keys():
-            full_path = character_path + animation
-            self.animations[animation] = import_folder(full_path)
-
     def animate(self):
         animation = self.animations[self.status]
 
-        # LOOP OVER FRAME INDEX 
+        # LOOP OVER FRAME INDEX
         self.frame_index += self.animation_speed
         if self.frame_index >= len(animation):
             self.frame_index = 0 
@@ -55,7 +44,7 @@ class Player(pygame.sprite.Sprite):
             self.image = flipped_image
             pygame.draw.rect(self.image, (255,0,0), [0, 0, self.rect[2], self.rect[3]], 1)
 
-        # SET THE RECT 
+        # SET THE RECT
         if self.on_ground and self.on_right:
             self.rect = self.image.get_rect(bottomright = self.rect.bottomright)
         elif self.on_ground and self.on_left:
