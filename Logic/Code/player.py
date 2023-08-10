@@ -16,9 +16,6 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(topleft = pos)
         # self.rect = pygame.Rect(pos[0], pos[1], 64, 59)
 
-
-        
-
         # PLAYER MOVEMENT 
         self.direction = pygame.math.Vector2(0,0)
         self.speed = 8
@@ -34,10 +31,6 @@ class Player(pygame.sprite.Sprite):
         self.on_right = False
         self.crouch = False
         self.crouch_walk = False
-
-
-
-
 
     def import_character_assets(self):
         character_path = '../Graphics/Character/'
@@ -123,6 +116,7 @@ class Player(pygame.sprite.Sprite):
     #             self.status = "Crouch_Walk"
     #         else:
     #             self.status ='Idle'
+
     def get_status(self):
         if self.direction.y < 0:
             self.status = 'Jump'
@@ -156,7 +150,7 @@ class Player(pygame.sprite.Sprite):
             self.speed = pygame.math.clamp(8,2,8)
 
     def update(self):
-        self.set_speed()
+        # self.set_speed()
         self.get_input()
         self.get_status()
         self.animate()

@@ -35,3 +35,10 @@ def import_cut_graphic(path):
             cut_tiles.append(new_surf)
     
     return cut_tiles
+
+def draw_text( text, font_type, size, x, y, color, display_surface):
+    font = pygame.font.Font(font_type, size)
+    text_surface = font.render(text, True, color)
+    text_rect = text_surface.get_rect()
+    text_rect.center = (x,y)
+    display_surface.blit(text_surface, text_rect)
