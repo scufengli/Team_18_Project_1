@@ -154,10 +154,10 @@ class Level:
         player_x = player.rect.centerx
         direction_x = player.direction.x
 
-        if player_x < int(screen_width*(3/8)) and direction_x < 0:
+        if player_x < int(screen_width/4) and direction_x < 0:
             self.world_shift = 8 
             player.speed = 0
-        elif player_x > int(screen_width*(5/8)) and direction_x > 0: 
+        elif player_x > int(screen_width*3/4) and direction_x > 0: 
             self.world_shift = -8
             player.speed = 0 
         else:
@@ -204,6 +204,7 @@ class Level:
         self.player.draw(self.display_surface)
         self.goal.update(self.world_shift)
         self.goal.draw(self.display_surface)
+        pygame.draw.line(self.display_surface,'red',(int(screen_width/4),0),(int(screen_width*3/4),0),1)
 
 
 
