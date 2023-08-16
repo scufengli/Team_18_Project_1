@@ -2,7 +2,6 @@ import pygame
 from random import randint, choice
 from settingsV2 import *
 from tilesV2 import *
-from support import*
 
 class Sky:
     def __init__(self,horizon):
