@@ -26,26 +26,7 @@ class Gameplay(mt._State):
     def get_event(self, event):
         """EVENT CONTAINS ALL THE KEY PRESSES"""
         self.event = event
-        # player = self.clp
-        # keys = pg.key.get_pressed()
-        # if keys[pg.K_RIGHT]:
-        #     player.direction.x = 1
-        #     player.facing_right = True
-        # elif keys[pg.K_LEFT]:
-        #     player.direction.x = -1
-        #     player.facing_right = False
-        # elif keys[pg.K_DOWN] and player.on_ground == True:
-        #     player.crouch = True
-        # elif keys[pg.K_DOWN] and player.on_ground == True and (keys[pg.K_RIGHT] or keys[pg.K_LEFT]):
-        #     player.crouch_walk = True
-
-        # else:
-        #     player.direction.x = 0
-        #     player.crouch, player.crouch_walk = False,False
-
-        # if keys[pg.K_SPACE] and player.on_ground:
-        #     player.crouch, player.crouch_walk = False,False
-        #     self.jump()
+        
     def update(self, surface, keys, current_time, time_delta):
         """Update blink timer and draw everything."""
         self.level.run()

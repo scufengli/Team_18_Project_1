@@ -113,7 +113,12 @@ class _State(object):
         self.quit = False
         self.next = None
         self.previous = None
-        self.persist = {}
+    
+# ========== Inventory Items are going to be placed within the self.persist variable. ==========
+
+        self.persist = {"Inventory": {}}
+
+# ========== Inventory Items are going to be placed within the self.persist variable. ==========
 
     def get_event(self, event):
         """Processes events that were passed from the main event loop.
