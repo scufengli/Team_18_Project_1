@@ -2,13 +2,15 @@ import pygame
 from supportV2 import *
 from settingsV2 import tile_size
 from tilesV2 import *
+from decorations import *
 
 
 class Level:
     def __init__(self,level_data, surface):
         # GENERAL SETUP
         self.display_surface = surface
-        self.world_shift = -1
+        self.world_shift = 0
+        #self.world_shift = -1
 
         #TERRAIN SETUP
         terrain_layout = import_csv_layout(level_data['terrain'])
@@ -19,7 +21,10 @@ class Level:
         self.player = pygame.sprite.GroupSingle()
         self.goal = pygame.sprite.GroupSingle()
         self.player_setup(player_layout)
-    
+
+        #LOAD PARALLAX BACKGROUND
+        self.bg = Parallax_BG()
+
     def player_setup(self,layout):
         for row_index, row in enumerate(layout):
             for col_index, val in enumerate(row):
@@ -47,13 +52,15 @@ class Level:
                         sprite_group.add(sprite)
 
         return sprite_group
-    
+
 
     def run(self):
-        # RUNS THE AN ENTIRE LEVEL 
+        # DRAW BACKGROUND
+        self.bg.draw_bg(self.display_surface, self.world_shift)
+        # RUNS THE AN ENTIRE LEVEL
         self.terrain_sprites.draw(self.display_surface)
         self.terrain_sprites.update(self.world_shift)
 
-        # PLAYER SPRITES 
+        # PLAYER SPRITES
         self.goal.update(self.world_shift)
         self.goal.draw(self.display_surface)
