@@ -1,5 +1,4 @@
 import pygame
-#import url('https://fonts.googleapis.com/css2?family=Kablammo&family=Palanquin:wght@300&family=Poiret+One&display=swap');
 from start_menu import *
 
 class Game():

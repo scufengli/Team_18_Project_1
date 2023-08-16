@@ -8,10 +8,10 @@
 
 import pygame
 
-class spritesheet(object):
+class SpriteSheet(object):
     def __init__(self, filename):
         try:
-            self.sheet = pygame.image.load(filename).convert()
+            self.sheet = pygame.image.load(filename).convert_alpha()
         except (pygame.error, message):
             print ('Unable to load spritesheet image:', filename)
             raise (SystemExit, message)
@@ -28,7 +28,7 @@ class spritesheet(object):
         return image
     # Load a whole bunch of images and return them as a list
     def images_at(self, rects, colorkey = None):
-        "Loads multiple images, supply a list of coordinates" 
+        "Loads multiple images, supply a list of coordinates"
         return [self.image_at(rect, colorkey) for rect in rects]
     # Load a whole strip of images
     def load_strip(self, rect, image_count, colorkey = None):
