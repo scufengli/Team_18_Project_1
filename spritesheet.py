@@ -11,7 +11,7 @@ import pygame
 class SpriteSheet(object):
     def __init__(self, filename):
         try:
-            self.sheet = pygame.image.load(filename).convert()
+            self.sheet = pygame.image.load(filename).convert_alpha()
         except (pygame.error, message):
             print ('Unable to load spritesheet image:', filename)
             raise (SystemExit, message)

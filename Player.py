@@ -9,8 +9,8 @@ class Player(Entity):
         self.width = PLAYER_SIZE
         self.height = PLAYER_SIZE
 
-        self.right_frames = SpriteStripAnim('Swim_Right.png', (0, 0, 48, 48), 6, 1, True, ANIMATION_FRAMES)
-        self.left_frames = SpriteStripAnim('Swim_Left.png', (0, 0, 48, 48), 6, 1, True, ANIMATION_FRAMES)
+        self.right_frames = SpriteStripAnim('Swim_Right.png', (0, 0, 48, 48), 6, -1, True, ANIMATION_FRAMES)
+        self.left_frames = SpriteStripAnim('Swim_Left.png', (0, 0, 48, 48), 6, -1, True, ANIMATION_FRAMES)
         self.frames = self.right_frames
 
     def can_move(self, maze, new_x, new_y):
