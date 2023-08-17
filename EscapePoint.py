@@ -5,12 +5,10 @@ from SpriteStripAnim import SpriteStripAnim
 
 
 class EscapePoint(Entity):
-    def __init__(self, __x, __y):
-        super().__init__()
+    def __init__(self, animations, __x, __y):
+        super().__init__(animations)
         self.x = __x
         self.y = __y
-
-        self.frames = SpriteStripAnim('Escape_Point.png', (0, 0, BLOCK_SIZE, BLOCK_SIZE), 5, -1, True, ANIMATION_FRAMES)
 
     def get_x_lower(self):
       return self.x

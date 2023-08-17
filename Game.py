@@ -5,6 +5,7 @@ from Settings import *
 from Player import Player
 from Maze import Maze
 from EscapePoint import EscapePoint
+from AssetsLoader import AssetsLoader
 
 class Game:
     clock = pygame.time.Clock()
@@ -22,19 +23,23 @@ class Game:
         self._display_surf = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT), pygame.HWSURFACE)
         pygame.display.set_caption('The Cult of Barnacles')
         self._running = True
-        self.player = Player()
+
+        asset_loader = AssetsLoader()
+        asset_loader.load_animations()
+
+        self.player = Player(asset_loader.animations['Player'])
         self.maze = Maze()
-        self.escape_point = EscapePoint(1130, 0)
-        self._bg_surf = pygame.image.load("background.jpeg").convert()
+        self.escape_point = EscapePoint(asset_loader.animations['EscapePoint'], 1190, 0)
+        self._bg_surf = pygame.image.load("Assets/background.png").convert()
         self._bg_surf = pygame.transform.scale(self._bg_surf, (WINDOW_WIDTH, WINDOW_HEIGHT))
 
-        self._block_surf = pygame.image.load("block.png").convert()
+        self._block_surf = pygame.image.load("Assets/block.png").convert()
         self._block_surf = pygame.transform.scale(self._block_surf, (BLOCK_SIZE, BLOCK_SIZE))
 
-        self.ss_success = pygame.image.load("SplashScreenPassed.jpeg").convert()
+        self.ss_success = pygame.image.load("Assets/splash_pass.jpeg").convert()
         self.ss_success = pygame.transform.scale(self.ss_success, (WINDOW_WIDTH, WINDOW_HEIGHT))
 
-        self.ss_failed = pygame.image.load("SplashScreenFailed.jpeg").convert()
+        self.ss_failed = pygame.image.load("Assets/splash_fail.jpeg").convert()
         self.ss_failed = pygame.transform.scale(self.ss_failed, (WINDOW_WIDTH, WINDOW_HEIGHT))
 
     def on_event(self, event):
