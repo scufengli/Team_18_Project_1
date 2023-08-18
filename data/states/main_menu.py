@@ -11,12 +11,14 @@ class Main_Menu(mt._State):
     """ Main menu that starts up after the splash screen."""
     def __init__(self):
         mt._State.__init__(self)
-        self.next = None 
+        self.next = None
         self.cover = pg.Surface((mp.screen_size)).convert_alpha()
         self.cover.fill(0)
         self.cover_alpha = 256
         self.alpha_step  = 2
         self.title_font = mp.FONTS['Kablammo-Regular']
+        self.sub_font = mp.FONTS['IndieFlower-Regular']
+        self.yellow = (255,235,90)
         self.display_surface = mp.SCREEN
         self.image = mp.BackGroundGFX['OceanBG1']
         self.image = pg.transform.scale(self.image,(mp.screen_width, mp.screen_height))
@@ -40,12 +42,12 @@ class Main_Menu(mt._State):
         return mt._State.startup(self, current_time, persistant)
 
     def display_menus(self,):
-        self.draw_text("Cult of the Barnacle", (mp.FONTS['Kablammo-Regular']),80,mp.SW_mid,80,'white',self.display_surface)
-        start_game = mt.Button((mp.SW_mid+5,mp.SH_mid), 'Start Game',(mp.FONTS['IndieFlower-Regular']),40,'white', 'red', self.display_surface)
-        options = mt.Button((mp.SW_qrt1,mp.SH_mid+50), 'Options',(mp.FONTS['IndieFlower-Regular']), 40, 'white', 'red', self.display_surface)
-        credits = mt.Button((mp.SW_qrt3,mp.SH_mid+50), 'Credits',(mp.FONTS['IndieFlower-Regular']),40 ,'white', 'red', self.display_surface)
+        self.draw_text("Cult of the Barnacle", self.title_font,80,mp.SW_mid, 80,self.yellow,self.display_surface)
+        start_game = mt.Button((mp.SW_mid, mp.SH_mid), 'Start Game', self.sub_font, 40,self.yellow, 'red', self.display_surface)
+        options = mt.Button((mp.SW_qrt1,mp.SH_mid+50), 'Options',self.sub_font, 40, self.yellow, 'red', self.display_surface)
+        credits = mt.Button((mp.SW_qrt3,mp.SH_mid+50), 'Credits',self.sub_font,40 ,self.yellow, 'red', self.display_surface)
         return [start_game, options, credits]
-        
+
     def update(self, surface, keys, current_time, time_delta):
         self.current_time = current_time
         surface.blit(self.image,self.rect)
@@ -72,13 +74,16 @@ class Main_Menu(mt._State):
                 pass
             if self.Blist[1].check_for_input(mouse_pos):
                 # options()
+                #self.next = "OPTIONS"
+                #self.done = True
                 pass
             if self.Blist[2].check_for_input(mouse_pos):
                 # credits()
+                #self.next = "CREDITS"
+                #self.done = True
                 pass
 
     def cleanup(self):
         """Stop the music when scene is done."""
         pg.mixer.music.stop()
         return mt._State.cleanup(self)
-
