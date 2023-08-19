@@ -1,16 +1,16 @@
 import pygame as pg
 from ... import prepare as mp
-from ... import tools as mt 
+from ... import tools as mt
 from random import randint, choice
 from .tilesV2 import *
 
 class Sky:
     def __init__(self,horizon):
-        self.horizon = horizon 
+        self.horizon = horizon
         self.top = pg.image.load('resources/graphics/level_graphics/decoration/sky/sky_top.png').convert()
         self.bottom = pg.image.load('resources/graphics/level_graphics/decoration/sky/sky_bottom.png').convert()
         self.middle = pg.image.load('resources/graphics/level_graphics/decoration/sky/sky_middle.png').convert()
-        
+
         # STRETCH
         self.top = pg.transform.scale(self.top,(mp.screen_width,mp.tile_size))
         self.bottom = pg.transform.scale(self.bottom,(mp.screen_width,mp.tile_size))
@@ -35,7 +35,7 @@ class Water:
 
         for tile in range(tile_x_amount):
             x = tile * water_tile_width + water_start
-            y = top 
+            y = top
 # =============== UNCOMMENT WHEN IMAGES ARE CREATED ==========================
             # sprite = AnimatedTile(192,X,Y,<WATER PATH>)
         #     self.water_sprites.add(sprite)
@@ -50,7 +50,7 @@ class Clouds:
         cloud_surf_list = mt.import_folder('resources/graphics/level_graphics/decoration/clouds')
         min_x = -mp.screen_width
         max_x = level_width + mp.screen_width
-        min_y = 0 
+        min_y = 0
         max_y = horizon
         self.cloud_sprites = pg.sprite.Group()
 
@@ -64,3 +64,59 @@ class Clouds:
     def draw(self, surface,shift):
         self.cloud_sprites.update(shift)
         self.cloud_sprites.draw(surface)
+
+class CoinDisplay:
+    def __init__(self):
+        money_bag = pg.image.load('resources/graphics/background_assets/coin_bag.png').convert_alpha()
+        self.mb_width,self.mb_height = 150,90
+        self.money_bag = pg.transform.scale(money_bag, (self.mb_width, self.mb_height)) # 330w x 197h
+
+        scroll_bg = pg.image.load('resources/graphics/background_assets/horz_scroll.png').convert_alpha()
+        self.sc_width, self.sc_height = 260,66
+        self.scroll_bg = pg.transform.scale(scroll_bg, (self.sc_width, self.sc_height)) # 230w x 210h
+
+        self.display_x = 4
+        self.display_y = 6
+        self.txt_color = (0,0,0)
+
+    def draw(self, coin_count, surface):
+        font = pg.font.Font(mp.FONTS['Handjet-Regular'], 30)
+        text_surface = font.render(coin_count, True, self.txt_color)
+        text_rect = text_surface.get_rect()
+        text_rect = self.scroll_bg.get_rect().center
+
+        scroll_loc = self.money_bag.get_rect().center
+
+        surface.blit(self.scroll_bg, (scroll_loc[0],int(scroll_loc[1])-23))
+        surface.blit(self.money_bag, (self.display_x,self.display_y))
+        surface.blit(text_surface, (text_rect[0]+(self.sc_width//4),text_rect[1]))
+
+class LivesDisplay:
+    def __init__(self):
+        heart = pg.image.load('resources/graphics/background_assets/lives.png').convert_alpha()
+        self.hrt_width, self.hrt_height = 24,24
+        self.heart = pg.transform.scale(heart, (self.hrt_width, self.hrt_height)) # 330w x 197h
+
+        life_bg = pg.image.load('resources/graphics/background_assets/lives_bg2.png').convert_alpha()
+        self.bg_width, self.bg_height = 249,104
+        self.life_bg = pg.transform.scale(life_bg, (self.bg_width, self.bg_height)) # 249w x 104h
+
+        self.display_x = mp.SW_mid-(self.bg_width/2)
+        self.display_y = 6
+
+    def draw(self, lives_left, surface):
+        life_rect = self.life_bg.get_rect()
+
+        hrt_x = self.display_x + life_rect[0] + 50
+        hrt_y = (life_rect[1] + (self.bg_height/2))-self.hrt_height/2 + 6
+        #--^top of the bg_img + half of the bg_img height, - half of the heart height to get centered properly
+
+        surface.blit(self.life_bg, (self.display_x, self.display_y))
+
+        next = 0
+        if lives_left > 0:
+            for i in range(lives_left):
+                surface.blit(self.heart, (hrt_x + next, hrt_y))
+                next += 34
+
+        #for i in range(lives_left):

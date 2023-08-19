@@ -22,6 +22,7 @@ class Level:
         # COINS ========== CREATE COINS IMAGE ==========
         coin_layout = mt.import_csv_layout(level_data['coins'])
         self.coin_sprites = self.create_tile_group(coin_layout,'coin')
+        self.coin_total = 0
 
         # # CHEST ========== CREATE CHEST IMAGE ==========
         # chest_layout = import_csv_layout(level_data['chest'])
@@ -43,12 +44,17 @@ class Level:
         self.player_setup(player_layout)
 
 
-        # DECORATIONS 
+        # DECORATIONS
         self.sky = Sky(8)
         level_width = len(terrain_layout[0]) * mp.tile_size
         self.water = Water(mp.screen_height - 20, level_width)
         self.clouds = Clouds(400,level_width, 20)
-    
+        #---Display COINS----
+        self.coin_display = CoinDisplay()
+        #---Display LIVES---
+        self.life = LivesDisplay()
+        self.life_left = 5
+
     def player_setup(self,layout):
         for row_index, row in enumerate(layout):
             for col_index, val in enumerate(row):
@@ -56,10 +62,11 @@ class Level:
                 if val == '0':
                     sprite = Player((x,y))
                     self.player.add(sprite)
-        
+
 
     def create_tile_group(self,layout,type):
         sprite_group = pygame.sprite.Group()
+
 
         for row_index, row in enumerate(layout):
             for col_index, val in enumerate(row):
@@ -77,15 +84,17 @@ class Level:
                         continue
                         pass
 
-                    # CODE TO CHANGE THE COLOR OF COINS 
+                    # CODE TO CHANGE THE COLOR OF COINS
                     if val == '0':
                         sprite = Coin(mp.tile_size,x,y,'resources/graphics/level_graphics/coins/gold')
+                        #self.coin_positions(x,y)
                         sprite_group.add(sprite)
                         continue
 
                     if val == '1':
                         sprite = Coin(mp.tile_size,x,y,'resources/graphics/level_graphics/coins/silver')
                         sprite_group.add(sprite)
+
                         continue
         # =============== UNCOMMENT WHEN IMAGES ARE CREATED ==========================
 
@@ -95,12 +104,12 @@ class Level:
 
                             # if type == 'constrains':
                             #     sprite = Tile(tile_size,x,y)
-                            
-                            
+
+
         # =============== UNCOMMENT WHEN IMAGES ARE CREATED ==========================
 
         return sprite_group
-    
+
     # =============== UNCOMMENT WHEN IMAGES ARE CREATED ==========================
         # def enemy_collision_reverse(self):
         #     for enemy in self.enemy_sprites.sprites():
@@ -154,6 +163,19 @@ class Level:
         if player.on_ceiling and player.direction.y > 0:
             player.on_ceiling = False
 
+    #COIN COLLISION
+    def coin_collection(self):
+        player = self.player.sprite
+
+        for coin in self.coin_sprites.sprites():
+            if player.rect.colliderect(coin.rect):
+                    pygame.sprite.Sprite.remove(coin, self.coin_sprites)
+                    self.coin_total += 1
+
+                #-----LIFE TEST------
+                    if self.life_left > 0:
+                        self.life_left -= 1
+
     def scroll_x(self):
         player = self.player.sprite
         player_x = player.rect.centerx
@@ -166,7 +188,7 @@ class Level:
             else:
                 self.world_shift = 8
                 player.speed = 0
-        elif player_x > int(mp.screen_width*3/4) and direction_x > 0: 
+        elif player_x > int(mp.screen_width*3/4) and direction_x > 0:
             if player.status == "Crouch_Walk":
                 self.world_shift = 2
                 player.speed = 0
@@ -178,13 +200,13 @@ class Level:
                 self.world_shift = 0
                 player.speed = 2
             else:
-                self.world_shift = 0  
+                self.world_shift = 0
                 player.speed = 8
 
     def run(self):
-        # RUNS THE AN ENTIRE LEVEL 
+        # RUNS THE AN ENTIRE LEVEL
 
-        # DECORATIONS 
+        # DECORATIONS
         self.sky.draw(self.display_surface)
         self.clouds.draw(self.display_surface, self.world_shift)
 
@@ -197,14 +219,17 @@ class Level:
         # COINS
         self.coin_sprites.update(self.world_shift)
         self.coin_sprites.draw(self.display_surface)
+        self.coin_display.draw(str(self.coin_total), self.display_surface)
 
+        # LIVES
+        self.life.draw(self.life_left, self.display_surface)
         # # ENEMIES
         # self.enemy_sprites.update(self.world_shift)
         # self.constraint_sprites.update(self.world_shift)
         # self.enemy_collision_reverse()
         # self.enemy_sprites.draw(self.world_shift)
 
-        # # CHEST 
+        # # CHEST
         # self.chest_sprites.update(self.world_shift)
         # self.chest_sprites.draw(self.display_surface)
 
@@ -213,14 +238,12 @@ class Level:
 
 # =============== UNCOMMENT WHEN IMAGES ARE CREATED ==========================
 
-        # PLAYER SPRITES 
+        # PLAYER SPRITES
         self.player.update()
         self.horizontal_movement_collision()
         self.vertical_movement_collision()
+        self.coin_collection()
         self.scroll_x()
         self.player.draw(self.display_surface)
         self.goal.update(self.world_shift)
         self.goal.draw(self.display_surface)
-
-
-
