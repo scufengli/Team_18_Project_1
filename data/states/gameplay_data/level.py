@@ -113,11 +113,6 @@ class Level:
     def horizontal_movement_collision(self):
         player = self.player.sprite
 
-        # if player.status == "Crouch_Walk" and self.world_shift == 0:
-        #     player.speed = 2
-        # else:
-        #     player.speed = 8
-
         player.rect.x += player.direction.x * player.speed
 
         for sprite in self.terrain_sprites.sprites():
@@ -168,7 +163,7 @@ class Level:
                 player.speed = 0
         elif player_x > int(mp.screen_width*3/4) and direction_x > 0: 
             if player.status == "Crouch_Walk":
-                self.world_shift = 2
+                self.world_shift = -2
                 player.speed = 0
             else:
                 self.world_shift = -8

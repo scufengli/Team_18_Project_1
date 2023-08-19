@@ -36,7 +36,6 @@ class Player(pg.sprite.Sprite):
         self.image = animation[int(self.frame_index)]
         self.image = pg.transform.scale_by(self.image, 1.5)
         self.rect = self.image.get_rect(topleft = self.rect.topleft, height = 59 )
-        
 
         if self.facing_right:
             pass

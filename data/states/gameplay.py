@@ -2,8 +2,8 @@ import pygame as pg
 from .. import prepare as mp
 from .. import tools as mt
 import sys
-from .Game1.level import Level
-from .Game1.game_data import*
+from .gameplay_data.level import Level
+from .gameplay_data.game_data import*
 
 class Gameplay(mt._State):
     """This state could represent the actual gameplay phase."""
