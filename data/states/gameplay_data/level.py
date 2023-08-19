@@ -5,7 +5,6 @@ from ... import tools as mt
 import pygame
 from .tilesV2 import *
 from .decorations import *
-from .enemy import*
 from .player import Player
 
 
@@ -15,29 +14,41 @@ class Level:
         # GENERAL SETUP
         self.display_surface = surface
         self.world_shift = 0
+
         #TERRAIN SETUP
         terrain_layout = mt.import_csv_layout(level_data['terrain'])
         self.terrain_sprites = self.create_tile_group(terrain_layout,'terrain')
 
-        # COINS ========== CREATE COINS IMAGE ==========
+        # GRASS SETUP 
+        grass_layout = mt.import_csv_layout(level_data['grass'])
+        self.grass_sprites = self.create_tile_group(grass_layout,'grass')
+
+        # COINS 
         coin_layout = mt.import_csv_layout(level_data['coins'])
-        self.coin_sprites = self.create_tile_group(coin_layout,'coin')
+        self.coin_sprites = self.create_tile_group(coin_layout,'coins')
 
-        # # CHEST ========== CREATE CHEST IMAGE ==========
-        # chest_layout = import_csv_layout(level_data['chest'])
-        # self.chest_sprites = self.create_tile_group(chest_layout,'chest')
+        # CRATE
+        crate_layout = mt.import_csv_layout(level_data['crates'])
+        self.crate_sprites = self.create_tile_group(crate_layout,'crates')
 
+        # FG PALMS
+        fg_palm_layout = mt.import_csv_layout(level_data['fg palms'])
+        self.fg_palm_sprites = self.create_tile_group(fg_palm_layout, 'fg palms')
 
-        # # ENEMIES ========== CREATE ENEMIES IMAGE ==========
-        # enemy_layout = import_csv_layout(level_data['Enemies'])
-        # self.enemy_sprites = self.create_tile_group(enemy_layout, 'enemies')
+        # BG PALMS
+        bg_palm_layout = mt.import_csv_layout(level_data['bg palms'])
+        self.bg_palm_sprites = self.create_tile_group(fg_palm_layout, 'bg palms')
 
-        # # CONSTRAINTS ========== CREATE CONSTRAINTS IMAGE ==========
-        # constraint_layout = import_csv_layout(level_data['constraints'])
-        # self.constraint_layout = self.create_tile_group(constraint_layout, 'constraints')
+        # ENEMIES 
+        enemy_layout = mt.import_csv_layout(level_data['enemies'])
+        self.enemy_sprites = self.create_tile_group(enemy_layout, 'enemies')
+
+        # CONSTRAINTS 
+        constraint_layout = mt.import_csv_layout(level_data['constraints'])
+        self.constraint_sprites = self.create_tile_group(constraint_layout, 'constraints')
 
         #PLAYER SET UP
-        player_layout = mt.import_csv_layout(level_data['Player'])
+        player_layout = mt.import_csv_layout(level_data['player'])
         self.player = pygame.sprite.GroupSingle()
         self.goal = pygame.sprite.GroupSingle()
         self.player_setup(player_layout)
@@ -65,50 +76,57 @@ class Level:
             for col_index, val in enumerate(row):
                 if val != '-1':
                     x,y = col_index * mp.tile_size, row_index*mp.tile_size
+
                     if type == 'terrain':
                         terrain_tile_list = mt.import_cut_graphic('resources/graphics/level_graphics/terrain/tileset.png')
                         tile_surface = terrain_tile_list[int(val)]
                         sprite = StaticTile(mp.tile_size,x,y, tile_surface)
                         sprite_group.add(sprite)
-                        continue
+
+                    if type == 'grass':
+                        grass_tile_list = mt.import_cut_graphic('resources\graphics\level_graphics\decoration\grass\grass.png')
+                        tile_surface = grass_tile_list[int(val)]
+                        sprite = StaticTile(mp.tile_size,x,y,tile_surface)
+                        sprite_group.add(sprite)
+
+                    if type == 'crates':
+                        sprite = Crate(mp.tile_size,x,y)
+                        sprite_group.add(sprite)
 
                     if type == 'coins':
                         #sprite = Coin(tile_size,x,y,'../Graphics/coins')
-                        continue
-                        pass
-
-                    # CODE TO CHANGE THE COLOR OF COINS 
-                    if val == '0':
-                        sprite = Coin(mp.tile_size,x,y,'resources/graphics/level_graphics/coins/gold')
+                        # CODE TO CHANGE THE COLOR OF COINS 
+                        if val == '0':
+                            sprite = Coin(mp.tile_size,x,y,'resources/graphics/level_graphics/coins/gold')
+                        if val == '1':
+                            sprite = Coin(mp.tile_size,x,y,'resources/graphics/level_graphics/coins/silver')
                         sprite_group.add(sprite)
-                        continue
 
-                    if val == '1':
-                        sprite = Coin(mp.tile_size,x,y,'resources/graphics/level_graphics/coins/silver')
+                    if type == 'fg palms':
+                        if val == '0': 
+                            sprite = Palm(mp.tile_size, x, y, 'resources\graphics\level_graphics\\terrain\palm_small', 38)
+                            sprite_group.add(sprite)
+                        if val == '1': 
+                            sprite = Palm(mp.tile_size, x, y, 'resources\graphics\level_graphics\\terrain\palm_large', 64)
+                            sprite_group.add(sprite)
+
+                    if type == 'bg palms':
+                        sprite = Palm(mp.tile_size, x, y, 'resources\graphics\level_graphics\\terrain\palm_bg', 64)
                         sprite_group.add(sprite)
-                        continue
-        # =============== UNCOMMENT WHEN IMAGES ARE CREATED ==========================
 
+                    if type == 'enemies':
+                        sprite = mt.Enemy(mp.tile_size,x,y)
+                        sprite_group.add(sprite)
 
-                            # if type == 'enemies':
-                            #     sprite = Enemy(tile_size,x,y)
-
-                            # if type == 'constrains':
-                            #     sprite = Tile(tile_size,x,y)
-                            
-                            
-        # =============== UNCOMMENT WHEN IMAGES ARE CREATED ==========================
+                    if type == 'constraints':
+                        sprite = Tile(mp.tile_size,x,y)
+                        sprite_group.add(sprite)
 
         return sprite_group
-    
-    # =============== UNCOMMENT WHEN IMAGES ARE CREATED ==========================
-        # def enemy_collision_reverse(self):
-        #     for enemy in self.enemy_sprites.sprites():
-        #         if pygame.sprite.spritecollide(enemy,self.constraint_sprites,False):
-        #             enemy.reverse()
-
-    # =============== UNCOMMENT WHEN IMAGES ARE CREATED ==========================
-
+    def enemy_collision_reverse(self):
+        for enemy in self.enemy_sprites.sprites():
+            if pygame.sprite.spritecollide(enemy,self.constraint_sprites,False):
+                enemy.reverse()
 
     def horizontal_movement_collision(self):
         player = self.player.sprite
@@ -183,28 +201,40 @@ class Level:
         self.sky.draw(self.display_surface)
         self.clouds.draw(self.display_surface, self.world_shift)
 
-        # TERRAIN
-        self.terrain_sprites.draw(self.display_surface)
-        self.terrain_sprites.update(self.world_shift)
+        # BG PALMS
+        self.bg_palm_sprites.update(self.world_shift)
+        self.bg_palm_sprites.draw(self.display_surface)
 
-# ============== UNCOMMENT WHEN IMAGES ARE CREATED =========================
+        # TERRAIN
+        self.terrain_sprites.update(self.world_shift)
+        self.terrain_sprites.draw(self.display_surface)
+
+        # GRASS 
+        self.grass_sprites.update(self.world_shift)
+        self.grass_sprites.draw(self.display_surface)
+
+        # ENEMIES
+        self.enemy_sprites.update(self.world_shift)
+        self.constraint_sprites.update(self.world_shift)
+        self.enemy_collision_reverse()
+        self.enemy_sprites.draw(self.display_surface)
+        
+        # CHEST 
+        self.crate_sprites.update(self.world_shift)
+        self.crate_sprites.draw(self.display_surface)
 
         # COINS
         self.coin_sprites.update(self.world_shift)
         self.coin_sprites.draw(self.display_surface)
 
-        # # ENEMIES
-        # self.enemy_sprites.update(self.world_shift)
-        # self.constraint_sprites.update(self.world_shift)
-        # self.enemy_collision_reverse()
-        # self.enemy_sprites.draw(self.world_shift)
 
-        # # CHEST 
-        # self.chest_sprites.update(self.world_shift)
-        # self.chest_sprites.draw(self.display_surface)
 
-        # self.water.update(self.world_shift)
-        # self.water.draw(self.display_surface)
+        # FG PALMS
+        self.fg_palm_sprites.update(self.world_shift)
+        self.fg_palm_sprites.draw(self.display_surface)
+
+  
+        self.water.draw(self.display_surface, self.world_shift)
 
 # =============== UNCOMMENT WHEN IMAGES ARE CREATED ==========================
 

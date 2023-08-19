@@ -36,14 +36,13 @@ class Water:
         for tile in range(tile_x_amount):
             x = tile * water_tile_width + water_start
             y = top 
-# =============== UNCOMMENT WHEN IMAGES ARE CREATED ==========================
-            # sprite = AnimatedTile(192,X,Y,<WATER PATH>)
-        #     self.water_sprites.add(sprite)
+            sprite = AnimatedTile(192,x,y,'resources\graphics\level_graphics\decoration\water')
+            self.water_sprites.add(sprite)
 
-        # def draw(self,surface,shift):
-        #     self.water_sprites.update(shift)
-        #     self.water_sprites.draw(surface)
-# =============== UNCOMMENT WHEN IMAGES ARE CREATED ==========================
+    def draw(self,surface,shift):
+        self.water_sprites.update(shift)
+        self.water_sprites.draw(surface)
+
 
 class Clouds:
     def __init__(self,horizon,level_width,cloud_number):

@@ -6,12 +6,12 @@ level_0 = {
 }
 
 test_level = {
-		'terrain': 'data/states/gameplay_data/level/level_0_terrain.csv',
-		'coins':'data/states/gameplay_data/level/level_0_coins.csv',
-		'fg palms':'data/states/gameplay_data/level/level_0_fg_palms.csv',
-		'bg palms':'data/states/gameplay_data/level/level_0_bg_palms.csv',
-		'crates': 'data/states/gameplay_data/level/level_0_crates.csv',
-		'enemies':'data/states/gameplay_data/level/level_0_enemies.csv',
-		'constraints':'data/states/gameplay_data/level/level_0_constraints.csv',
-		'player': 'data/states/gameplay_data/level/level_0_player.csv',
-		'grass': 'data/states/gameplay_data/level/level_0_grass.csv'}
+	'terrain': 'data/states/gameplay_data/level/level_data/Apalapala_terrain.csv',
+	'coins':'data\states\gameplay_data\level\level_data\Apalapala_coins.csv',
+	'fg palms':'data\states\gameplay_data\level\level_data\Apalapala_fg_palms.csv',
+	'bg palms':'data\states\gameplay_data\level\level_data\Apalapala_bg_palms.csv',
+	'crates': 'data/states/gameplay_data/level/level_data/Apalapala_crate.csv',
+	'enemies':'data\states\gameplay_data\level\level_data\Apalapala_enemy.csv',
+	'constraints':'data\states\gameplay_data\level\level_data\Apalapala_constraints.csv',
+	'player': 'data\states\gameplay_data\level\level_data\Apalapala_player.csv',
+	'grass': 'data\states\gameplay_data\level\level_data\Apalapala_grass.csv'}

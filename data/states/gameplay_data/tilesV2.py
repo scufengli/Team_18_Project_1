@@ -17,10 +17,9 @@ class StaticTile(Tile):
         super().__init__(size,x,y)
         self.image = surface
 
-class Chest(StaticTile):
-    def __inti__(self,size,x,y):
-        # CREATE CHEST IMAGE ====================
-        super().__init__(size,x,y,pg.image.load('../Graphics/Terrain/chest.png'))
+class Crate(StaticTile):
+    def __init__(self,size,x,y):
+        super().__init__(size,x,y,pg.image.load('resources/graphics/level_graphics/terrain/crate.png').convert_alpha())
         offset_y = y + size
         self.rect = self.image.get_rect(bottomleft = (x,offset_y))
 
@@ -47,4 +46,10 @@ class Coin(AnimatedTile):
         center_x = x + int(size/2)
         center_y = y + int(size/2)
         self.rect = self.image.get_rect(center = (center_x, center_y))
+
+class Palm(AnimatedTile):
+            def __init__(self, size,x,y,path, offset):
+                super().__init__(size,x,y,path)
+                offset_y = y - offset
+                self.rect.topleft = (x, offset_y)
 
