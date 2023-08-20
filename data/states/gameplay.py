@@ -2,14 +2,14 @@ import pygame as pg
 from .. import prepare as mp
 from .. import tools as mt
 import sys
-from .Game1.level import Level
-from .Game1.game_data import*
+from .gameplay_data.level import Level
+from .gameplay_data.game_data import*
 
 class Gameplay(mt._State):
     """This state could represent the actual gameplay phase."""
     def __init__(self):
         mt._State.__init__(self)
-        self.level = Level(level_0, mp.SCREEN)
+        self.level = Level(test_level, mp.SCREEN)
 
             
     def startup(self, current_time, persistant):
