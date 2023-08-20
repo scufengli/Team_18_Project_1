@@ -10,7 +10,7 @@ class Sky:
 
         # STRETCH
         self.top = pygame.transform.scale(self.top,(screen_width,tile_size))
-        
+
 class Parallax_BG:
     def __init__(self):
         self.plx_imgs = []

@@ -1,10 +1,10 @@
 """
-The main function starts here. 
-It will create an instance of 'Game Controller'. 
-It will add the game states to a dictionary called state_dict by using tools.setup_states. 
-THERE IS NO NEED TO EDIT 'tools.Control' class. 
+The main function starts here.
+It will create an instance of 'Game Controller'.
+It will add the game states to a dictionary called state_dict by using tools.setup_states.
+THERE IS NO NEED TO EDIT 'tools.Control' class.
 
-ALL MODIFICATIONS SHOULD OCCUR IN THIS MODULE, AND IN THE PREPARE MODULE. 
+ALL MODIFICATIONS SHOULD OCCUR IN THIS MODULE, AND IN THE PREPARE MODULE.
 
 """
 
