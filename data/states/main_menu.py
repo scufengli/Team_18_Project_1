@@ -42,12 +42,12 @@ class Main_Menu(mt._State):
         return mt._State.startup(self, current_time, persistant)
 
     def display_menus(self,):
-        self.draw_text("Cult of the Barnacle", self.title_font,80,mp.SW_mid, 80,self.yellow,self.display_surface)
-        start_game = mt.Button((mp.SW_mid, mp.SH_mid), 'Start Game', self.sub_font, 40,self.yellow, 'red', self.display_surface)
-        options = mt.Button((mp.SW_qrt1,mp.SH_mid+50), 'Options',self.sub_font, 40, self.yellow, 'red', self.display_surface)
-        credits = mt.Button((mp.SW_qrt3,mp.SH_mid+50), 'Credits',self.sub_font,40 ,self.yellow, 'red', self.display_surface)
-        return [start_game, options, credits]
-
+        StartGameIcon = mt.Button((20, mp.SW_mid,80), "Cult of the Barnacle", (mp.FONTS['Kablammo-Regular']), 80, 'white', 'white', self.display_surface)
+        start_game = mt.Button((mp.SW_mid+5,mp.SH_mid), 'Start Game',(mp.FONTS['IndieFlower-Regular']),40,'white', 'red', self.display_surface)
+        options = mt.Button((mp.SW_qrt1,mp.SH_mid+50), 'Options',(mp.FONTS['IndieFlower-Regular']), 40, 'white', 'red', self.display_surface)
+        credits = mt.Button((mp.SW_qrt3,mp.SH_mid+50), 'Credits',(mp.FONTS['IndieFlower-Regular']),40 ,'white', 'red', self.display_surface)
+        return [start_game, options, credits, StartGameIcon]
+        
     def update(self, surface, keys, current_time, time_delta):
         self.current_time = current_time
         surface.blit(self.image,self.rect)
