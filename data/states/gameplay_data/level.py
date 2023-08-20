@@ -26,6 +26,7 @@ class Level:
         # COINS 
         coin_layout = mt.import_csv_layout(level_data['coins'])
         self.coin_sprites = self.create_tile_group(coin_layout,'coins')
+        self.coin_total = 0
 
         # CRATE
         crate_layout = mt.import_csv_layout(level_data['crates'])
@@ -54,12 +55,12 @@ class Level:
         self.player_setup(player_layout)
 
 
-        # DECORATIONS 
+        # DECORATIONS
         self.sky = Sky(8)
         level_width = len(terrain_layout[0]) * mp.tile_size
         self.water = Water(mp.screen_height - 20, level_width)
         self.clouds = Clouds(400,level_width, 20)
-    
+
     def player_setup(self,layout):
         for row_index, row in enumerate(layout):
             for col_index, val in enumerate(row):
@@ -67,10 +68,11 @@ class Level:
                 if val == '0':
                     sprite = Player((x,y))
                     self.player.add(sprite)
-        
+
 
     def create_tile_group(self,layout,type):
         sprite_group = pygame.sprite.Group()
+
 
         for row_index, row in enumerate(layout):
             for col_index, val in enumerate(row):
@@ -164,6 +166,17 @@ class Level:
         if player.on_ground and player.direction.y < 0 or player.direction.y > 1:
             player.on_ground = False
 
+    #COIN COLLISION
+    def coin_collection(self):
+        player = self.player.sprite
+
+        for coin in self.coin_sprites.sprites():
+            if player.rect.colliderect(coin.rect):
+                    pygame.sprite.Sprite.remove(coin, self.coin_sprites)
+                    self.coin_total += 1
+
+
+
     def scroll_x(self):
         player = self.player.sprite
         player_x = player.rect.centerx
@@ -176,7 +189,7 @@ class Level:
             else:
                 self.world_shift = 8
                 player.speed = 0
-        elif player_x > int(mp.screen_width*3/4) and direction_x > 0: 
+        elif player_x > int(mp.screen_width*3/4) and direction_x > 0:
             if player.status == "Crouch_Walk":
                 self.world_shift = -2
                 player.speed = 0
@@ -188,13 +201,13 @@ class Level:
                 self.world_shift = 0
                 player.speed = 2
             else:
-                self.world_shift = 0  
+                self.world_shift = 0
                 player.speed = 8
 
     def run(self):
-        # RUNS THE AN ENTIRE LEVEL 
+        # RUNS THE AN ENTIRE LEVEL
 
-        # DECORATIONS 
+        # DECORATIONS
         self.sky.draw(self.display_surface)
         self.clouds.draw(self.display_surface, self.world_shift)
 
@@ -223,6 +236,7 @@ class Level:
         # COINS
         self.coin_sprites.update(self.world_shift)
         self.coin_sprites.draw(self.display_surface)
+        print(self.coin_total)
 
         # FG PALMS
         self.fg_palm_sprites.update(self.world_shift)
@@ -232,14 +246,12 @@ class Level:
 
 # =============== UNCOMMENT WHEN IMAGES ARE CREATED ==========================
 
-        # PLAYER SPRITES 
+        # PLAYER SPRITES
         self.player.update()
         self.horizontal_movement_collision()
         self.vertical_movement_collision()
+        self.coin_collection()
         self.scroll_x()
         self.player.draw(self.display_surface)
         self.goal.update(self.world_shift)
         self.goal.draw(self.display_surface)
-
-
-
