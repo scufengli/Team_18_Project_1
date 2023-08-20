@@ -8,13 +8,18 @@ class Player(pg.sprite.Sprite):
         self.animation_speed = 0.20
         self.animations = mp.AniDict
         self.image = self.animations['Idle'][self.frame_index]
-        self.rect = self.image.get_rect(topleft = pos)
+        self.mask = pg.mask.from_surface(self.image)
+        self.a,self.b,self.c,self.d = self.mask.get_bounding_rects()[0]
+        rects = self.a,self.b,self.c,self.d
+        print(rects)
+        self.rect = self.image.get_rect( topleft = pos)
 
         # PLAYER MOVEMENT
         self.direction = pg.math.Vector2(0,0)
         self.speed = 0
         self.gravity = 0.8 
         self.jump_speed = -20
+        self.collision_rect = pg.Rect(self.rect.topleft,(self.rect.width, self.rect.height))
 
         # PLAYER STATUS 
         self.status = 'Idle'
@@ -35,13 +40,16 @@ class Player(pg.sprite.Sprite):
             self.frame_index = 0 
         self.image = animation[int(self.frame_index)]
         self.image = pg.transform.scale_by(self.image, 1.5)
-        self.rect = self.image.get_rect(topleft = self.rect.topleft, height = 59 )
+        self.rect = self.image.get_rect(x = self.rect.x, y = self.rect.y)
+
+        # self.rect = self.image.get_rect(bottom = self.rect.bottom, width = self.bounding_rect[0][2], height = self.bounding_rect[0][3])
 
         if self.facing_right:
-            pass
+            self.rect.bottomleft = self.collision_rect.bottomleft
         else:
             flipped_image = pg.transform.flip(self.image,True,False)
             self.image = flipped_image
+            self.rect.bottomright = self.collision_rect.bottomright
 
     def get_status(self):
         if self.direction.y < 0:
@@ -83,12 +91,12 @@ class Player(pg.sprite.Sprite):
             self.jump()
     def apply_gravity(self):
         self.direction.y += self.gravity
-        self.rect.y += int(self.direction.y)
+        self.collision_rect.y += int(self.direction.y)
 
     def jump(self):
         self.direction.y = self.jump_speed
 
-    def update(self):
+    def update(self,):
         self.get_input()
         self.get_status()
         self.animate()
