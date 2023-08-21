@@ -114,10 +114,11 @@ class _State(object):
         self.quit = False
         self.next = None
         self.previous = None
+
     
 # ========== Inventory Items are going to be placed within the self.persist variable. ==========
 
-        self.persist = {"Inventory": {}}
+        self.persist = {}
 
 # ========== Inventory Items are going to be placed within the self.persist variable. ==========
 
@@ -257,6 +258,7 @@ def load_animations_from_folders(character):
         for image in os.listdir(os.path.join("resources", "graphics","character", folder)):
             path = f'./resources/graphics/character/{folder}/{image}'
             image_surf = pg.image.load(path)
+            image_surf = pg.transform.scale_by(image_surf, 1.5)
             CharAnimations.append(image_surf)
         AnimationsDict[folder] = CharAnimations
     return AnimationsDict

@@ -69,7 +69,7 @@ class Main_Menu(mt._State):
         if event.type == pg.MOUSEBUTTONDOWN:
             if self.Blist[0].check_for_input(mouse_pos):
                 # play()
-                self.next = "GAMEPLAY"
+                self.next = "LEVELSELECT"
                 self.done = True
                 pass
             if self.Blist[1].check_for_input(mouse_pos):
