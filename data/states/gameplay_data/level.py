@@ -61,6 +61,11 @@ class Level:
         self.water = Water(mp.screen_height - 20, level_width)
         self.clouds = Clouds(400,level_width, 20)
 
+        self.coin_display = CoinDisplay()
+        #---Display LIVES---
+        self.life = LivesDisplay()
+        self.life_left = 5
+
     def player_setup(self,layout):
         for row_index, row in enumerate(layout):
             for col_index, val in enumerate(row):
@@ -140,7 +145,7 @@ class Level:
         for sprite in collidable_sprites:
             if sprite.rect.colliderect(player.collision_rect):
                 if player.direction.x <0:
-                    player.rect.left = sprite.rect.right
+                    player.collision_rect.left = sprite.rect.right
                     player.on_left = True
                     self.current_x = player.rect.left
                 elif player.direction.x > 0 :
@@ -175,6 +180,9 @@ class Level:
                     pygame.sprite.Sprite.remove(coin, self.coin_sprites)
                     self.coin_total += 1
 
+                #-----LIFE TEST------
+                    if self.life_left > 0:
+                        self.life_left = self.life_left
 
 
     def scroll_x(self):
@@ -219,6 +227,15 @@ class Level:
         self.terrain_sprites.update(self.world_shift)
         self.terrain_sprites.draw(self.display_surface)
 
+        # COINS
+        self.coin_sprites.update(self.world_shift)
+        self.coin_sprites.draw(self.display_surface)
+        self.coin_display.draw(str(self.coin_total), self.display_surface)
+        print(self.coin_total)
+
+        # LIVES
+        self.life.draw(self.life_left, self.display_surface)
+
         # GRASS 
         self.grass_sprites.update(self.world_shift)
         self.grass_sprites.draw(self.display_surface)
@@ -233,10 +250,6 @@ class Level:
         self.crate_sprites.update(self.world_shift)
         self.crate_sprites.draw(self.display_surface)
 
-        # COINS
-        self.coin_sprites.update(self.world_shift)
-        self.coin_sprites.draw(self.display_surface)
-        print(self.coin_total)
 
         # FG PALMS
         self.fg_palm_sprites.update(self.world_shift)
@@ -253,5 +266,11 @@ class Level:
         self.coin_collection()
         self.scroll_x()
         self.player.draw(self.display_surface)
+
         self.goal.update(self.world_shift)
         self.goal.draw(self.display_surface)
+
+        s = pg.Surface((self.player.sprite.collision_rect.width, self.player.sprite.collision_rect.height))
+        s.set_alpha(100)
+        s.fill((255,0,0))
+        self.display_surface.blit(s, self.player.sprite.rect )
