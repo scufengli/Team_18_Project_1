@@ -270,7 +270,14 @@ class Level:
         self.goal.update(self.world_shift)
         self.goal.draw(self.display_surface)
 
-        s = pg.Surface((self.player.sprite.collision_rect.width, self.player.sprite.collision_rect.height))
-        s.set_alpha(100)
-        s.fill((255,0,0))
-        self.display_surface.blit(s, self.player.sprite.rect )
+
+        if self.player.sprite.CollBox == True:
+            s = pg.Surface((self.player.sprite.collision_rect.width, self.player.sprite.collision_rect.height))
+            s.set_alpha(100)
+            s.fill((255,0,0))
+            if self.player.sprite.CollBox1 == True:
+                self.display_surface.blit(s, self.player.sprite.collision_rect )
+                print("collision rect")
+            else:
+                self.display_surface.blit(s, self.player.sprite.rect )
+                print("rect")
