@@ -33,5 +33,5 @@ test_level = {
 level_dict = {
 	'0' : level_0,
     '1' : level_1,
-    'test_level' : test_level
+    '2' : test_level
 }

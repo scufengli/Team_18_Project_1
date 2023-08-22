@@ -20,23 +20,6 @@ SW_mid, SW_qrt3 = SW_qrt1*2,SW_qrt1*3
 
 ORIGINAL_CAPTION = "Cult of the Barnacle"
 
-#============ TEMP CODE ============
-
-level_map = [
-'                        ',
-'                        ',
-'XX                      ',
-'XXXX     XX  XX  XX     ',
-'XXXXXXX              XX ',
-'                 XXXXXX ',
-'         XXXXXX         ',
-'                        ',
-'      X                 ',
-'  P XXX   XX   XX  X XX ',
-' XXXXXX     XXXX  XX XX ']
-
-#============ TEMP CODE ============
-
 
 #Initialization
 pg.init()
