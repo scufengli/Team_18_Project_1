@@ -9,7 +9,7 @@ class Gameplay(mt._State):
     """This state could represent the actual gameplay phase."""
     def __init__(self,):
         mt._State.__init__(self) 
-        self.level = Level(level_dict['test_level'], mp.SCREEN)
+        self.level = Level(level_dict['0'], mp.SCREEN)
 
 
             
