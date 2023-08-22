@@ -22,5 +22,5 @@ class EscapePoint(Entity):
     def get_y_upper(self):
       return self.y + BLOCK_SIZE
 
-    def draw(self, displaySurface, escapeSurf):
-      displaySurface.blit(escapeSurf, (self.x, self.y))
+    def update(self, display_surf):
+      display_surf.blit(self.frames.next(), (self.x, self.y))

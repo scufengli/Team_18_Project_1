@@ -47,3 +47,6 @@ class Character(Entity):
          self.x + PLAYER_SIZE / 2 < escape_point.get_x_upper() and \
           self.y + PLAYER_SIZE / 2 > escape_point.get_y_lower() and \
            self.y + PLAYER_SIZE / 2 < escape_point.get_y_upper()
+
+    def update(self, display_surf):
+        display_surf.blit(self.frames.next(), (self.x, self.y))
