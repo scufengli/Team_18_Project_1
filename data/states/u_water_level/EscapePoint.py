@@ -1,7 +1,7 @@
-from Entity import Entity
-from Settings import *
+from .Entity import*
+from .Settings import *
 
-from SpriteStripAnim import SpriteStripAnim
+from .SpriteStripAnim import* 
 
 
 class EscapePoint(Entity):
