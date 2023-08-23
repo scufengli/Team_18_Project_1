@@ -1,11 +1,11 @@
-from Settings import *
-from Entity import Entity
-from SpriteStripAnim import SpriteStripAnim
+from .Settings import*
+from .Entity import*
+from .SpriteStripAnim import*
 
 class Player(Entity):
     def __init__(self):
         super().__init__()
-        self.speed = 2
+        self.speed = 25
         self.width = PLAYER_SIZE
         self.height = PLAYER_SIZE
 

@@ -101,7 +101,6 @@ class Control(object):
                 with_fps = "{} - {:.2f} FPS".format(self.caption, fps)
                 pg.display.set_caption(with_fps)
 
-
 class _State(object):
     """This is a prototype class for States.  All states should inherit from it.
     No direct instances of this class should be created. get_event and update
@@ -149,7 +148,6 @@ class _State(object):
         rect = msg.get_rect(center=center)
         return msg, rect
 
-
 class Button():
     def __init__(self,pos,text_input,font,size, base_color,hovering_color,display_surface, image=None):
         self.image = image
@@ -176,7 +174,6 @@ class Button():
             self.tect = self.font.render(self.text_input,True,self.hovering_color)
         else:
             self.tect = self.font.render(self.text_input,True,self.base_color)
-
 
 class Enemy(AnimatedTile):
 	def __init__(self,size,x,y):
@@ -302,7 +299,6 @@ def cursor_from_image(image):
             this_row.append(colors.get(pixel, " "))
         icon_string.append("".join(this_row))
     return icon_string
-
 
 ### IMPORT FUNCTIONS
 def import_folder(path):
