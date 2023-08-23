@@ -27,10 +27,15 @@ class SpriteStripAnim(object):
         self.loop = loop
         self.frames = frames
         self.f = frames
+
     def iter(self):
         self.i = 0
         self.f = self.frames
         return self
+    
+    def cur(self):
+        return self.images[self.i - 1]
+    
     def next(self):
         if self.i >= len(self.images):
             if not self.loop:
@@ -43,6 +48,7 @@ class SpriteStripAnim(object):
             self.i += 1
             self.f = self.frames
         return image
+    
     def __add__(self, ss):
         self.images.extend(ss.images)
         return self
