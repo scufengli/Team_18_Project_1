@@ -1,6 +1,5 @@
 from Settings import *
 from Entity import Entity
-from SpriteStripAnim import SpriteStripAnim
 
 class Character(Entity):
     def __init__(self, x = 0, y = 0):
@@ -8,6 +7,7 @@ class Character(Entity):
         self.speed = PLAYER_SPEED
 
         self.animations.update({'move_left': None, 'move_right': None})
+        self.center()
 
     def can_move(self, level, new_x, new_y):
         for block in level.blocks:
@@ -15,24 +15,32 @@ class Character(Entity):
                 return False
         return True
 
-    def moveRight(self, level):
+    def move_right(self, level):
         self.state = 'move_right'
         new_x = self.rect.x + self.speed
         if self.can_move(level, new_x, self.rect.y):
             self.rect.x = new_x
+            return True
+        return False
 
-    def moveLeft(self, level):
+    def move_left(self, level):
         self.state = 'move_left'
         new_x = self.rect.x - self.speed
         if self.can_move(level, new_x, self.rect.y):
             self.rect.x = new_x
+            return True
+        return False
 
-    def moveUp(self, level):
+    def move_up(self, level):
         new_y = self.rect.y - self.speed
         if self.can_move(level, self.rect.x, new_y):
             self.rect.y = new_y
+            return True
+        return False
 
-    def moveDown(self, level):
+    def move_down(self, level):
         new_y = self.rect.y + self.speed
         if self.can_move(level, self.rect.x, new_y):
             self.rect.y = new_y
+            return True
+        return False

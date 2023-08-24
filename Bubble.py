@@ -1,17 +1,16 @@
-from Entity import Entity
 from Settings import *
-
-from SpriteStripAnim import SpriteStripAnim
+from Entity import Entity
 
 class Bubble(Entity):
     def __init__(self, x = 0, y = 0):
-        super().__init__(x, y)
+        super().__init__(x, y, 18)
 
         self.counter = 0
         self.movement = 1
+        self.center()
 
     def float(self):
-      if self.counter % 15 == 0:
+      if self.counter % 30 == 0:
          self.movement *= -1
 
       self.rect.y += self.movement
@@ -19,4 +18,4 @@ class Bubble(Entity):
 
     def update(self, display_surf):
       self.float()
-      display_surf.blit(self.frames.next(), (self.rect.x + BLOCK_SIZE / 2, self.rect.y + BLOCK_SIZE / 2))
+      super().update(display_surf)

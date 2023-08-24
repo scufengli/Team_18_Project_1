@@ -12,9 +12,9 @@ class SpriteSheet(object):
     def __init__(self, filename):
         try:
             self.sheet = pygame.image.load(filename).convert_alpha()
-        except (pygame.error, message):
+        except (pygame.error):
             print ('Unable to load spritesheet image:', filename)
-            raise (SystemExit, message)
+            raise (SystemExit)
         
     # Load a specific image from a specific rectangle
     def image_at(self, rectangle, colorkey = None):

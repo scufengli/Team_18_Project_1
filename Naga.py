@@ -1,26 +1,23 @@
 from Settings import *
 from Character import Character
 
-class Fish(Character):
+class Naga(Character):
     def __init__(self, x = 0, y = 0):
         super().__init__(x, y)
 
         self.counter = 0
-        self.x_movement = 1
-        self.state = 'move_right'
+        self.y_movement = 1
+        self.state = 'move_left'
+        self.center()
 
     def patrol(self):
-        if self.counter % 15 == 0:
-            self.x_movement *= -1
-        
         if self.counter % 120 == 0:
+            self.y_movement *= -1
+        
+        if self.counter % 15 == 0:
             self.speed *= -1
-            if self.state == 'move_left':
-                self.state = 'move_right'
-            else:
-                self.state = 'move_left'
 
-        self.rect.y += self.x_movement
+        self.rect.y -= self.y_movement
         self.rect.x += self.speed
         self.counter += 1
 
