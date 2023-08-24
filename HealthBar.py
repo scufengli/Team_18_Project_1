@@ -13,14 +13,14 @@ class HealthBar:
         self.bg_width, self.bg_height = 249, 104
         self.life_bg = pygame.transform.scale(life_bg, (self.bg_width, self.bg_height)) # 249w x 104h
 
-        self.display_x = 5
-        self.display_y = 570
+        self.display_x = 10
+        self.display_y = 585
 
     def draw(self, lives_left, surface):
         life_rect = self.life_bg.get_rect()
 
         hrt_x = self.display_x + life_rect[0] + 50
-        hrt_y = (life_rect[1] + (self.bg_height/2))-self.hrt_height/2 + 570
+        hrt_y = (life_rect[1] + (self.bg_height/2))-self.hrt_height/2 + 585
         #--^top of the bg_img + half of the bg_img height, - half of the heart height to get centered properly
 
         surface.blit(self.life_bg, (self.display_x, self.display_y))

@@ -2,8 +2,8 @@ from Settings import *
 from Entity import Entity
 
 class Character(Entity):
-    def __init__(self, x = 0, y = 0):
-        super().__init__(x, y, size = 48)
+    def __init__(self, x = 0, y = 0, size = 48):
+        super().__init__(x, y, size)
         self.speed = PLAYER_SPEED
 
         self.animations.update({'move_left': None, 'move_right': None})

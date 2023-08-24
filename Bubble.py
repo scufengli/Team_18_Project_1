@@ -13,12 +13,13 @@ class Bubble(Entity):
         self.sound = pygame.mixer.Sound(os.path.join(ROOT_PATH, SOUND_PATH, 'bubble.mp3'))
 
     def float(self):
-      if self.counter % 20 == 0:
-         self.movement *= -1
+        if self.counter % 25 == 0:
+            self.movement *= -1
 
-      self.rect.y += self.movement
-      self.counter += 1
+        self.rect.y += self.movement
 
     def update(self, display_surf):
-      self.float()
-      super().update(display_surf)
+        self.counter += 1
+        if self.counter % 5 == 0:
+            self.float()
+        super().update(display_surf)
