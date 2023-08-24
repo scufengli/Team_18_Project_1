@@ -22,7 +22,6 @@ class Entity:
 
     def update(self, display_surf):
         self.frames = self.animations[self.state]
-        pygame.draw.rect(display_surf, rect = self.rect, color = (255, 0, 0))
         display_surf.blit(self.frames.next(), (self.rect.x, self.rect.y))
 
     def collide_rect(self, entity):

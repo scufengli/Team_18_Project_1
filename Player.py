@@ -16,9 +16,4 @@ class Player(Character):
         return True
     
     def update(self, display_surf):
-        if self.freeze is True:
-            self.frames.blink()
-        else:
-            self.frames.unblink()
-
         super().update(display_surf)

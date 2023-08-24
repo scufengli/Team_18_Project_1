@@ -22,10 +22,7 @@ class SpriteStripAnim(object):
         """
         self.filename = filename
         ss = SpriteSheet(filename)
-        self.blinking = False
         self.images = ss.load_strip(rect, count, colorkey)
-        self.blink_images = []
-        self.temp_images = self.images
         self.i = 0
         self.loop = loop
         self.frames = frames
@@ -35,24 +32,6 @@ class SpriteStripAnim(object):
         self.i = 0
         self.f = self.frames
         return self
-    
-    def blink(self):
-        if self.blinking is False and len(self.blink_images) == 0:
-            for i in range(len(self.images)):
-                copy = self.images[i].copy()
-                if i % 2 == 0:
-                    copy.set_alpha(255)
-                self.blink_images.append(copy)
-
-            self.temp_images = self.images
-            self.images = self.blink_images
-
-            self.blinking = True
-
-    def unblink(self):
-        if self.blinking is True:
-            self.images = self.temp_images
-            self.blinking = False
     
     def cur(self):
         return self.images[self.i - 1]

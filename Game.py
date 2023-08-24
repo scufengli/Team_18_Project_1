@@ -16,7 +16,7 @@ class Game:
         self.display_surf = None
         self.level = None
         self.start_time = pygame.time.get_ticks()
-        self.max_level = 2
+        self.max_level = 3
 
     def on_init(self):
         self.display_surf = pygame.display.set_mode((CAMERA_WIDTH, CAMERA_HEIGHT), pygame.RESIZABLE)
@@ -29,9 +29,11 @@ class Game:
 
         self.ss_success = pygame.image.load(os.path.join(ROOT_PATH, 'splash_pass.png')).convert()
         self.ss_success = pygame.transform.scale(self.ss_success, (CAMERA_WIDTH, CAMERA_HEIGHT))
+        self.success_sound = pygame.mixer.Sound(os.path.join(ROOT_PATH, SOUND_PATH, 'pass.mp3'))
 
         self.ss_failed = pygame.image.load(os.path.join(ROOT_PATH, 'splash_fail.png')).convert()
         self.ss_failed = pygame.transform.scale(self.ss_failed, (CAMERA_WIDTH, CAMERA_HEIGHT))
+        self.fail_sound = pygame.mixer.Sound(os.path.join(ROOT_PATH, SOUND_PATH, 'fail.mp3'))
 
     def on_event(self, event):
         if event.type == QUIT:
@@ -54,6 +56,7 @@ class Game:
 
     def on_win(self):
         self.display_surf.blit(self.ss_success, (0, 0))
+        self.success_sound.play()
         pygame.display.update()
         if self.level.cur_level == self.max_level:
             self._running = False
@@ -63,7 +66,9 @@ class Game:
 
     def on_lose(self):
         self.display_surf.blit(self.ss_failed, (0, 0))
+        self.fail_sound.play()
         pygame.display.update()
+        self._running = False
 
     def get_seconds(self):
         return (pygame.time.get_ticks() - self.start_time) / 1000
@@ -101,7 +106,6 @@ class Game:
                 
             if self.level.lives_left == 0:
                 self.on_lose()
-                self._running = False
 
             if self._running:
                 self.on_loop()
