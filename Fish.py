@@ -1,3 +1,4 @@
+import pygame, os
 from Settings import *
 from Character import Character
 
@@ -8,6 +9,8 @@ class Fish(Character):
         self.counter = 0
         self.x_movement = 1
         self.state = 'move_right'
+
+        self.death_sound = pygame.mixer.Sound(os.path.join(ROOT_PATH, SOUND_PATH, 'fish_death.mp3'))
 
     def patrol(self):
         if self.counter % 15 == 0:

@@ -1,3 +1,4 @@
+import pygame, os
 from Settings import *
 from Character import Character
 
@@ -9,6 +10,9 @@ class Naga(Character):
         self.y_movement = 1
         self.state = 'move_left'
         self.center()
+
+        self.death_sound = pygame.mixer.Sound(os.path.join(ROOT_PATH, SOUND_PATH, 'naga_death.mp3'))
+
 
     def patrol(self):
         if self.counter % 120 == 0:

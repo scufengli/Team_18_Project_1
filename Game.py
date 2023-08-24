@@ -1,4 +1,4 @@
-import sys
+import sys, os
 import pygame
 from Settings import *
 from pygame.locals import *
@@ -11,6 +11,7 @@ class Game:
 
     def __init__(self):
         pygame.init()
+        pygame.mixer.init()
         self._running = True
         self.display_surf = None
         self.level = None
@@ -20,14 +21,16 @@ class Game:
     def on_init(self):
         self.display_surf = pygame.display.set_mode((CAMERA_WIDTH, CAMERA_HEIGHT), pygame.RESIZABLE)
         pygame.display.set_caption('The Cult of Barnacles')
+        pygame.mixer.music.load(os.path.join(ROOT_PATH, SOUND_PATH, 'bg_music.mp3'))
+        pygame.mixer.music.play(1, 0.0)
 
         self.level = Level()
         self.healthbar = HealthBar()
 
-        self.ss_success = pygame.image.load("Assets/splash_pass.png").convert()
+        self.ss_success = pygame.image.load(os.path.join(ROOT_PATH, 'splash_pass.png')).convert()
         self.ss_success = pygame.transform.scale(self.ss_success, (CAMERA_WIDTH, CAMERA_HEIGHT))
 
-        self.ss_failed = pygame.image.load("Assets/splash_fail.png").convert()
+        self.ss_failed = pygame.image.load(os.path.join(ROOT_PATH, 'splash_fail.png')).convert()
         self.ss_failed = pygame.transform.scale(self.ss_failed, (CAMERA_WIDTH, CAMERA_HEIGHT))
 
     def on_event(self, event):
@@ -39,7 +42,7 @@ class Game:
 
     def on_render(self):
         self.level.lives_left = int((GAME_TIME - self.get_seconds()) / GAME_TIME * 6) + self.level.player.lives_offset
-        self.bg_surf = pygame.image.load("Assets/background.png").convert()
+        self.bg_surf = pygame.image.load(os.path.join(ROOT_PATH, 'background.png')).convert()
         self.bg_surf = pygame.transform.scale(self.bg_surf, (CAMERA_WIDTH, CAMERA_HEIGHT))
         self.display_surf.blit(self.bg_surf, (0, 0))
 

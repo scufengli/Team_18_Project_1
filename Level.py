@@ -92,9 +92,11 @@ class Level:
             if self.player.collide_rect(bubble):
                 self.remove_entity(bubble)
                 self.player.lives_offset += 2
+                bubble.sound.play()
         
         if self.player.collide_rect(self.spear):
             self.player.armed = True
+            self.spear.pickup_sound.play()
             self.remove_entity(self.spear)
 
         if self.player.freeze is False:
@@ -103,8 +105,10 @@ class Level:
                     if self.player.armed == True:
                         self.remove_entity(enemy)
                         self.player.armed = False
+                        enemy.death_sound.play()
                     else:
                         self.player.lives_offset -= 1
+                        self.player.hurt_sound.play()
                         self.player.freeze = True
         else:
             self.player.counter += 1

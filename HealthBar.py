@@ -1,13 +1,14 @@
-import pygame
+import pygame, os
+from Settings import *
 
 class HealthBar:
     def __init__(self):
-        heart = pygame.image.load('./Assets/lives.png').convert_alpha()
+        heart = pygame.image.load(os.path.join(ROOT_PATH, 'lives.png')).convert_alpha()
         heart.set_colorkey(heart.get_at((0, 0)), pygame.RLEACCEL)
         self.hrt_width, self.hrt_height = 24, 24
         self.heart = pygame.transform.scale(heart, (self.hrt_width, self.hrt_height)) # 330w x 197h
 
-        life_bg = pygame.image.load('./Assets/lives_bg.png').convert_alpha()
+        life_bg = pygame.image.load(os.path.join(ROOT_PATH, 'lives_bg.png')).convert_alpha()
         life_bg.set_colorkey(life_bg.get_at((0, 0)), pygame.RLEACCEL)
         self.bg_width, self.bg_height = 249, 104
         self.life_bg = pygame.transform.scale(life_bg, (self.bg_width, self.bg_height)) # 249w x 104h

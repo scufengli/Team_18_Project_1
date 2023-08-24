@@ -5,10 +5,9 @@ from SpriteStripAnim import SpriteStripAnim
 class AssetsLoader:
     def __init__(self):
         self.animations = {}
-        self.root_path = './Assets'
 
     def load_animations(self):
-        path = self.root_path + '/Animations'
+        path = os.path.join(ROOT_PATH, ANIMATION_PATH)
         entity_dirs = [d for d in os.listdir(path) if os.path.isdir(os.path.join(path, d))]
 
         for entity in entity_dirs:
