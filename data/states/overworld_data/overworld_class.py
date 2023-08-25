@@ -7,12 +7,19 @@ from .game_data import levels
 class Node(pg.sprite.Sprite):
     def __init__(self,pos, status, icon_speed):
         super().__init__()
+        #img1 = pg.image.load('resources/graphics/background_assets/SwordedLevelOW.png').convert_alpha()
+        #locked_img =  pg.transform.scale(img1,(100,80))
+        #img2 = pg.image.load('resources/graphics/background_assets/NOSwordedLevelOW.png').convert_alpha()
+        #unlocked_img = pg.transform.scale(img2,(100,80))
         self.image = pg.Surface((100,80))
+        self.rect = self.image.get_rect(center = pos)
         if status == 'available':
+            #self.image.blit(unlocked_img, self.rect)
             self.image.fill('red')
         else:
+            #self.image.blit(locked_img, self.rect)
             self.image.fill('grey')
-        self.rect = self.image.get_rect(center = pos)
+        #self.rect = self.image.get_rect(center = pos)
 
         self.detection_zone = pg.Rect((self.rect.centerx - icon_speed/2),(self.rect.centery - icon_speed/2),icon_speed,icon_speed)
 
@@ -21,27 +28,33 @@ class Icon(pg.sprite.Sprite):
         super().__init__()
         self.pos = pos
         self.image = pg.Surface((20,20))
-        self.image.fill('blue')
+        dot = pg.image.load('resources/graphics/background_assets/target.png').convert_alpha()
+        self.dot = pg.transform.scale(dot, (20, 20))
+        #self.image.fill('blue')
         self.rect = self.image.get_rect(center = pos)
 
     def update(self):
         self.rect.center = self.pos
+        self.image.blit(self.dot, self.rect)
 
 
 class Overworld:
     def __init__(self, start_level, max_level):
-        
-        # SET UP 
+
+        # SET UP
         self.display_surface = mp.SCREEN
+        bg = mp.BackGroundGFX['overworld_bg'].convert_alpha()
+        self.ovw_bg = pg.transform.scale(bg, (mp.screen_width, mp.screen_height))
+
         self.max_level = max_level
         self.current_level =  start_level
 
-        # MOVEMENT LOGIC 
+        # MOVEMENT LOGIC
         self.moving = False
         self.move_direction = pg.math.Vector2(0,0)
-        self.speed = 8 
+        self.speed = 8
 
-        # SPRITES 
+        # SPRITES
         self.setup_nodes()
         self.setup_icon()
 
@@ -58,7 +71,7 @@ class Overworld:
 
     def draw_paths(self):
         points = [node['node_pos'] for index, node in enumerate(levels.values()) if index <= self.max_level]
-        pg.draw.lines(self.display_surface,'red',False,points, 6)
+        pg.draw.lines(self.display_surface,'black',False,points, 6)
 
     def setup_icon(self):
         self.icon = pg.sprite.GroupSingle()
@@ -70,7 +83,7 @@ class Overworld:
         if not self.moving:
             if keys[pg.K_RIGHT] and self.current_level < self.max_level:
                 self.move_direction = self.get_movement_data('next')
-                self.current_level += 1 
+                self.current_level += 1
                 self.moving = True
                 print("right")
             elif keys[pg.K_LEFT] and self.current_level > 0:
@@ -100,7 +113,7 @@ class Overworld:
 
 
     def run(self):
-        self.display_surface.fill("black")
+        self.display_surface.blit(self.ovw_bg, (0,0))
         self.input()
         self.update_icon_pos()
         self.icon.update()
