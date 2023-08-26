@@ -9,7 +9,7 @@ ALL MODIFICATIONS SHOULD OCCUR IN THIS MODULE, AND IN THE PREPARE MODULE.
 """
 
 
-from . import prepare, tools 
+from . import prepare, tools
 from .states import gameplay, level_select, splash, main_menu, water_level #==== Note 1 ====#
 
 def main():
@@ -23,7 +23,7 @@ def main():
                   #"STATE NAME" . <State Module Name>.<State Class()>
                   }
 #======== TEMP CODE =========
-    run_it.setup_states(state_dict, "WATERLEVEL")
+    run_it.setup_states(state_dict, "SPLASH")
     run_it.main()
 #======== TEMP CODE =========
 # #======== DONT DELETE =========
