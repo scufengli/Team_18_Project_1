@@ -10,7 +10,7 @@ ALL MODIFICATIONS SHOULD OCCUR IN THIS MODULE, AND IN THE PREPARE MODULE.
 
 
 from . import prepare, tools
-from .states import gameplay, level_select, splash, main_menu, water_level #==== Note 1 ====#
+from .states import gameplay, level_select, splash, main_menu #water_level #==== Note 1 ====#
 
 def main():
     """Add states to control here."""
@@ -19,7 +19,7 @@ def main():
                   "MAINMENU" : main_menu.Main_Menu(),
                   "GAMEPLAY" : gameplay.Gameplay(),
                   "LEVELSELECT" : level_select.Level_select(),
-                  "WATERLEVEL" : water_level.Underwater()
+                #   "WATERLEVEL" : water_level.Underwater()
                   #"STATE NAME" . <State Module Name>.<State Class()>
                   }
 #======== TEMP CODE =========
