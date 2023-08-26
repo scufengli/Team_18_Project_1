@@ -6,7 +6,7 @@
  <tileset firstgid="1" source="terrain_tiles.tsx"/>
  <tileset firstgid="17" source="coin_tiles.tsx"/>
  <tileset firstgid="19" source="grass_tiles.tsx"/>
- <tileset firstgid="24" source="palms.tsx"/>
+ <tileset firstgid="24" name="palms" tilewidth="1" tileheight="1" tilecount="0" columns="0"/>
  <tileset firstgid="27" source="setup_tiles.tsx"/>
  <tileset firstgid="29" source="enemy_tile.tsx"/>
  <layer id="6" name="bg_palms" width="120" height="12">
