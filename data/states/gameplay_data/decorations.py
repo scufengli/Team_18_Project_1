@@ -35,7 +35,7 @@ class Water:
 
         for tile in range(tile_x_amount):
             x = tile * water_tile_width + water_start
-            y = top 
+            y = top
             sprite = AnimatedTile(192,x,y,'resources/graphics/level_graphics/decoration/water')
             self.water_sprites.add(sprite)
 
@@ -112,10 +112,31 @@ class LivesDisplay:
 
         surface.blit(self.life_bg, (self.display_x, self.display_y))
 
-        next = 0
+        #next = 0
         if lives_left > 0:
             for i in range(lives_left):
-                surface.blit(self.heart, (hrt_x + next, hrt_y))
-                next += 34
+                surface.blit(self.heart, (hrt_x, hrt_y))
+                hrt_x += 34
 
-        #for i in range(lives_left):
+class GemClueDisplay:
+    def __init__(self):
+        bg = pg.image.load('resources/graphics/background_assets/clue_capture.png').convert_alpha()
+        self.bg_W, self.bg_H = 80,94 #100w 117h
+        self.bg = pg.transform.scale(bg, (self.bg_W, self.bg_H)) # 330w x 197h
+
+        gem = pg.image.load('resources/graphics/level_graphics/coins/jewels/Jewel_0.png').convert_alpha()
+        self.gem = pg.transform.scale(gem, (100, 100))
+
+    def draw(self, gems, surface):
+        x = 20
+        y = mp.screen_height - 100
+        g_x = 10
+        g_y = y + 5
+
+        for i in range(5):
+            surface.blit(self.bg, (x,y))
+            x += 90
+        for i in range(gems):
+            surface.blit(self.gem, (g_x, g_y))
+            if  gems > 1:
+                g_x += 90
