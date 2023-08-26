@@ -219,6 +219,13 @@ class Level:
         self.sky.draw(self.display_surface)
         self.clouds.draw(self.display_surface, self.world_shift)
 
+        # PARALLLAX BACKGROUND 
+        # LAYER 1
+        # LAYER 2
+        # LAYER 3 
+        # LAYER 4 
+        # Each layer is one level of the background, the smaller the layer number the father back the farther back the layer is. World shift is slower the smaller the number.  
+
         # BG PALMS
         self.bg_palm_sprites.update(self.world_shift)
         self.bg_palm_sprites.draw(self.display_surface)
@@ -270,7 +277,14 @@ class Level:
         self.goal.update(self.world_shift)
         self.goal.draw(self.display_surface)
 
-        s = pg.Surface((self.player.sprite.collision_rect.width, self.player.sprite.collision_rect.height))
-        s.set_alpha(100)
-        s.fill((255,0,0))
-        self.display_surface.blit(s, self.player.sprite.rect )
+
+        if self.player.sprite.CollBox == True:
+            s = pg.Surface((self.player.sprite.collision_rect.width, self.player.sprite.collision_rect.height))
+            s.set_alpha(100)
+            s.fill((255,0,0))
+            if self.player.sprite.CollBox1 == True:
+                self.display_surface.blit(s, self.player.sprite.collision_rect )
+                print("collision rect")
+            else:
+                self.display_surface.blit(s, self.player.sprite.rect )
+                print("rect")

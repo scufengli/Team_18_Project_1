@@ -1,4 +1,4 @@
-from SpriteSheet import SpriteSheet
+from .spritesheet import*
 
 # https://www.pygame.org/wiki/Spritesheet
 class SpriteStripAnim(object):
@@ -21,7 +21,8 @@ class SpriteStripAnim(object):
         the iterator advances to the next image.
         """
         self.filename = filename
-        ss = SpriteSheet(filename)
+        path = "resources/graphics/u_water_graphics/"
+        ss = SpriteSheet(path, filename)
         self.images = ss.load_strip(rect, count, colorkey)
         self.i = 0
         self.loop = loop
