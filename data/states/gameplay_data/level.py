@@ -132,12 +132,32 @@ class Level:
                     if type == 'constraints':
                         sprite = Tile(mp.tile_size,x,y)
                         sprite_group.add(sprite)
-
         return sprite_group
+    
     def enemy_collision_reverse(self):
         for enemy in self.enemy_sprites.sprites():
             if pygame.sprite.spritecollide(enemy,self.constraint_sprites,False):
                 enemy.reverse()
+
+    def enemy_speed(self):
+        for enemy in self.enemy_sprites.sprites():
+            if self.player.sprite.collision_rect.x - enemy.rect.x >= -400 and self.player.sprite.collision_rect.x - enemy.rect.x <= 400 and self.player.sprite.crouch != True and self.player.sprite.collision_rect.y - enemy.rect.y >= -20 and self.player.sprite.collision_rect.y - enemy.rect.y <= 20: 
+                print (self.player.sprite.collision_rect.x)
+                print(enemy.rect.x)
+                if enemy.speed > 0:
+                    enemy.speed = 7
+                else:
+                    enemy.speed = -7
+            elif self.player.sprite.crouch == True:
+                if enemy.speed > 0:
+                    enemy.speed = 1
+                else:
+                    enemy.speed = -1
+            else:
+                if enemy.speed > 0:
+                    enemy.speed = 1
+                else:
+                    enemy.speed = -1
 
     def horizontal_movement_collision(self):
         player = self.player.sprite
@@ -187,7 +207,6 @@ class Level:
                 #-----LIFE TEST------
                     if self.life_left > 0:
                         self.life_left = self.life_left
-
 
     def scroll_x(self):
         player = self.player.sprite
@@ -255,6 +274,7 @@ class Level:
         self.enemy_sprites.update(self.world_shift)
         self.constraint_sprites.update(self.world_shift)
         self.enemy_collision_reverse()
+        self.enemy_speed()
         self.enemy_sprites.draw(self.display_surface)
 
         # CHEST
@@ -265,7 +285,6 @@ class Level:
         # FG PALMS
         self.fg_palm_sprites.update(self.world_shift)
         self.fg_palm_sprites.draw(self.display_surface)
-
         self.water.draw(self.display_surface, self.world_shift)
 
         # GEMS CLUE DISPLAY
