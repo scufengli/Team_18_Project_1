@@ -19,11 +19,11 @@ class Level:
         terrain_layout = mt.import_csv_layout(level_data['terrain'])
         self.terrain_sprites = self.create_tile_group(terrain_layout,'terrain')
 
-        # GRASS SETUP 
+        # GRASS SETUP
         grass_layout = mt.import_csv_layout(level_data['grass'])
         self.grass_sprites = self.create_tile_group(grass_layout,'grass')
 
-        # COINS 
+        # COINS
         coin_layout = mt.import_csv_layout(level_data['coins'])
         self.coin_sprites = self.create_tile_group(coin_layout,'coins')
         self.coin_total = 0
@@ -40,11 +40,11 @@ class Level:
         bg_palm_layout = mt.import_csv_layout(level_data['bg palms'])
         self.bg_palm_sprites = self.create_tile_group(fg_palm_layout, 'bg palms')
 
-        # ENEMIES 
+        # ENEMIES
         enemy_layout = mt.import_csv_layout(level_data['enemies'])
         self.enemy_sprites = self.create_tile_group(enemy_layout, 'enemies')
 
-        # CONSTRAINTS 
+        # CONSTRAINTS
         constraint_layout = mt.import_csv_layout(level_data['constraints'])
         self.constraint_sprites = self.create_tile_group(constraint_layout, 'constraints')
 
@@ -91,7 +91,7 @@ class Level:
                         sprite_group.add(sprite)
 
                     if type == 'grass':
-                        grass_tile_list = mt.import_cut_graphic('resources\graphics\level_graphics\decoration\grass\grass.png')
+                        grass_tile_list = mt.import_cut_graphic('resources/graphics/level_graphics/decoration/grass/grass.png')
                         tile_surface = grass_tile_list[int(val)]
                         sprite = StaticTile(mp.tile_size,x,y,tile_surface)
                         sprite_group.add(sprite)
@@ -102,7 +102,7 @@ class Level:
 
                     if type == 'coins':
                         #sprite = Coin(tile_size,x,y,'../Graphics/coins')
-                        # CODE TO CHANGE THE COLOR OF COINS 
+                        # CODE TO CHANGE THE COLOR OF COINS
                         if val == '0':
                             sprite = Coin(mp.tile_size,x,y,'resources/graphics/level_graphics/coins/gold')
                         if val == '1':
@@ -110,15 +110,15 @@ class Level:
                         sprite_group.add(sprite)
 
                     if type == 'fg palms':
-                        if val == '0': 
-                            sprite = Palm(mp.tile_size, x, y, 'resources\graphics\level_graphics\\terrain\palm_small', 38)
+                        if val == '0':
+                            sprite = Palm(mp.tile_size, x, y, 'resources/graphics/level_graphics//terrain/palm_small', 38)
                             sprite_group.add(sprite)
-                        if val == '1': 
-                            sprite = Palm(mp.tile_size, x, y, 'resources\graphics\level_graphics\\terrain\palm_large', 64)
+                        if val == '1':
+                            sprite = Palm(mp.tile_size, x, y, 'resources/graphics/level_graphics//terrain/palm_large', 64)
                             sprite_group.add(sprite)
 
                     if type == 'bg palms':
-                        sprite = Palm(mp.tile_size, x, y, 'resources\graphics\level_graphics\\terrain\palm_bg', 64)
+                        sprite = Palm(mp.tile_size, x, y, 'resources/graphics/level_graphics//terrain/palm_bg', 64)
                         sprite_group.add(sprite)
 
                     if type == 'enemies':
@@ -219,12 +219,12 @@ class Level:
         self.sky.draw(self.display_surface)
         self.clouds.draw(self.display_surface, self.world_shift)
 
-        # PARALLLAX BACKGROUND 
+        # PARALLLAX BACKGROUND
         # LAYER 1
         # LAYER 2
-        # LAYER 3 
-        # LAYER 4 
-        # Each layer is one level of the background, the smaller the layer number the father back the farther back the layer is. World shift is slower the smaller the number.  
+        # LAYER 3
+        # LAYER 4
+        # Each layer is one level of the background, the smaller the layer number the father back the farther back the layer is. World shift is slower the smaller the number.
 
         # BG PALMS
         self.bg_palm_sprites.update(self.world_shift)
@@ -243,7 +243,7 @@ class Level:
         # LIVES
         self.life.draw(self.life_left, self.display_surface)
 
-        # GRASS 
+        # GRASS
         self.grass_sprites.update(self.world_shift)
         self.grass_sprites.draw(self.display_surface)
 
@@ -252,8 +252,8 @@ class Level:
         self.constraint_sprites.update(self.world_shift)
         self.enemy_collision_reverse()
         self.enemy_sprites.draw(self.display_surface)
-        
-        # CHEST 
+
+        # CHEST
         self.crate_sprites.update(self.world_shift)
         self.crate_sprites.draw(self.display_surface)
 
