@@ -31,6 +31,7 @@ class Level:
         self.maze = Maze()
         self.register_level(level)
 
+
     def register_level(self, level):
         entities = self.maze.get_maze(level)
         bx = 0
@@ -79,11 +80,17 @@ class Level:
     def remove_entity(self, entity):
         try:
             self.entities.remove(entity)
+        except ValueError:
+            pass
+        try:
             self.bubbles.remove(entity)
+        except ValueError:
+            pass
+        try:
             self.enemies.remove(entity)
         except ValueError:
             pass
-        
+
     def update(self, display_surf):
         for entity in self.entities:
             entity.update(display_surf)
@@ -91,13 +98,13 @@ class Level:
         for bubble in self.bubbles:
             if self.player.collide_rect(bubble):
                 self.remove_entity(bubble)
-                self.player.lives_offset += 2
+                self.lives_left = min(PLAYER_LIVES, self.lives_left + 2)
                 bubble.sound.play()
         
         if self.player.collide_rect(self.spear):
+            self.remove_entity(self.spear)
             self.player.armed = True
             self.spear.pickup_sound.play()
-            self.remove_entity(self.spear)
 
         if self.player.freeze is False:
             for enemy in self.enemies:
@@ -106,13 +113,14 @@ class Level:
                         self.remove_entity(enemy)
                         self.player.armed = False
                         enemy.death_sound.play()
+                        self.player.freeze = True
                     else:
-                        self.player.lives_offset -= 1
+                        self.lives_left -= 1
                         self.player.hurt_sound.play()
                         self.player.freeze = True
         else:
             self.player.counter += 1
-            if self.player.counter % 50 == 0:
+            if self.player.counter % 60 == 0:
                 self.player.freeze = False
 
     def next(self):

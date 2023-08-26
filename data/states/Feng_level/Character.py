@@ -4,6 +4,7 @@ from Entity import Entity
 class Character(Entity):
     def __init__(self, x = 0, y = 0, size = 48):
         super().__init__(x, y, size)
+        # refer to Settings.py
         self.speed = PLAYER_SPEED
 
         self.animations.update({'move_left': None, 'move_right': None})
@@ -13,7 +14,7 @@ class Character(Entity):
         for block in level.blocks:
             if (Entity(new_x, new_y, size = self.size).collide_rect(block)):
                 return False
-        return True
+        return new_x >= -10 and new_x <= CAMERA_WIDTH + 10 and new_y >= -10 and new_y <= CAMERA_HEIGHT + 10
 
     def move_right(self, level):
         self.state = 'move_right'
