@@ -8,6 +8,7 @@ class Player(pg.sprite.Sprite):
         self.animation_speed = 0.20
         self.animations = mp.AniDict
         self.image = self.animations['Idle'][self.frame_index]
+        self.pos = pos
 
 
         self.CollBox = True
@@ -29,6 +30,7 @@ class Player(pg.sprite.Sprite):
 
         # x,y,w,h = self.rect = self.image.get_bounding_rect()
         x,y,w,h = self.image.get_bounding_rect()
+        self.x, self.y = x, y
         self.h = h 
         # self.collision_rect = pg.Rect((self.rect.x, self.rect.y),(w, h))
         # self.collision_rect = pg.Rect((pos[0]+20, pos[1]+20),(w,h+20))

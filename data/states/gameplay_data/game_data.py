@@ -11,7 +11,7 @@ level_0 = {
 	'grass': 'data\states\gameplay_data\levelV2\level_0\level_0_grass.csv'}
 level_1 = {
 	'terrain': 'data\states\gameplay_data\levelV2\level_1\level_1_terrain.csv',
-	'coins':'data\states\gameplay_data\levelV2\level_level_1\level_1_coins.csv',
+	'coins':'data\states\gameplay_data\levelV2\level_1\level_1_coins.csv',
 	'fg palms':'data\states\gameplay_data\levelV2\level_1\level_1_fg_palms.csv',
 	'bg palms':'data\states\gameplay_data\levelV2\level_1\level_1_bg_palms.csv',
 	'crates': 'data\states\gameplay_data\levelV2\level_1\level_1_crate.csv',
