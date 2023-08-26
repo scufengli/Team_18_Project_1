@@ -7,19 +7,17 @@ from .game_data import levels
 class Node(pg.sprite.Sprite):
     def __init__(self,pos, status, icon_speed):
         super().__init__()
-        #img1 = pg.image.load('resources/graphics/background_assets/SwordedLevelOW.png').convert_alpha()
-        #locked_img =  pg.transform.scale(img1,(100,80))
-        #img2 = pg.image.load('resources/graphics/background_assets/NOSwordedLevelOW.png').convert_alpha()
-        #unlocked_img = pg.transform.scale(img2,(100,80))
-        self.image = pg.Surface((100,80))
-        self.rect = self.image.get_rect(center = pos)
-        if status == 'available':
-            #self.image.blit(unlocked_img, self.rect)
-            self.image.fill('red')
-        else:
-            #self.image.blit(locked_img, self.rect)
-            self.image.fill('grey')
+        img1 = pg.image.load('resources/graphics/background_assets/SwordLevel.0.png').convert_alpha()
+        locked_img =  pg.transform.scale(img1,(250,250))
+        img2 = pg.image.load('resources/graphics/background_assets/NoSwordLevel.0.png').convert_alpha()
+        unlocked_img = pg.transform.scale(img2,(250,250))
+        #self.image = pg.Surface((100,80))
         #self.rect = self.image.get_rect(center = pos)
+        if status == 'available':
+            self.image = unlocked_img
+        else:
+            self.image = locked_img
+        self.rect = self.image.get_rect(center = pos)
 
         self.detection_zone = pg.Rect((self.rect.centerx - icon_speed/2),(self.rect.centery - icon_speed/2),icon_speed,icon_speed)
 
@@ -27,15 +25,15 @@ class Icon(pg.sprite.Sprite):
     def __init__(self,pos):
         super().__init__()
         self.pos = pos
-        self.image = pg.Surface((20,20))
+        #self.image = pg.Surface((20,20))
         dot = pg.image.load('resources/graphics/background_assets/target.png').convert_alpha()
-        self.dot = pg.transform.scale(dot, (20, 20))
+        self.image = pg.transform.scale(dot, (60, 50))
         #self.image.fill('blue')
         self.rect = self.image.get_rect(center = pos)
 
     def update(self):
         self.rect.center = self.pos
-        self.image.blit(self.dot, self.rect)
+        #self.image.blit(self.dot, self.rect)
 
 
 class Overworld:
