@@ -1,3 +1,12 @@
+<<<<<<< HEAD:Player.py
+import pygame, os
+from Settings import *
+from Character import Character
+
+class Player(Character):
+    def __init__(self, x = 0, y = 0):
+        super().__init__(x, y)
+=======
 from .Settings import*
 from .Entity import*
 from .SpriteStripAnim import*
@@ -8,43 +17,16 @@ class Player(Entity):
         self.speed = 25
         self.width = PLAYER_SIZE
         self.height = PLAYER_SIZE
+>>>>>>> main:data/states/u_water_level/Player.py
 
-        self.right_frames = SpriteStripAnim('Swim_Right.png', (0, 0, 48, 48), 6, -1, True, ANIMATION_FRAMES)
-        self.left_frames = SpriteStripAnim('Swim_Left.png', (0, 0, 48, 48), 6, -1, True, ANIMATION_FRAMES)
-        self.frames = self.right_frames
+        self.lives_offset = 0   
+        self.freeze = False
+        self.counter = 0
+        self.armed = False
+        self.hurt_sound = pygame.mixer.Sound(os.path.join(ROOT_PATH, SOUND_PATH, 'player_hurt.mp3'))
 
-    def can_move(self, maze, new_x, new_y):
-        # Check if the player can move to the new position without colliding with walls
-        for i in range(new_x // BLOCK_SIZE, (new_x + self.width) // BLOCK_SIZE + 1):
-            for j in range(new_y // BLOCK_SIZE, (new_y + self.height) // BLOCK_SIZE + 1):
-                if maze.maze[i + j * maze.M] == 1:
-                    return False
+    def is_player(self):
         return True
-
-    def moveRight(self, maze):
-        self.frames = self.right_frames
-        new_x = self.x + self.speed
-        if new_x < (maze.M - 1) * BLOCK_SIZE and self.can_move(maze, new_x, self.y):
-            self.x = new_x
-
-    def moveLeft(self, maze):
-        self.frames = self.left_frames
-        new_x = self.x - self.speed
-        if new_x >= 0 and self.can_move(maze, new_x, self.y):
-            self.x = new_x
-
-    def moveUp(self, maze):
-        new_y = self.y - self.speed
-        if new_y >= 0 and self.can_move(maze, self.x, new_y):
-            self.y = new_y
-
-    def moveDown(self, maze):
-        new_y = self.y + self.speed
-        if new_y < (maze.N - 1) * BLOCK_SIZE and self.can_move(maze, self.x, new_y):
-            self.y = new_y
-
-    def is_escaped(self, escape_point):
-        return self.x + PLAYER_SIZE / 2 > escape_point.get_x_lower() and \
-         self.x + PLAYER_SIZE / 2 < escape_point.get_x_upper() and \
-          self.y + PLAYER_SIZE / 2 > escape_point.get_y_lower() and \
-           self.y + PLAYER_SIZE / 2 < escape_point.get_y_upper()
+    
+    def update(self, display_surf):
+        super().update(display_surf)
