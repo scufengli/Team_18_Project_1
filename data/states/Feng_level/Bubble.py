@@ -8,6 +8,7 @@ class Bubble(Entity):
 
         self.counter = 0
         self.movement = 1
+        # center place bubble to the center of the cell
         self.center()
 
         self.sound = pygame.mixer.Sound(os.path.join(ROOT_PATH, SOUND_PATH, 'bubble.mp3'))
