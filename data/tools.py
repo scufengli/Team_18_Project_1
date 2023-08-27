@@ -50,9 +50,9 @@ class Control(object):
         self.state.update(self.screen, self.keys, self.current_time, dt)
 # RUNS THE UPDATE METHOD WITHIN THE STATE MODULE
 
-# wHEN SELF.DONE IS EQUAL TO TRUE IT WILL THEN THE THE FLIP_STATE CONTROL CLASS METHOD THAT CHANGES THE CURRENT STATE. 
+# wHEN SELF.DONE IS EQUAL TO TRUE IT WILL THEN THE THE FLIP_STATE CONTROL CLASS METHOD THAT CHANGES THE CURRENT STATE.
 
-# AFTER THE STATE CHANGE THE UPDATE METHOD OF THE NEXT STATE WILL RUN. 
+# AFTER THE STATE CHANGE THE UPDATE METHOD OF THE NEXT STATE WILL RUN.
 #================================================
     def flip_state(self):
         """When a State changes to done necessary startup and cleanup functions
@@ -92,7 +92,7 @@ class Control(object):
 #================================================
 
             self.update(time_delta)
-# RUNS THE UPDATE METHOD IN THE CONTROL CLASS 
+# RUNS THE UPDATE METHOD IN THE CONTROL CLASS
 # LINE 34
 #================================================
             pg.display.update()
@@ -114,10 +114,10 @@ class _State(object):
         self.next = None
         self.previous = None
 
-    
+
 # ========== Inventory Items are going to be placed within the self.persist variable. ==========
 
-        self.persist = {}
+        self.persist = {"Current_level": 1}
 
 # ========== Inventory Items are going to be placed within the self.persist variable. ==========
 
@@ -168,7 +168,7 @@ class Button():
 
     def check_for_input(self,position):
         return position[0] in range(self.rect.left, self.rect.right) and position[1] in range(self.rect.top, self.rect.bottom)
-    
+
     def change_color(self,position):
         if position[0] in range(self.rect.left, self.rect.right) and position[1] in range(self.rect.top, self.rect.bottom):
             self.tect = self.font.render(self.text_input,True,self.hovering_color)
@@ -332,7 +332,7 @@ def import_cut_graphic(path):
             new_surf = pg.Surface((mp.tile_size, mp.tile_size), flags= pg.SRCALPHA)
             new_surf.blit(surface, (0,0), pg.Rect(x,y,mp.tile_size, mp.tile_size))
             cut_tiles.append(new_surf)
-    
+
     return cut_tiles
 
 def import_character_assets():
@@ -343,7 +343,7 @@ def import_character_assets():
         full_path = character_path + animation
         animations[animation] = import_folder(full_path)
 
-    
+
     return animations
 
 ### DRAW FUNCTIONS
@@ -354,4 +354,11 @@ def draw_text( text, font_type, size, x, y, color, display_surface):
     text_rect.center = (x,y)
     display_surface.blit(text_surface, text_rect)
 
+def draw_newline_text(text, font_type, size, space, pos, color, surface):
+    paragraph = []
+    font = pg.font.Font(font_type, size)
+    for line in text:
+        paragraph.append(font.render(line, True, color))
 
+    for line in range(len(paragraph)):
+        surface.blit(paragraph[line],(pos[0],pos[1]+(line*size)+(space*line)))

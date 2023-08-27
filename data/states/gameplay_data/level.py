@@ -15,6 +15,7 @@ class Level:
         self.display_surface = surface
         self.world_shift = 0
         self.game_over = False
+        self.reset = True
 
         #TERRAIN SETUP
         terrain_layout = mt.import_csv_layout(level_data['terrain'])
@@ -29,6 +30,10 @@ class Level:
         self.coin_sprites = self.create_tile_group(coin_layout,'coins')
         self.coin_total = 0
 
+        # JEWELS
+        jewel_layout = mt.import_csv_layout(level_data['jewels'])
+        self.jewel_sprite = self.create_tile_group(jewel_layout,'jewels')
+
         # CRATE
         crate_layout = mt.import_csv_layout(level_data['crates'])
         self.crate_sprites = self.create_tile_group(crate_layout,'crates')
@@ -40,6 +45,10 @@ class Level:
         # BG PALMS
         bg_palm_layout = mt.import_csv_layout(level_data['bg palms'])
         self.bg_palm_sprites = self.create_tile_group(fg_palm_layout, 'bg palms')
+
+        # SIGN
+        sign_layout = mt.import_csv_layout(level_data['sign'])
+        self.sign_sprite = self.create_tile_group(sign_layout, 'sign')
 
         # ENEMIES
         enemy_layout = mt.import_csv_layout(level_data['enemies'])
@@ -69,6 +78,7 @@ class Level:
         #----Jewels UI---
         self.ClueUI = GemClueDisplay()
         self.num_gems = 3
+        self.jewel_count = 0 
 
 
     def player_setup(self,layout):
@@ -115,7 +125,7 @@ class Level:
 
                     if type == 'fg palms':
                         if val == '0':
-                            sprite = Palm(mp.tile_size, x, y, 'resources/graphics/level_graphics//terrain/palm_small', 38)
+                            sprite = Palm(mp.tile_size, x, y, 'resources/graphics/level_graphics//terrain/palm_small')
                             sprite_group.add(sprite)
                         if val == '1':
                             sprite = Palm(mp.tile_size, x, y, 'resources/graphics/level_graphics//terrain/palm_large', 64)
@@ -125,6 +135,11 @@ class Level:
                         sprite = Palm(mp.tile_size, x, y, 'resources/graphics/level_graphics//terrain/palm_bg', 64)
                         sprite_group.add(sprite)
 
+                    if type == 'sign':
+                        self.jewel_count = 0
+                        sprite = Sign(mp.tile_size,x,y, self.jewel_count)
+                        sprite_group.add(sprite)
+
                     if type == 'enemies':
                         sprite = mt.Enemy(mp.tile_size,x,y)
                         sprite_group.add(sprite)
@@ -132,8 +147,13 @@ class Level:
                     if type == 'constraints':
                         sprite = Tile(mp.tile_size,x,y)
                         sprite_group.add(sprite)
+
+                    if type == 'jewels':
+                        sprite = Jewel(mp.tile_size,x,y,'resources/graphics/level_graphics/coins/jewels')
+                        sprite_group.add(sprite)
+
         return sprite_group
-    
+
     def enemy_collision_reverse(self):
         for enemy in self.enemy_sprites.sprites():
             if pygame.sprite.spritecollide(enemy,self.constraint_sprites,False):
@@ -141,7 +161,7 @@ class Level:
 
     def enemy_speed(self):
         for enemy in self.enemy_sprites.sprites():
-            if self.player.sprite.collision_rect.x - enemy.rect.x >= -400 and self.player.sprite.collision_rect.x - enemy.rect.x <= 400 and self.player.sprite.crouch != True and self.player.sprite.collision_rect.y - enemy.rect.y >= -20 and self.player.sprite.collision_rect.y - enemy.rect.y <= 20: 
+            if self.player.sprite.collision_rect.x - enemy.rect.x >= -400 and self.player.sprite.collision_rect.x - enemy.rect.x <= 400 and self.player.sprite.crouch != True and self.player.sprite.collision_rect.y - enemy.rect.y >= -20 and self.player.sprite.collision_rect.y - enemy.rect.y <= 20:
                 if enemy.speed > 0:
                     enemy.speed = 7
                 else:
@@ -199,12 +219,18 @@ class Level:
 
         for coin in self.coin_sprites.sprites():
             if player.rect.colliderect(coin.rect):
-                    pygame.sprite.Sprite.remove(coin, self.coin_sprites)
-                    self.coin_total += 1
+                pygame.sprite.Sprite.remove(coin, self.coin_sprites)
+                self.coin_total += 1
 
                 # #-----LIFE TEST------
                 #     if self.life_left > 0:
                 #         self.life_left = self.life_left
+    def jewel_collision(self):
+        player = self.player.sprite
+        for jewel in self.jewel_sprite.sprites():
+            if player.rect.colliderect(jewel.rect):
+                pygame.sprite.Sprite.remove(jewel, self.jewel_sprite)
+                self.jewel_count += 1
 
     def check_enemy_collisions(self):
         enemy_collisions = pg.sprite.spritecollide(self.player.sprite, self.enemy_sprites, False)
@@ -231,8 +257,8 @@ class Level:
                 self.player.sprite.invincible = False
 
     def check_drown(self):
-        print(self.player.sprite.rect.bottom)
-        print(mp.screen_height)
+        # print(self.player.sprite.rect.bottom)
+        # print(mp.screen_height)
         if self.player.sprite.rect.bottom >= (mp.screen_height + 128):
             self.game_over = True
 
@@ -291,6 +317,18 @@ class Level:
         self.coin_sprites.draw(self.display_surface)
         self.coin_display.draw(str(self.coin_total), self.display_surface)
         #print(self.coin_total)
+        if self.jewel_count == 0:
+            for sprite in self.sign_sprite.sprites():
+                sprite.image.set_alpha(0)
+                print(sprite.image.get_alpha())
+        if self.jewel_count >= 3:
+            for sprite in self.sign_sprite.sprites():
+                sprite.image.set_alpha(255)
+                print(sprite.image.get_alpha())
+
+        self.jewel_sprite.update(self.world_shift)
+        self.jewel_sprite.draw(self.display_surface)
+        #print(self.coin_total)
 
         # LIVES
         self.life.draw(self.life_left, self.display_surface)
@@ -310,13 +348,17 @@ class Level:
         self.crate_sprites.update(self.world_shift)
         self.crate_sprites.draw(self.display_surface)
 
+        # SIGN
+        self.sign_sprite.update(self.world_shift)
+        self.sign_sprite.draw(self.display_surface)
+
 
         # FG PALMS
         self.fg_palm_sprites.update(self.world_shift)
         self.fg_palm_sprites.draw(self.display_surface)
         self.water.draw(self.display_surface, self.world_shift)
 
-        # GEMS CLUE DISPLAY
+        # GEMS CLUE DISPLAY - extra comment 
         self.ClueUI.draw(self.num_gems, self.display_surface)
 # =============== UNCOMMENT WHEN IMAGES ARE CREATED ==========================
 
@@ -325,6 +367,7 @@ class Level:
         self.horizontal_movement_collision()
         self.vertical_movement_collision()
         self.coin_collection()
+        self.jewel_collision()
         self.scroll_x()
         self.player.draw(self.display_surface)
 
@@ -335,6 +378,13 @@ class Level:
         self.check_invin()
         self.check_drown()
 
+        keys = pg.key.get_pressed()
+        if keys[pg.K_j]:
+            self.reset is not self.reset
+        if keys[pg.K_o]:
+            print(self.jewel_count)
+        if keys[pg.K_p]:
+            pass
         if self.player.sprite.CollBox == True:
             s = pg.Surface((self.player.sprite.collision_rect.width, self.player.sprite.collision_rect.height))
             s.set_alpha(100)
