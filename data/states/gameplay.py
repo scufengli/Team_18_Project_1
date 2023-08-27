@@ -36,5 +36,9 @@ class Gameplay(mt._State):
     def update(self, surface, keys, current_time, time_delta):
         """Update blink timer and draw everything."""
         self.level.run()
+        if self.level.game_over == True:
+            self.next = "SPLASH" #REPLACE WITH GAME OVER SCREEN 
+            self.done = True
+        
         self.current_time = current_time
 

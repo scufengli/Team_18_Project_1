@@ -14,6 +14,7 @@ class Level:
         # GENERAL SETUP
         self.display_surface = surface
         self.world_shift = 0
+        self.game_over = False
 
         #TERRAIN SETUP
         terrain_layout = mt.import_csv_layout(level_data['terrain'])
@@ -73,7 +74,6 @@ class Level:
                 if val == '0':
                     sprite = Player((x,y))
                     self.player.add(sprite)
-
 
     def create_tile_group(self,layout,type):
         sprite_group = pygame.sprite.Group()
@@ -138,8 +138,6 @@ class Level:
     def enemy_speed(self):
         for enemy in self.enemy_sprites.sprites():
             if self.player.sprite.collision_rect.x - enemy.rect.x >= -400 and self.player.sprite.collision_rect.x - enemy.rect.x <= 400 and self.player.sprite.crouch != True and self.player.sprite.collision_rect.y - enemy.rect.y >= -20 and self.player.sprite.collision_rect.y - enemy.rect.y <= 20: 
-                print (self.player.sprite.collision_rect.x)
-                print(enemy.rect.x)
                 if enemy.speed > 0:
                     enemy.speed = 7
                 else:
@@ -200,9 +198,40 @@ class Level:
                     pygame.sprite.Sprite.remove(coin, self.coin_sprites)
                     self.coin_total += 1
 
-                #-----LIFE TEST------
-                    if self.life_left > 0:
-                        self.life_left = self.life_left
+                # #-----LIFE TEST------
+                #     if self.life_left > 0:
+                #         self.life_left = self.life_left
+
+    def check_enemy_collisions(self):
+        enemy_collisions = pg.sprite.spritecollide(self.player.sprite, self.enemy_sprites, False)
+
+        if enemy_collisions:
+            for enemy in enemy_collisions:
+                enemy_center = enemy.rect.centery
+                enemy_top = enemy.rect.top
+                player_bottom = self.player.sprite.rect.bottom
+                if enemy_top < player_bottom < enemy_center and self.player.sprite.direction.y >+0:
+                    self.player.sprite.direction.y = -15
+                    enemy.kill()
+                else:
+                    if not self.player.sprite.invincible:
+                        self.life_left -= 1
+                        if self.life_left == 0:
+                            self.game_over = True
+                        self.player.sprite.invincible = True
+                        self.hurt_time = pg.time.get_ticks()
+    def check_invin(self):
+        if self.player.sprite.invincible:
+            current_time = pg.time.get_ticks()
+            if current_time - self.hurt_time >= self.player.sprite.invincibility_duration:
+                self.player.sprite.invincible = False
+
+    def check_drown(self):
+        print(self.player.sprite.rect.bottom)
+        print(mp.screen_height)
+        if self.player.sprite.rect.bottom >= (mp.screen_height + 128):
+            self.game_over = True
+
 
     def scroll_x(self):
         player = self.player.sprite
@@ -257,7 +286,7 @@ class Level:
         self.coin_sprites.update(self.world_shift)
         self.coin_sprites.draw(self.display_surface)
         self.coin_display.draw(str(self.coin_total), self.display_surface)
-        print(self.coin_total)
+
 
         # LIVES
         self.life.draw(self.life_left, self.display_surface)
@@ -296,14 +325,15 @@ class Level:
         self.goal.update(self.world_shift)
         self.goal.draw(self.display_surface)
 
+        self.check_enemy_collisions()
+        self.check_invin()
+        self.check_drown()
 
         if self.player.sprite.CollBox == True:
             s = pg.Surface((self.player.sprite.collision_rect.width, self.player.sprite.collision_rect.height))
             s.set_alpha(100)
             s.fill((255,0,0))
-            if self.player.sprite.CollBox1 == True:
+            if self.player.sprite.CollBox1 == False:
                 self.display_surface.blit(s, self.player.sprite.collision_rect )
-                print("collision rect")
             else:
                 self.display_surface.blit(s, self.player.sprite.rect )
-                print("rect")
