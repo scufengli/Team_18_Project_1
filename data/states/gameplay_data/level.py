@@ -61,11 +61,15 @@ class Level:
         level_width = len(terrain_layout[0]) * mp.tile_size
         self.water = Water(mp.screen_height - 20, level_width)
         self.clouds = Clouds(400,level_width, 20)
-
+        #----Coin UI ----
         self.coin_display = CoinDisplay()
-        #---Display LIVES---
+        #----Lives UI----
         self.life = LivesDisplay()
         self.life_left = 5
+        #----Jewels UI---
+        self.ClueUI = GemClueDisplay()
+        self.num_gems = 3
+
 
     def player_setup(self,layout):
         for row_index, row in enumerate(layout):
@@ -286,7 +290,7 @@ class Level:
         self.coin_sprites.update(self.world_shift)
         self.coin_sprites.draw(self.display_surface)
         self.coin_display.draw(str(self.coin_total), self.display_surface)
-
+        #print(self.coin_total)
 
         # LIVES
         self.life.draw(self.life_left, self.display_surface)
@@ -312,6 +316,8 @@ class Level:
         self.fg_palm_sprites.draw(self.display_surface)
         self.water.draw(self.display_surface, self.world_shift)
 
+        # GEMS CLUE DISPLAY
+        self.ClueUI.draw(self.num_gems, self.display_surface)
 # =============== UNCOMMENT WHEN IMAGES ARE CREATED ==========================
 
         # PLAYER SPRITES
