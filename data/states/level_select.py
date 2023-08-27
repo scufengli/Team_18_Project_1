@@ -7,8 +7,8 @@ import sys
 class Level_select(mt._State):
     def __init__(self,):
         mt._State.__init__(self)
-        self.start_level = 1
-        self.max_level = 4
+        self.start_level = 0
+        self.max_level = 1
         self.overworld = Overworld(self.start_level, self.max_level)
 
         
