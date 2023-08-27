@@ -109,6 +109,15 @@ class Overworld:
                 self.move_direction = pg.math.Vector2(0,0)
         pass
 
+    def draw_instructions(self):
+        text = ['Press \'<--\' or \'-->\' to toggle unlocked levels', '\'SPACEBAR\' to enter level']
+        textbox = pg.image.load('resources/graphics/background_assets/Textbox_1.png').convert_alpha()
+        textbox = pg.transform.scale(textbox,(400,118)) #255w 98h
+
+        x, y = mp.SW_qrt1+100 , 30 # x = SW_mid-150
+        self.display_surface.blit(textbox, (x,y))
+        mt.draw_newline_text(text, mp.FONTS['Handjet-Regular'], 20, 5, (x+50, y+33),'black', self.display_surface)
+
 
     def run(self):
         self.display_surface.blit(self.ovw_bg, (0,0))
@@ -118,3 +127,4 @@ class Overworld:
         self.draw_paths()
         self.nodes.draw(self.display_surface)
         self.icon.draw(self.display_surface)
+        self.draw_instructions()

@@ -133,7 +133,7 @@ class Level:
                         sprite = Tile(mp.tile_size,x,y)
                         sprite_group.add(sprite)
         return sprite_group
-    
+
     def enemy_collision_reverse(self):
         for enemy in self.enemy_sprites.sprites():
             if pygame.sprite.spritecollide(enemy,self.constraint_sprites,False):
@@ -141,7 +141,13 @@ class Level:
 
     def enemy_speed(self):
         for enemy in self.enemy_sprites.sprites():
-            if self.player.sprite.collision_rect.x - enemy.rect.x >= -400 and self.player.sprite.collision_rect.x - enemy.rect.x <= 400 and self.player.sprite.crouch != True and self.player.sprite.collision_rect.y - enemy.rect.y >= -20 and self.player.sprite.collision_rect.y - enemy.rect.y <= 20: 
+          #-----CYN CONFLICTS
+            #if self.player.sprite.collision_rect.x - enemy.rect.x >= -400 and self.player.sprite.collision_rect.x - enemy.rect.x <= 400 and self.player.sprite.crouch != True and self.player.sprite.collision_rect.y - enemy.rect.y >= -20 and self.player.sprite.collision_rect.y - enemy.rect.y <= 20:
+             #   print (self.player.sprite.collision_rect.x)
+              #  print(enemy.rect.x)
+
+            #if self.player.sprite.collision_rect.x - enemy.rect.x >= -400 and self.player.sprite.collision_rect.x - enemy.rect.x <= 400 and self.player.sprite.crouch != True and self.player.sprite.collision_rect.y - enemy.rect.y >= -20 and self.player.sprite.collision_rect.y - enemy.rect.y <= 20: 
+          #------
                 if enemy.speed > 0:
                     enemy.speed = 7
                 else:
@@ -316,7 +322,7 @@ class Level:
         self.fg_palm_sprites.draw(self.display_surface)
         self.water.draw(self.display_surface, self.world_shift)
 
-        # GEMS CLUE DISPLAY
+        # GEMS CLUE DISPLAY - extra comment 
         self.ClueUI.draw(self.num_gems, self.display_surface)
 # =============== UNCOMMENT WHEN IMAGES ARE CREATED ==========================
 

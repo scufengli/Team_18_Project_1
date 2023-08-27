@@ -118,6 +118,7 @@ class LivesDisplay:
                 surface.blit(self.heart, (hrt_x, hrt_y))
                 hrt_x += 34
 
+#Extra comment
 class GemClueDisplay:
     def __init__(self):
         bg = pg.image.load('resources/graphics/background_assets/clue_capture.png').convert_alpha()
