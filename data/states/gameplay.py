@@ -9,9 +9,7 @@ class Gameplay(mt._State):
     """This state could represent the actual gameplay phase."""
     def __init__(self,):
         mt._State.__init__(self) 
-        self.level = Level(level_dict['1'], mp.SCREEN)
-
-
+        self.level = Level(level_dict[str(self.persist['Current_level'])], mp.SCREEN)
             
     def startup(self, current_time, persistant):
         """Load and play the music on scene start."""
@@ -19,6 +17,7 @@ class Gameplay(mt._State):
         # pg.mixer.music.play(-1)
         self.persist = persistant
         level_num = (str(self.persist['Current_level']))
+        print(level_dict[level_num])
         print(type(level_dict[level_num]))
         print(level_dict[level_num])
         self.level = Level(level_dict[level_num], mp.SCREEN)
@@ -37,8 +36,13 @@ class Gameplay(mt._State):
         """Update blink timer and draw everything."""
         self.level.run()
         if self.level.game_over == True:
-            self.next = "SPLASH" #REPLACE WITH GAME OVER SCREEN 
-            self.done = True
+            if self.level.reset == True:
+                self.next = "GAMEPLAY" #REPLACE WITH GAME OVER SCREEN 
+                self.done = True
+            else:
+                self.next = "SPLASH" #REPLACE WITH GAME OVER SCREEN 
+                self.done = True
+
         
         self.current_time = current_time
 
