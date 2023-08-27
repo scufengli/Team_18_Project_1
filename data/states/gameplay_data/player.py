@@ -1,5 +1,6 @@
 import pygame as pg
 from ... import prepare as mp
+from math import sin
 
 class Player(pg.sprite.Sprite):
     def __init__(self,pos):
@@ -51,6 +52,9 @@ class Player(pg.sprite.Sprite):
         self.on_right = False
         self.crouch = False
         self.crouch_walk = False
+        self.invincible = False
+        self.invincibility_duration = 600
+        self.hurt_time = 0 
 
 
 
@@ -82,6 +86,12 @@ class Player(pg.sprite.Sprite):
                 self.collision_rect.height, self.collision_rect.bottom = self.h, self.collision_rect.bottom - self.y_offset + 12
             self.rect.right = self.collision_rect.right + self.x_offset
             self.rect.bottom = self.collision_rect.bottom + 15
+        
+        if self.invincible:
+            alpha = self.wave_value()
+            self.image.set_alpha(alpha)
+        else:
+            self.image.set_alpha(255)
 
 
     def get_status(self):
@@ -100,6 +110,8 @@ class Player(pg.sprite.Sprite):
                     self.status = "Crouch_Idle"
                 else:
                     self.status ='Idle'
+        if self.invincible:
+            self.status = "Hurt"
 
 
     def get_input(self):
@@ -141,6 +153,11 @@ class Player(pg.sprite.Sprite):
 
     def jump(self):
         self.direction.y = self.jump_speed
+
+    def wave_value(self):
+        value = sin(pg.time.get_ticks())
+        if value >= 0: return 255
+        else: return 0
 
     def update(self,):
         self.get_input()
