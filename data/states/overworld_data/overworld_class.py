@@ -50,7 +50,7 @@ class Overworld:
         # MOVEMENT LOGIC
         self.moving = False
         self.move_direction = pg.math.Vector2(0,0)
-        self.speed = 8
+        self.speed = 16
 
         # SPRITES
         self.setup_nodes()

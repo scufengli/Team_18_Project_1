@@ -119,9 +119,10 @@ class Level:
                         # CODE TO CHANGE THE COLOR OF COINS
                         if val == '0':
                             sprite = Coin(mp.tile_size,x,y,'resources/graphics/level_graphics/coins/gold')
+                            sprite_group.add(sprite)
                         if val == '1':
                             sprite = Coin(mp.tile_size,x,y,'resources/graphics/level_graphics/coins/silver')
-                        sprite_group.add(sprite)
+                            sprite_group.add(sprite)
 
                     if type == 'fg palms':
                         if val == '0':
