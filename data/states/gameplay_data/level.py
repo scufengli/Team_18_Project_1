@@ -7,6 +7,8 @@ from .tilesV2 import *
 from .decorations import *
 from .player import Player
 
+from ..level_select import *
+from ..overworld_data import overworld_class as ovw
 
 
 class Level:
@@ -16,6 +18,13 @@ class Level:
         self.world_shift = 0
         self.game_over = False
         self.reset = True
+
+        #OVERWORL CONNECTION
+        self.create_ovrwrld = Level_select()
+        #self.current_level = ovw.current_level
+        #self.level_data = levels
+        #self.new_max_level = ovw_data['unlock']
+
 
         #TERRAIN SETUP
         terrain_layout = mt.import_csv_layout(level_data['terrain'])
