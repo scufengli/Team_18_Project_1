@@ -77,8 +77,7 @@ class Level:
         self.life_left = 5
         #----Jewels UI---
         self.ClueUI = GemClueDisplay()
-        self.num_gems = 3
-        self.jewel_count = 0 
+        self.jewel_count = 0
 
 
     def player_setup(self,layout):
@@ -214,7 +213,7 @@ class Level:
         if player.on_ground and player.direction.y < 0 or player.direction.y > 1:
             player.on_ground = False
 
-    #COIN COLLISION
+    #COIN/JEWEL COLLISION
     def coin_collection(self):
         player = self.player.sprite
 
@@ -223,9 +222,6 @@ class Level:
                 pygame.sprite.Sprite.remove(coin, self.coin_sprites)
                 self.coin_total += 1
 
-                # #-----LIFE TEST------
-                #     if self.life_left > 0:
-                #         self.life_left = self.life_left
     def jewel_collision(self):
         player = self.player.sprite
         for jewel in self.jewel_sprite.sprites():
@@ -360,7 +356,7 @@ class Level:
         self.water.draw(self.display_surface, self.world_shift)
 
         # GEMS CLUE DISPLAY - extra comment
-        self.ClueUI.draw(self.num_gems, self.display_surface)
+        self.ClueUI.draw(self.jewel_count, self.display_surface)
 # =============== UNCOMMENT WHEN IMAGES ARE CREATED ==========================
 
         # PLAYER SPRITES

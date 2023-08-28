@@ -25,7 +25,7 @@ class Crate(StaticTile):
 
 class Sign(StaticTile):
     def __init__(self,size,x,y, jewel_count):
-        super().__init__(size,x,y,pg.image.load('resources\graphics\level_graphics\wood_sign.png').convert_alpha())
+        super().__init__(size,x,y,pg.image.load('resources/graphics/level_graphics/wood_sign.png').convert_alpha())
         self.image = pg.transform.scale(self.image, (90,90))
         self.image = pg.transform.rotate(self.image, -90)
         self.rect = self.image.get_rect(bottomleft = (x-20,y+120))
@@ -37,7 +37,7 @@ class AnimatedTile(Tile):
         super().__init__(size,x,y)
         self.size = size
         self.frames = mt.import_folder(path)
-        self.frame_index = 0 
+        self.frame_index = 0
         if len(self.frames) >= 7:
             i = 0
             for frame in self.frames:
@@ -48,7 +48,7 @@ class AnimatedTile(Tile):
     def animate(self):
         self.frame_index += 0.15
         if self.frame_index >= len(self.frames):
-            self.frame_index = 0 
+            self.frame_index = 0
         # self.image =  pg.transform.scale(self.frames[int(self.frame_index)], (64,64))
         self.image = self.frames[int(self.frame_index)]
 
@@ -76,4 +76,3 @@ class Palm(AnimatedTile):
         super().__init__(size,x,y,path)
         offset_y = y - offset
         self.rect.topleft = (x, offset_y)
-

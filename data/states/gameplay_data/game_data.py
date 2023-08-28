@@ -9,7 +9,7 @@ level_0 = {
 	'player': 'data/states/gameplay_data/levelV2/level_0/level_0_player.csv',
 	'sign': 'data/states/gameplay_data/levelV2/level_0/level_0_sign.csv',
 	'grass': 'data/states/gameplay_data/levelV2/level_0/level_0_grass.csv',
-    'jewels': 'data\states\gameplay_data\levelV2\level_0\level_0_jewels.csv' }
+    'jewels': 'data/states/gameplay_data/levelV2/level_0/level_0_jewels.csv' }
 level_1 = {
 	'terrain': 'data/states/gameplay_data/levelV2/level_1/level_1_terrain.csv',
 	'coins':'data/states/gameplay_data/levelV2/level_1/level_1_coins.csv',
@@ -21,7 +21,7 @@ level_1 = {
 	'player': 'data/states/gameplay_data/levelV2/level_1/level_1_player.csv',
 	'sign': 'data/states/gameplay_data/levelV2/level_1/level_1_sign.csv',
 	'grass': 'data/states/gameplay_data/levelV2/level_1/level_1_grass.csv',
-    'jewels': 'data\states\gameplay_data\levelV2\level_1\level_1_jewels.csv'}
+    'jewels': 'data/states/gameplay_data/levelV2/level_1/level_1_jewels.csv'}
 level_2 = {
 	'terrain': 'data/states/gameplay_data/levelV2/level_2/level_2_terrain.csv',
 	'coins':'data/states/gameplay_data/levelV2/level_2/level_2_coins.csv',
@@ -33,7 +33,7 @@ level_2 = {
 	'player': 'data/states/gameplay_data/levelV2/level_2/level_2_player.csv',
 	'sign': 'data/states/gameplay_data/levelV2/level_2/level_2_sign.csv',
 	'grass': 'data/states/gameplay_data/levelV2/level_2/level_2_grass.csv',
-    'jewels': 'data\states\gameplay_data\levelV2\level_2\level_2_jewels.csv'}
+    'jewels': 'data/states/gameplay_data/levelV2/level_2/level_2_jewels.csv'}
 level_3 = {
 	'terrain': 'data/states/gameplay_data/levelV2/level_3/level_3_terrain.csv',
 	'coins':'data/states/gameplay_data/levelV2/level_3/level_3_coins.csv',
@@ -45,7 +45,7 @@ level_3 = {
 	'player': 'data/states/gameplay_data/levelV2/level_3/level_3_player.csv',
 	'sign': 'data/states/gameplay_data/levelV2/level_3/level_3_sign.csv',
 	'grass': 'data/states/gameplay_data/levelV2/level_3/level_3_grass.csv',
-    'jewels': 'data\states\gameplay_data\levelV2\level_3\level_3_jewels.csv'}
+    'jewels': 'data/states/gameplay_data/levelV2/level_3/level_3_jewels.csv'}
 level_4 = {
 	'terrain': 'data/states/gameplay_data/levelV2/level_4/level_4_terrain.csv',
 	'coins':'data/states/gameplay_data/levelV2/level_level_4/level_4_coins.csv',
@@ -57,7 +57,7 @@ level_4 = {
 	'player': 'data/states/gameplay_data/levelV2/level_4/level_4_player.csv',
 	'sign': 'data/states/gameplay_data/levelV2/level_4/level_4_sign.csv',
 	'grass': 'data/states/gameplay_data/levelV2/level_4/level_4_grass.csv',
-    'jewels': 'data\states\gameplay_data\levelV2\level_4\level_4_jewels.csv'}
+    'jewels': 'data/states/gameplay_data/levelV2/level_4/level_4_jewels.csv'}
 test_level = {
 	'terrain': 'data/states/gameplay_data/level/level_data/Apalapala_terrain.csv',
 	'coins':'data/states/gameplay_data/level/level_data/Apalapala_coins.csv',
