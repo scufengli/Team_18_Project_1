@@ -149,27 +149,29 @@ class _State(object):
         return msg, rect
 
 class Button():
-    def __init__(self,pos,text_input,font,size, base_color,hovering_color,display_surface, image=None):
+    def __init__(self,pos,text_input,font,size, base_color,hovering_color,display_surface, image):
         self.image = image
         self.x_pos, self.y_pos = pos[0],pos[1]
-        self.font = pg.font.Font(font, size)
-        self.base_color, self.hovering_color = base_color, hovering_color
-        self.text_input = text_input
-        self.text = self.font.render(self.text_input,True,self.base_color)
         if self.image is None:
+            self.font = pg.font.Font(font, size)
+            self.base_color, self.hovering_color = base_color, hovering_color
+            self.text_input = text_input
+            self.text = self.font.render(self.text_input,True,self.base_color)
             self.image = self.text
+            self.text_rect = self.text.get_rect(topleft =(self.x_pos, self.y_pos))
         self.rect = self.image.get_rect(topleft =(self.x_pos, self.y_pos))
-        self.text_rect = self.text.get_rect(topleft =(self.x_pos, self.y_pos))
 
     def update(self,display_surface):
-        if self.image is not None:
-            display_surface.blit(self.image,self.rect)
-        display_surface.blit(self.tect,self.text_rect)
+        if self.image is None:
+            display_surface.blit(self.tect,self.text_rect)
+        else:
+            display_surface.blit(self.image, self.rect)
 
     def check_for_input(self,position):
         return position[0] in range(self.rect.left, self.rect.right) and position[1] in range(self.rect.top, self.rect.bottom)
 
     def change_color(self,position):
+
         if position[0] in range(self.rect.left, self.rect.right) and position[1] in range(self.rect.top, self.rect.bottom):
             self.tect = self.font.render(self.text_input,True,self.hovering_color)
         else:

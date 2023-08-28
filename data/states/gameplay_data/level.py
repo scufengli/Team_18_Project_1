@@ -359,7 +359,7 @@ class Level:
         self.fg_palm_sprites.draw(self.display_surface)
         self.water.draw(self.display_surface, self.world_shift)
 
-        # GEMS CLUE DISPLAY - extra comment 
+        # GEMS CLUE DISPLAY - extra comment
         self.ClueUI.draw(self.num_gems, self.display_surface)
 # =============== UNCOMMENT WHEN IMAGES ARE CREATED ==========================
 

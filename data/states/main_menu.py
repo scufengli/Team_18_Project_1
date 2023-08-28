@@ -31,7 +31,7 @@ class Main_Menu(mt._State):
         font = pg.font.Font(font_type, size)
         text_surface = font.render(text, True, color)
         text_rect = text_surface.get_rect()
-        text_rect.ceneter = (x,y)
+        text_rect.center = (x,y)
         display_surface.blit(text_surface, text_rect)
         return text_rect
 
