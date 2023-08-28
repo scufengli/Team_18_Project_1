@@ -7,6 +7,8 @@ from .tilesV2 import *
 from .decorations import *
 from .player import Player
 
+from ..level_select import *
+from ..overworld_data import overworld_class as ovw
 
 
 class Level:
@@ -16,6 +18,13 @@ class Level:
         self.world_shift = 0
         self.game_over = False
         self.reset = True
+
+        #OVERWORL CONNECTION
+        self.create_ovrwrld = Level_select()
+        #self.current_level = ovw.current_level
+        #self.level_data = levels
+        #self.new_max_level = ovw_data['unlock']
+
 
         #TERRAIN SETUP
         terrain_layout = mt.import_csv_layout(level_data['terrain'])
@@ -77,8 +86,7 @@ class Level:
         self.life_left = 5
         #----Jewels UI---
         self.ClueUI = GemClueDisplay()
-        self.num_gems = 3
-        self.jewel_count = 0 
+        self.jewel_count = 0
 
 
     def player_setup(self,layout):
@@ -214,7 +222,7 @@ class Level:
         if player.on_ground and player.direction.y < 0 or player.direction.y > 1:
             player.on_ground = False
 
-    #COIN COLLISION
+    #COIN/JEWEL COLLISION
     def coin_collection(self):
         player = self.player.sprite
 
@@ -223,9 +231,6 @@ class Level:
                 pygame.sprite.Sprite.remove(coin, self.coin_sprites)
                 self.coin_total += 1
 
-                # #-----LIFE TEST------
-                #     if self.life_left > 0:
-                #         self.life_left = self.life_left
     def jewel_collision(self):
         player = self.player.sprite
         for jewel in self.jewel_sprite.sprites():
@@ -360,7 +365,7 @@ class Level:
         self.water.draw(self.display_surface, self.world_shift)
 
         # GEMS CLUE DISPLAY - extra comment
-        self.ClueUI.draw(self.num_gems, self.display_surface)
+        self.ClueUI.draw(self.jewel_count, self.display_surface)
 # =============== UNCOMMENT WHEN IMAGES ARE CREATED ==========================
 
         # PLAYER SPRITES

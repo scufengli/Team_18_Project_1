@@ -5,20 +5,17 @@ import sys
 from .game_data import levels
 
 class Node(pg.sprite.Sprite):
-    def __init__(self,pos, status, icon_speed):
+    def __init__(self,pos, lvl, status, icon_speed,):
         super().__init__()
-        img1 = pg.image.load('resources/graphics/background_assets/SwordLevel.0.png').convert_alpha()
+        img1 = pg.image.load(f'resources/graphics/overworld/{lvl}.png').convert_alpha()
         locked_img =  pg.transform.scale(img1,(250,250))
-        img2 = pg.image.load('resources/graphics/background_assets/NoSwordLevel.0.png').convert_alpha()
+        img2 = pg.image.load(f'resources/graphics/overworld/{lvl}.1.png').convert_alpha()
         unlocked_img = pg.transform.scale(img2,(250,250))
-        #self.image = pg.Surface((100,80))
-        #self.rect = self.image.get_rect(center = pos)
         if status == 'available':
-            self.image = unlocked_img
-        else:
             self.image = locked_img
+        else:
+            self.image = unlocked_img
         self.rect = self.image.get_rect(center = pos)
-
         self.detection_zone = pg.Rect((self.rect.centerx - icon_speed/2),(self.rect.centery - icon_speed/2),icon_speed,icon_speed)
 
 class Icon(pg.sprite.Sprite):
@@ -34,7 +31,6 @@ class Icon(pg.sprite.Sprite):
     def update(self):
         self.rect.center = self.pos
         #self.image.blit(self.dot, self.rect)
-
 
 class Overworld:
     def __init__(self, start_level, max_level):
@@ -61,10 +57,10 @@ class Overworld:
 
         for index, node_data in enumerate(levels.values()):
             if index <= self.max_level:
-                node_sprite = Node(node_data['node_pos'], 'available', self.speed)
+                node_sprite = Node(node_data['node_pos'],node_data['unlock'], 'available', self.speed)
                 self.nodes.add(node_sprite)
             else:
-                node_sprite = Node(node_data['node_pos'], 'locked', self.speed)
+                node_sprite = Node(node_data['node_pos'],node_data['unlock'], 'locked', self.speed)
                 self.nodes.add(node_sprite)
 
     def draw_paths(self):
@@ -110,13 +106,13 @@ class Overworld:
         pass
 
     def draw_instructions(self):
-        text = ['Press \'<--\' or \'-->\' to toggle unlocked levels', '\'SPACEBAR\' to enter level']
+        text = ['Press <- or -> to toggle levels', 'Press \'SPACEBAR\' to enter level']
         textbox = pg.image.load('resources/graphics/background_assets/Textbox_1.png').convert_alpha()
         textbox = pg.transform.scale(textbox,(400,118)) #255w 98h
 
         x, y = mp.SW_qrt1+100 , 30 # x = SW_mid-150
         self.display_surface.blit(textbox, (x,y))
-        mt.draw_newline_text(text, mp.FONTS['Handjet-Regular'], 20, 5, (x+50, y+33),'black', self.display_surface)
+        mt.draw_newline_text(text, mp.FONTS['Megrim-Regular'], 20, 5, (x+50, y+33),'Blue', self.display_surface)
 
 
     def run(self):
