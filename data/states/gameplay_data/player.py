@@ -16,6 +16,7 @@ class Player(pg.sprite.Sprite):
         self.CollBox1 = False
 
 
+
         # PLAYER MOVEMENT
         self.direction = pg.math.Vector2(0,0)
         self.speed = 0
