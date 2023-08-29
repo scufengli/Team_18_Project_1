@@ -23,7 +23,8 @@ def main():
                 #   "WATERLEVEL" : water_level.Underwater()
                   #"STATE NAME" . <State Module Name>.<State Class()>
                   }
-    run_it.setup_states(state_dict, "GAMEPLAY")
+#======== TEMP CODE =========
+    run_it.setup_states(state_dict, "OPTIONS")
     run_it.main()
 
 

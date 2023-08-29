@@ -134,7 +134,7 @@ class GemClueDisplay:
         g_x = 10
         g_y = y + 5
 
-        for i in range(5):
+        for i in range(3):
             surface.blit(self.bg, (x,y))
             x += 90
         for i in range(gems):

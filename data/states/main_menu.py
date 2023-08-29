@@ -71,12 +71,10 @@ class Main_Menu(mt._State):
                 # play()
                 self.next = "LEVELSELECT"
                 self.done = True
-                pass
             if self.Blist[1].check_for_input(mouse_pos):
                 # options()
-                #self.next = "OPTIONS"
-                #self.done = True
-                pass
+                self.next = "OPTIONS"
+                self.done = True
             if self.Blist[2].check_for_input(mouse_pos):
                 # credits()
                 #self.next = "CREDITS"
