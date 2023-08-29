@@ -111,7 +111,7 @@ class Option_Menu(mt._State):
 
         back_rect = pg.draw.circle(self.display_surface, 'yellow', (back_x,back_y), 20, 0)
         mt.draw_text("Return", self.sub_font, 15, back_x, back_y+50, self.color1, self.display_surface)
-        back = myBtn(self.back_btn, (back_x,back_y), back_rect, self.display_surface)
+        back = mt.ImgBtn(self.back_btn, (back_x,back_y), back_rect, self.display_surface)
 
         return [on_btn, off_btn, back]
 
@@ -161,12 +161,3 @@ class Option_Menu(mt._State):
         #self.done = False
         #return self.persist
         return mt._State.cleanup(self)
-
-class myBtn():
-    def __init__(self, image, pos, rect, display):
-        x, y = pos
-        self.rect = rect
-        display.blit(image, image.get_rect(center = self.rect.center))
-
-    def check_clicked(self,position):
-        return position[0] in range(self.rect.left, self.rect.right) and position[1] in range(self.rect.top, self.rect.bottom)

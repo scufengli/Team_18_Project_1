@@ -177,6 +177,16 @@ class Button():
         else:
             self.tect = self.font.render(self.text_input,True,self.base_color)
 
+class ImgBtn():
+    def __init__(self, image, pos, rect, display):
+        x, y = pos
+        self.rect = rect
+        display.blit(image, image.get_rect(center = self.rect.center))
+
+    def check_clicked(self,position):
+        return position[0] in range(self.rect.left, self.rect.right) and position[1] in range(self.rect.top, self.rect.bottom)
+
+
 class Enemy(AnimatedTile):
 	def __init__(self,size,x,y):
 		super().__init__(size,x,y,'resources/graphics/level_graphics/enemy/run')

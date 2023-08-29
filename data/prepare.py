@@ -1,12 +1,13 @@
 """
 This module initializes the display and creates dictionaries of resources.
+
 """
 
 import os
 import pygame as pg
 from . import tools
 
-vertical_tile_number = 11 
+vertical_tile_number = 11
 tile_size = 64
 
 screen_height = vertical_tile_number*tile_size
@@ -42,5 +43,3 @@ MUSIC = tools.load_all_music(os.path.join("resources", "music"))
 BackGroundGFX   = tools.load_all_gfx(os.path.join("resources", "graphics", "background_assets"))
 GFX   = tools.load_all_gfx(os.path.join("resources", "graphics"))
 AniDict = tools.load_animations_from_folders('character')
-
-
