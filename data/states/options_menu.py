@@ -109,7 +109,8 @@ class Option_Menu(mt._State):
         off_rect = pg.draw.circle(self.display_surface, 'black',(off_x, off_y), 34, 57)
         off_btn = myBtn(off_img,(off_x, off_y), off_rect, self.display_surface)
 
-        back_rect = pg.draw.circle(self.display_surface, 'grey', (back_x,back_y), 35, 60)
+        back_rect = pg.draw.circle(self.display_surface, 'yellow', (back_x,back_y), 20, 0)
+        mt.draw_text("Return", self.sub_font, 15, back_x, back_y+50, self.color1, self.display_surface)
         back = myBtn(self.back_btn, (back_x,back_y), back_rect, self.display_surface)
 
         return [on_btn, off_btn, back]

@@ -1,5 +1,5 @@
 """
-The plash screen of the game is the first thing the user will see. 
+The splash screen of the game is the first thing the user will see.
 """
 
 import pygame as pg
@@ -18,12 +18,15 @@ class Splash(mt._State):
         self.alpha_step  = 2
         self.image = mp.GFX['Splash1']
         self.image = pg.transform.scale(self.image, mp.screen_size)
+        self.logo = mp.GFX['Team_banner']
         self.rect = self.image.get_rect(center=mp.SCREEN_RECT.center)
+        self.logo_rect = self.logo.get_rect(center = mp.SCREEN_RECT.center)
 
     def update(self, surface, keys, current_time, time_delta):
         """Updates the splash screen."""
         self.current_time = current_time
         surface.blit(self.image,self.rect)
+        surface.blit(self.logo, self.logo_rect)
         self.cover.set_alpha(self.cover_alpha)
         self.cover_alpha = max(self.cover_alpha-self.alpha_step,0)
         surface.blit(self.cover,(0,0))
@@ -31,8 +34,8 @@ class Splash(mt._State):
             self.done = True
 
     def get_event(self, event):
-        """ Keeps track of events. 
-            Code that executes with events should go here. 
+        """ Keeps track of events.
+            Code that executes with events should go here.
             EXAMPLES: KEY PRESSES AND MOUSE BUTTON
         """
 
