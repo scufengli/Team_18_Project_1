@@ -3,7 +3,7 @@ import pygame as pg
 
 from .. import prepare as mp # Module prepare
 from .. import tools as mt # Module tools
-from .gameplay_data import player
+from ...Platformer.Code import player
 
 class Option_Menu(mt._State):
     """Options menu that can be called from any state"""

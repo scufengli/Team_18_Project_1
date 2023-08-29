@@ -1,14 +1,13 @@
 import pygame as pg
-from ... import prepare as mp
-from ... import tools as mt
+from ...data import prepare as mp
+from ...data import tools as mt
 
 import pygame
-from .tilesV2 import *
-from .decorations import *
+from ...data.states.gameplay_data.tilesV2 import *
+from ...data.states.gameplay_data.decorations import *
 from .player import Player
 
-from ..level_select import *
-from ..overworld_data import overworld_class as ovw
+from ...data.states.level_select import *
 
 
 class Level:
@@ -94,6 +93,7 @@ class Level:
             for col_index, val in enumerate(row):
                 x,y = col_index * mp.tile_size, row_index*mp.tile_size
                 if val == '0':
+                    self.play_x, self.play_y = x,y
                     sprite = Player((x,y))
                     self.player.add(sprite)
 
@@ -267,6 +267,7 @@ class Level:
         # print(mp.screen_height)
         if self.player.sprite.rect.bottom >= (mp.screen_height + 128):
             self.game_over = True
+            self.player.sprite.collision_rect.topleft = (self.play_x, self.play_y)
 
 
     def scroll_x(self):
@@ -326,11 +327,11 @@ class Level:
         if self.jewel_count == 0:
             for sprite in self.sign_sprite.sprites():
                 sprite.image.set_alpha(0)
-                print(sprite.image.get_alpha())
+                # print(sprite.image.get_alpha())
         if self.jewel_count >= 3:
             for sprite in self.sign_sprite.sprites():
                 sprite.image.set_alpha(255)
-                print(sprite.image.get_alpha())
+                # print(sprite.image.get_alpha())
 
         self.jewel_sprite.update(self.world_shift)
         self.jewel_sprite.draw(self.display_surface)
@@ -384,11 +385,14 @@ class Level:
         self.check_invin()
         self.check_drown()
 
+
+
         keys = pg.key.get_pressed()
         if keys[pg.K_j]:
             self.reset is not self.reset
         if keys[pg.K_o]:
-            print(self.jewel_count)
+            pass
+            # print(self.jewel_count)
         if keys[pg.K_p]:
             pass
         if self.player.sprite.CollBox == True:
