@@ -9,10 +9,12 @@ class Level_select(mt._State):
         mt._State.__init__(self)
         self.start_level = 0
         self.max_level = 1
-        self.overworld = Overworld(self.start_level, self.max_level)
+        self.overworld = Overworld(self.start_level, self.max_level, self.persist)
+
 
         
     def startup(self, current_time, persistant):
+        self.persist = persistant
         pass
 
     def cleanup(self):
@@ -22,13 +24,16 @@ class Level_select(mt._State):
     def get_event(self, event):
         """EVENT CONTAINS ALL THE KEY PRESSES"""
         self.event = event
-        keys = pg.key.get_pressed()
-        if keys[pg.K_KP_ENTER] or keys[pg.K_SPACE]:
-            self.persist["Current_level"] = self.overworld.current_level
-            print(self.persist['Current_level'])
-            print(self.overworld.current_level)
-            self.next = "GAMEPLAY"
-            self.done = True
+        if self.event.type == pg.KEYDOWN:
+            self.keys = pg.key.get_pressed()
+            if self.keys == [pg.K_SPACE]:
+                self.persist["Current_level"] = self.overworld.current_level
+                # print(self.persist['Current_level'])
+                # print(self.overworld.current_level)
+                self.next = "GAMEPLAY"
+                print("done 1")
+                self.done = True
+
 
         
     def update(self, surface, keys, current_time, time_delta):

@@ -1,5 +1,5 @@
 import pygame as pg
-from ... import prepare as mp
+from ...data import prepare as mp
 from math import sin
 
 class Player(pg.sprite.Sprite):
