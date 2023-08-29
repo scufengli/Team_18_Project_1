@@ -85,5 +85,5 @@ class Main_Menu(mt._State):
 
     def cleanup(self):
         """Stop the music when scene is done."""
-        pg.mixer.music.stop()
+        pg.mixer.music.pause()
         return mt._State.cleanup(self)

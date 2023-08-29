@@ -163,7 +163,7 @@ class Button():
 
     def update(self,display_surface):
         if self.image is None:
-            display_surface.blit(self.tect,self.text_rect)
+            display_surface.blit(self.text,self.text_rect)
         else:
             display_surface.blit(self.image, self.rect)
 
