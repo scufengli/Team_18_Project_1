@@ -82,19 +82,19 @@ class Overworld:
                 self.current_level += 1
                 self.persist["Current_level"] = self.current_level
                 self.moving = True
-                print("right")
+                # print("right")
             elif keys[pg.K_LEFT] and self.current_level  >= 0:
                 self.move_direction = self.get_movement_data('previous')
                 self.current_level -= 1
                 self.persist["Current_level"] = self.current_level
                 self.moving = True
-                print("left")
+                # print("left")
             elif keys[pg.K_SPACE]:
                 # self.persist["Current_level"] = self.current_level
                 # print(self.persist['Current_level'])
                 # print(self.overworld.current_level)
                 self.next = "GAMEPLAY"
-                print("done 1")
+                # print("done 1")
                 return True
 
     def get_movement_data(self, target):
@@ -114,10 +114,7 @@ class Overworld:
             if target_node.detection_zone.collidepoint(self.icon.sprite.pos):
                 self.moving = False
                 self.move_direction = pg.math.Vector2(0,0)
-                if self.current_level == 1 and self.water_level[0] == True:
-                    self.water_level[0] = False
-                    if main.run(1)[0] == False and main.run(1)[1] == True:
-                        pass
+
 
 
     def draw_instructions(self):
@@ -135,7 +132,7 @@ class Overworld:
         # self.current_level =  persistant['Current_level']
         print(f'self.current_level = {self.current_level}')
         print(f'persistant["Current_level"] = {persistant["Current_level"]}')
-        print(f'persistant["max_level"] = {persistant["max_level"]}')
+        # print(f'persistant["max_level"] = {persistant["max_level"]}')
         self.display_surface.blit(self.ovw_bg, (0,0))
         self.input()
         self.update_icon_pos()

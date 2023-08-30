@@ -17,9 +17,6 @@ class Gameplay(mt._State):
         # pg.mixer.music.play(-1)
         self.persist = persistant
         level_num = (str(self.persist['Current_level']))
-        print(level_dict[level_num])
-        print(type(level_dict[level_num]))
-        print(f'current level {level_dict[level_num]}')
         self.level = Level(level_dict[level_num], mp.SCREEN)
         # return mt._State.startup(self, current_time, persistant)
 
@@ -36,7 +33,6 @@ class Gameplay(mt._State):
     def update(self, surface, keys, current_time, time_delta):
         """Update blink timer and draw everything."""
         self.level.run()
-        print('running')
         if self.level.game_over == True:
             if self.level.end_level == True:
                 self.persist['max_level'] +=1
