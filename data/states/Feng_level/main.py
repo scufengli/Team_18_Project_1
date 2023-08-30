@@ -1,7 +1,10 @@
 # import Game class from the game package
-from Game import Game
+from .Game import Game
+
 
 # entry point
-if __name__ == "__main__":
+def run(level):
     game = Game()
-    game.on_execute()
+    return game.on_execute(level), True
+
+    
