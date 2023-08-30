@@ -8,9 +8,9 @@ from .gameplay_data.level import Level
 class Gameplay(mt._State):
     """This state could represent the actual gameplay phase."""
     def __init__(self,):
-        mt._State.__init__(self) 
+        mt._State.__init__(self)
         self.level = Level(level_dict[str(self.persist['Current_level'])], mp.SCREEN)
-            
+
     def startup(self, current_time, persistant):
         """Load and play the music on scene start."""
         # pg.mixer.music.load(self.bgm)
@@ -31,18 +31,17 @@ class Gameplay(mt._State):
     def get_event(self, event):
         """EVENT CONTAINS ALL THE KEY PRESSES"""
         self.event = event
-        
+
     def update(self, surface, keys, current_time, time_delta):
         """Update blink timer and draw everything."""
         self.level.run()
         if self.level.game_over == True:
             if self.level.reset == True:
-                self.next = "GAMEPLAY" #REPLACE WITH GAME OVER SCREEN 
+                self.next = "GAMEOVER" #REPLACE WITH GAME OVER SCREEN
                 self.done = True
             else:
-                self.next = "SPLASH" #REPLACE WITH GAME OVER SCREEN 
+                self.next = "GAMEOVER" #REPLACE WITH GAME OVER SCREEN
                 self.done = True
 
-        
-        self.current_time = current_time
 
+        self.current_time = current_time

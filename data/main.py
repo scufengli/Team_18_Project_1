@@ -20,7 +20,7 @@ def main():
                   "OPTIONS" : options_menu.Option_Menu(),
                   "GAMEPLAY" : gameplay.Gameplay(),
                   "LEVELSELECT" : level_select.Level_select(),
-                  "GAMEOVER": gameover.GameOver_Menu()
+                  "GAMEOVER": gameover.Gameover_Menu()
                 #   "WATERLEVEL" : water_level.Underwater()
                   #"STATE NAME" . <State Module Name>.<State Class()>
                   }

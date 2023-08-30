@@ -6,7 +6,7 @@ from ..import prepare as mp
 from ..import tools as mt
 
 
-class GameOver_Menu(mt._State):
+class Gameover_Menu(mt._State):
     def __init__(self):
         mt._State.__init__(self)
         self.done = False
@@ -26,6 +26,11 @@ class GameOver_Menu(mt._State):
 
 
     def display_options(self, group):
+        """
+        2. level_select
+        3. main_menu
+        4. quit game
+        """
         mt.draw_text("The Evil Banacles Devoured You!", mp.FONTS['Silkscreen-Regular'], 20, mp.SW_mid,mp.SH_qrt1+5, 'white', self.display_surface)
 
         txt = ["Main Menu", "Retry", "Quit"]
@@ -33,11 +38,6 @@ class GameOver_Menu(mt._State):
         y = mp.SH_mid - 30
         btn_list = []
 
-        """
-        2. level_select
-        3. main_menu
-        4. quit game
-        """
         for i in enumerate(group):
             w_h = group.get(i[1])
             image = pg.image.load(f'resources/graphics/background_assets/{i[1]}.png')
@@ -70,13 +70,9 @@ class GameOver_Menu(mt._State):
         """
         return btn_list
 
-
-        pass
-
-
     def get_event(self, event):
-        keys = pg.key.get_pressed()
-        btn_pressed = display_options(self.files)
+        mouse_pos = pg.mouse.get_pos()
+        btn_pressed = self.display_options(self.files)
         if event.type == pg.MOUSEBUTTONDOWN:
             if btn_pressed[0].check_clicked(mouse_pos):
                 # main_menu
@@ -85,7 +81,6 @@ class GameOver_Menu(mt._State):
             elif btn_pressed[1].check_clicked(mouse_pos):
                 # retry (level_select)
                 self.next = "LEVELSELECT"
-                self.
                 self.done  = True
             elif btn_pressed[2].check_clicked(mouse_pos):
                 # quit end program

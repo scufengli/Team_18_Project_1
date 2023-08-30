@@ -183,7 +183,7 @@ class ImgBtn():
         self.rect = rect
         display.blit(image, image.get_rect(center = self.rect.center))
 
-    def check_clicked(self,position):
+    def check_clicked(self, position):
         return position[0] in range(self.rect.left, self.rect.right) and position[1] in range(self.rect.top, self.rect.bottom)
 
 
