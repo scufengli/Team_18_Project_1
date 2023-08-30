@@ -9,7 +9,7 @@ class Level_select(mt._State):
         mt._State.__init__(self)
         self.start_level = 0
         self.max_level = self.persist['max_level']
-        print('this is being ran')
+        # print('this is being ran')
         self.overworld = Overworld(self.start_level, self.max_level, self.persist)
 
 
@@ -19,7 +19,7 @@ class Level_select(mt._State):
         self.done = False
         self.persist = persistant
         self.overworld = Overworld(self.start_level, self.max_level, self.persist)
-        print(self.persist)
+        # print(self.persist)
         pass
 
     def cleanup(self):
@@ -34,7 +34,11 @@ class Level_select(mt._State):
             self.next = "GAMEPLAY"
             self.done = True
         if keys[pg.K_0]:
-            print("key pressed")
+            water = False
+            if water == False:
+                self.next = "WATERLEVEL"
+                water = True
+                self.done = True
 
     def update(self, surface, keys, current_time, time_delta):
         """Update blink timer and draw everything."""

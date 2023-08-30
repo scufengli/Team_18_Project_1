@@ -1,11 +1,13 @@
 import os, pygame, sys
+from .. import tools as tm
+from .. import prepare as pm 
 BLOCK_SIZE = 70
 PLAYER_SIZE = 48
 PLAYER_SPEED = 6
 PLAYER_LIVES = 5
 
-CAMERA_WIDTH = 1260
-CAMERA_HEIGHT = 700
+CAMERA_WIDTH = pm.screen_width
+CAMERA_HEIGHT = pm.screen_height
 
 FPS = 60
 ANIMATION_FRAMES = 5
@@ -139,6 +141,22 @@ class Character(Entity):
             self.rect.y = new_y
             return True
         return False
+
+class Player(Character):
+    def __init__(self, x = 0, y = 0):
+        super().__init__(x, y)
+
+        self.lives_offset = 0   
+        self.freeze = False
+        self.counter = 0
+        self.armed = False
+        self.hurt_sound = pygame.mixer.Sound(os.path.join(ROOT_PATH, SOUND_PATH, 'player_hurt.mp3'))
+
+    def is_player(self):
+        return True
+    
+    def update(self, display_surf):
+        super().update(display_surf)
 
 class SpriteStripAnim(object):
     """sprite strip animator
@@ -491,6 +509,8 @@ class Game:
         self.start_time = pygame.time.get_ticks()
         # assign 3 to max_level
         self.max_level = 3
+        self._win = False
+
 
     def on_init(self, level):
         self.display_surf = pygame.display.set_mode((CAMERA_WIDTH, CAMERA_HEIGHT), pygame.RESIZABLE)
@@ -584,6 +604,7 @@ class Game:
 
             if self.level.escaped() and self.level.lives_left > 0:
                 self.on_win()
+                return False
                 
             if self.level.lives_left == 0:
                 self.on_lose()
@@ -660,7 +681,7 @@ class Fish(Character):
 
 
 
-class _State(object):
+class water_level(object):
     """This is a prototype class for States.  All states should inherit from it.
     No direct instances of this class should be created. get_event and update
     must be overloaded in the childclass.  startup and cleanup need to be
@@ -673,6 +694,7 @@ class _State(object):
         self.next = None
         self.previous = None
         self.persist = {}
+        self.game = Game()
 
     def get_event(self, event):
         """Processes events that were passed from the main event loop.
@@ -682,6 +704,7 @@ class _State(object):
     def startup(self, current_time, persistant):
         """Add variables passed in persistant to the proper attributes and
         set the start time of the State to the current time."""
+
         self.persist = persistant
         self.start_time = current_time
 
@@ -691,6 +714,16 @@ class _State(object):
         self.done = False
         return self.persist
 
-    def update(self, surface, keys, current_time):
+    def update(self, surface, keys, current_time, time_delta):
         """Update function for state.  Must be overloaded in children."""
+        if self.game._running == True:
+            self.game.on_execute(self.persist['Current_level'])
+        else:
+            if self.game._win == False:
+                self.next = "LEVELSELECT"
+                self.done = True
+            else:
+                self.persist['water_level_done'][self.persist['Current_Level']] = True
+                self.next = "LEVELSELECT"
+                self.done = True
         pass
