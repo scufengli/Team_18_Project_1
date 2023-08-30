@@ -117,7 +117,7 @@ class _State(object):
 
 # ========== Inventory Items are going to be placed within the self.persist variable. ==========
 
-        self.persist = {"Current_level": 0}
+        self.persist = {"Current_level": 0, 'max_level': 4}
 
 # ========== Inventory Items are going to be placed within the self.persist variable. ==========
 

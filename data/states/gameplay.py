@@ -26,6 +26,7 @@ class Gameplay(mt._State):
     def cleanup(self):
         """Stop the music when scene is done."""
         # pg.mixer.music.stop()
+        print(self.persist)
         return mt._State.cleanup(self)
 
     def get_event(self, event):
@@ -37,11 +38,13 @@ class Gameplay(mt._State):
         self.level.run()
         print('running')
         if self.level.game_over == True:
-            if self.level.reset == True:
-                self.next = "GAMEOVER" #REPLACE WITH GAME OVER SCREEN
+            if self.level.end_level == True:
+                self.persist['max_level'] +=1
+                self.persist['Current_level'] +=1
+                self.next = 'LEVELSELECT'
                 self.done = True
             else:
-                self.next = "GAMEOVER" #REPLACE WITH GAME OVER SCREEN
+                self.next = 'GAMEOVER'
                 self.done = True
 
 
