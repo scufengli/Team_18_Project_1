@@ -5,9 +5,10 @@ from ...data import tools as mt
 import pygame
 from ...data.states.gameplay_data.tilesV2 import *
 from ...data.states.gameplay_data.decorations import *
-from .player import Player
+from ...data.states.gameplay_data.player import Player
 
-from ...data.states.level_select import *
+from  import overworld_class as ovw
+from .. import gameover
 
 
 class Level:
@@ -18,11 +19,10 @@ class Level:
         self.game_over = False
         self.reset = True
 
-        #OVERWORL CONNECTION
-        self.create_ovrwrld = Level_select()
-        #self.current_level = ovw.current_level
-        #self.level_data = levels
-        #self.new_max_level = ovw_data['unlock']
+        #OVERWORLD CONNECTION
+        #self.current_level = self.overworld.current_level
+        #self.level_data = level_data
+        #self.new_max_level =
 
 
         #TERRAIN SETUP
@@ -269,6 +269,11 @@ class Level:
             self.game_over = True
             self.player.sprite.collision_rect.topleft = (self.play_x, self.play_y)
 
+    #def EndGame(self):
+        #if self.life_left == 0 and self.game_over == True:
+        #    self.current_level = current_level
+        #    self.GameOverMenu.update()
+
 
     def scroll_x(self):
         player = self.player.sprite
@@ -358,7 +363,6 @@ class Level:
         # SIGN
         self.sign_sprite.update(self.world_shift)
         self.sign_sprite.draw(self.display_surface)
-
 
         # FG PALMS
         self.fg_palm_sprites.update(self.world_shift)

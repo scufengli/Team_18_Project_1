@@ -12,30 +12,27 @@ class Level_select(mt._State):
         self.overworld = Overworld(self.start_level, self.max_level, self.persist)
 
 
-        
+
     def startup(self, current_time, persistant):
+        self.next = None
+        self.done = False
         self.persist = persistant
         pass
 
     def cleanup(self):
-
         return self.persist
 
     def get_event(self, event):
         """EVENT CONTAINS ALL THE KEY PRESSES"""
         self.event = event
-        if self.event.type == pg.KEYDOWN:
-            self.keys = pg.key.get_pressed()
-            if self.keys == [pg.K_SPACE]:
-                self.persist["Current_level"] = self.overworld.current_level
-                # print(self.persist['Current_level'])
-                # print(self.overworld.current_level)
-                self.next = "GAMEPLAY"
-                print("done 1")
-                self.done = True
+        keys = pg.key.get_pressed()
+        if keys[pg.K_RETURN] or keys[pg.K_SPACE]:
+            self.persist["Current_level"] = self.overworld.current_level
+            print(self.persist['Current_level'])
+            print(self.overworld.current_level)
+            self.next = "GAMEPLAY"
+            self.done = True
 
-
-        
     def update(self, surface, keys, current_time, time_delta):
         """Update blink timer and draw everything."""
         self.overworld.run()

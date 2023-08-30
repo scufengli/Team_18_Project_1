@@ -3,7 +3,7 @@ import pygame as pg
 
 from .. import prepare as mp # Module prepare
 from .. import tools as mt # Module tools
-from ...Platformer.Code import player
+from .gameplay_data import player
 
 class Option_Menu(mt._State):
     """Options menu that can be called from any state"""
@@ -104,14 +104,14 @@ class Option_Menu(mt._State):
             off_img = self.green_btn
 
         on_rect = pg.draw.circle(self.display_surface, 'black',(on_x, on_y), 34, 57)
-        on_btn = myBtn(on_img,(on_x, on_y), on_rect, self.display_surface)
+        on_btn = mt.ImgBtn(on_img,(on_x, on_y), on_rect, self.display_surface)
 
         off_rect = pg.draw.circle(self.display_surface, 'black',(off_x, off_y), 34, 57)
-        off_btn = myBtn(off_img,(off_x, off_y), off_rect, self.display_surface)
+        off_btn = mt.ImgBtn(off_img,(off_x, off_y), off_rect, self.display_surface)
 
-        back_rect = pg.draw.circle(self.display_surface, 'yellow', (back_x,back_y), 20, 0)
+        back_rect = self.back_btn.get_rect(center =  (back_x,back_y))
         mt.draw_text("Return", self.sub_font, 15, back_x, back_y+50, self.color1, self.display_surface)
-        back = myBtn(self.back_btn, (back_x,back_y), back_rect, self.display_surface)
+        back = mt.ImgBtn(self.back_btn, (back_x,back_y), back_rect, self.display_surface)
 
         return [on_btn, off_btn, back]
 
@@ -161,12 +161,3 @@ class Option_Menu(mt._State):
         #self.done = False
         #return self.persist
         return mt._State.cleanup(self)
-
-class myBtn():
-    def __init__(self, image, pos, rect, display):
-        x, y = pos
-        self.rect = rect
-        display.blit(image, image.get_rect(center = self.rect.center))
-
-    def check_clicked(self,position):
-        return position[0] in range(self.rect.left, self.rect.right) and position[1] in range(self.rect.top, self.rect.bottom)
