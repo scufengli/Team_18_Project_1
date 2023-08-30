@@ -17,7 +17,7 @@ GAME_TIME = 60
 COLLISION_FACTOR = .8
 INVULNERBILITY_FRAMES = 240
 
-ROOT_PATH = 'data\states\Feng_level\Assets'
+ROOT_PATH = 'data/states/Feng_level/Assets'
 SOUND_PATH = 'Sounds'
 ANIMATION_PATH = 'Animations'
 
