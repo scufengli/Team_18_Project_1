@@ -3,7 +3,7 @@ from .. import prepare as mp
 from .. import tools as mt
 import sys
 from .gameplay_data.game_data import level_dict
-from ...Platformer.Code.level import Level
+from .gameplay_data.level import Level
 
 class Gameplay(mt._State):
     """This state could represent the actual gameplay phase."""
