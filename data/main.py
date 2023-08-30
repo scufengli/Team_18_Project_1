@@ -10,7 +10,7 @@ ALL MODIFICATIONS SHOULD OCCUR IN THIS MODULE, AND IN THE PREPARE MODULE.
 
 
 from . import prepare, tools
-from .states import gameplay, level_select, splash, main_menu, options_menu, gameover, w_evel #water_level #==== Note 1 ====#
+from .states import gameplay, level_select, splash, main_menu, options_menu, gameover, w_evel, gamewin #water_level #==== Note 1 ====#
 
 def main():
     """Add states to control here."""
@@ -21,7 +21,8 @@ def main():
                   "GAMEPLAY" : gameplay.Gameplay(),
                   "LEVELSELECT" : level_select.Level_select(),
                   "GAMEOVER": gameover.Gameover_Menu(),
-                  "WATERLEVEL" : w_evel.water_level()
+                  "WATERLEVEL" : w_evel.water_level(),
+                  "GAMEWIN": gamewin.GameWin_Screen()
                 #   "WATERLEVEL" : water_level.Underwater()
                   #"STATE NAME" . <State Module Name>.<State Class()>
                   }

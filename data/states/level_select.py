@@ -19,7 +19,6 @@ class Level_select(mt._State):
         self.done = False
         self.persist = persistant
         self.overworld = Overworld(self.start_level, self.max_level, self.persist)
-        # print(self.persist)
         pass
 
     def cleanup(self):
