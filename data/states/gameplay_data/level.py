@@ -20,12 +20,6 @@ class Level:
         self.game_over = False
         self.reset = True
 
-        #OVERWORLD CONNECTION
-        #self.current_level = self.overworld.current_level
-        #self.level_data = level_data
-        #self.new_max_level =
-
-
         #TERRAIN SETUP
         terrain_layout = mt.import_csv_layout(level_data['terrain'])
         self.terrain_sprites = self.create_tile_group(terrain_layout,'terrain')
@@ -87,6 +81,7 @@ class Level:
         #----Jewels UI---
         self.ClueUI = GemClueDisplay()
         self.jewel_count = 0
+
 
 
     def player_setup(self,layout):
@@ -267,11 +262,6 @@ class Level:
         # print(mp.screen_height)
         if self.player.sprite.rect.bottom >= (mp.screen_height + 128):
             self.game_over = True
-
-    #def EndGame(self):
-        #if self.life_left == 0 and self.game_over == True:
-        #    self.current_level = current_level
-        #    self.GameOverMenu.update()
 
 
     def scroll_x(self):

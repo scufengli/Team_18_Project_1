@@ -11,10 +11,15 @@ class Level_select(mt._State):
         self.max_level = 1
         self.overworld = Overworld(self.start_level, self.max_level)
 
+        #MUSIC
+        self.song = 'overworld'
+
 
     def startup(self, current_time, persistant):
         self.next = None
         self.done = False
+        self.music_status = persistant['music_status']
+        mt.Play_Music(self.music_status, self.song).Play_Pause()
         pass
 
     def cleanup(self):

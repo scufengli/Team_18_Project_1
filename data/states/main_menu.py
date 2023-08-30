@@ -25,7 +25,6 @@ class Main_Menu(mt._State):
         self.rect = self.image.get_rect(center=mp.SCREEN_RECT.center)
         self.Blist = self.display_menus()
 
-        self.bgm = mp.MUSIC['main_menu_BG_music']
 
     def draw_text(self, text, font_type, size, x, y, color, display_surface):
         font = pg.font.Font(font_type, size)
@@ -37,8 +36,6 @@ class Main_Menu(mt._State):
 
     def startup(self, current_time, persistant):
         """Load and play the music on scene start."""
-        pg.mixer.music.load(self.bgm)
-        pg.mixer.music.play(-1)
         return mt._State.startup(self, current_time, persistant)
 
     def display_menus(self,):
@@ -83,5 +80,5 @@ class Main_Menu(mt._State):
 
     def cleanup(self):
         """Stop the music when scene is done."""
-        pg.mixer.music.pause()
+        #pg.mixer.music.pause()
         return mt._State.cleanup(self)

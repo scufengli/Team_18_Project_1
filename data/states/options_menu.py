@@ -50,11 +50,6 @@ class Option_Menu(mt._State):
         self.spbar = pg.transform.scale(spbar,(w2, h2))
 
 
-        #INTERACTIVES
-        #----MUSIC
-        self.music_status = 'on'
-        self.bgm = mp.MUSIC['main_menu_BG_music']
-        #----back
 
     def draw(self):
         #BG display
@@ -123,8 +118,7 @@ class Option_Menu(mt._State):
             if btn_pressed[0].check_clicked(mouse_pos):
                 # Music is on
                 self.music_status = 'on'
-                pg.mixer.music.unpause()
-
+                pg.mixer.music.play(-1)
             elif btn_pressed[1].check_clicked(mouse_pos):
                 # Music is off
                 self.music_status = 'off'
@@ -135,13 +129,11 @@ class Option_Menu(mt._State):
                 self.done = True
 
     def startup(self, current_time, persistant):
-        self.persist = persistant
+        self.music_status = persistant['music_status']
+        self.music = mt.Play_Music(self.music_status,'main_menu_BG_music').Play_Pause()
         self.start_time = current_time
         """Load and play the music on scene start."""
-        #pg.mixer.init()
-        #pg.mixer.music.set_volume(0.7)
-        #pg.mixer.music.load(self.bgm)
-        pg.mixer.music.unpause()
+
 
         return mt._State.startup(self, current_time, persistant)
 
@@ -158,6 +150,5 @@ class Option_Menu(mt._State):
     def cleanup(self):
         """Add variables that should persist to the self.persist dictionary.
         Then reset State.done to False."""
-        #self.done = False
-        #return self.persist
+        self.persist['music_status'] = self.music_status
         return mt._State.cleanup(self)
