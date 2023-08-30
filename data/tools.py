@@ -117,7 +117,7 @@ class _State(object):
 
 # ========== Inventory Items are going to be placed within the self.persist variable. ==========
 
-        self.persist = {"Current_level": 0, 'max_level': 1, 'water_level_done': [False,False,False]}
+        self.persist = {"Current_level": 0, 'max_level': 1, 'water_level_done': [True,False,False,False]}
 
 # ========== Inventory Items are going to be placed within the self.persist variable. ==========
 
