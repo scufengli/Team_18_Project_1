@@ -30,7 +30,7 @@ class Water:
     def __init__(self,top,level_width):
         water_start = -mp.screen_width
         water_tile_width = 192
-        tile_x_amount = int((level_width + mp.screen_width) / water_tile_width)
+        tile_x_amount = int((level_width + mp.screen_width) / water_tile_width) + 30
         self.water_sprites = pg.sprite.Group()
 
         for tile in range(tile_x_amount):

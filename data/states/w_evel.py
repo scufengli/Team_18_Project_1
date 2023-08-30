@@ -3,11 +3,11 @@ from .. import tools as tm
 from .. import prepare as pm 
 BLOCK_SIZE = 70
 PLAYER_SIZE = 48
-PLAYER_SPEED = 6
+PLAYER_SPEED = 2
 PLAYER_LIVES = 5
 
-CAMERA_WIDTH = pm.screen_width
-CAMERA_HEIGHT = pm.screen_height
+CAMERA_WIDTH = 1260
+CAMERA_HEIGHT = 700
 
 FPS = 60
 ANIMATION_FRAMES = 5
@@ -251,6 +251,7 @@ class Spear(Entity):
         self.center()
 
         self.pickup_sound = pygame.mixer.Sound(os.path.join(ROOT_PATH, SOUND_PATH, 'spear_pickup.mp3'))
+        pygame.mixer.Sound.set_volume(self.pickup_sound, 0.10)
 
     def float(self):
         if self.counter % 15 == 0:
@@ -274,6 +275,7 @@ class Naga(Character):
         self.center()
 
         self.death_sound = pygame.mixer.Sound(os.path.join(ROOT_PATH, SOUND_PATH, 'naga_death.mp3'))
+        pygame.mixer.Sound.set_volume(self.death_sound, 0.20)
 
 
     def patrol(self):
@@ -527,10 +529,12 @@ class Game:
         self.ss_success = pygame.image.load(os.path.join(ROOT_PATH, 'splash_pass.png')).convert()
         self.ss_success = pygame.transform.scale(self.ss_success, (CAMERA_WIDTH, CAMERA_HEIGHT))
         self.success_sound = pygame.mixer.Sound(os.path.join(ROOT_PATH, SOUND_PATH, 'pass.mp3'))
+        pygame.mixer.Sound.set_volume(self.success_sound, 0.25)
 
         self.ss_failed = pygame.image.load(os.path.join(ROOT_PATH, 'splash_fail.png')).convert()
         self.ss_failed = pygame.transform.scale(self.ss_failed, (CAMERA_WIDTH, CAMERA_HEIGHT))
         self.fail_sound = pygame.mixer.Sound(os.path.join(ROOT_PATH, SOUND_PATH, 'fail.mp3'))
+        pygame.mixer.Sound.set_volume(self.fail_sound, 0.25)
 
     def on_event(self, event):
         if event.type == pygame.QUIT:
@@ -556,8 +560,9 @@ class Game:
         self.display_surf.blit(self.ss_success, (0, 0))
         self.success_sound.play()
         pygame.display.update()
+        self._win = True
         self._running = False
-
+        pygame.time.wait(3000)
         # if self.level.cur_level == self.max_level:
         #     self._running = False
         # else:
@@ -570,6 +575,7 @@ class Game:
         self.fail_sound.play()
         pygame.display.update()
         self._running = False
+        pygame.time.wait(3000)
 
     def calc_life(self):
         if (pygame.time.get_ticks() - self.start_time) > 5000:
@@ -608,6 +614,7 @@ class Game:
                 
             if self.level.lives_left == 0:
                 self.on_lose()
+                return False
 
             if self._running:
                 self.on_loop()
@@ -704,15 +711,20 @@ class water_level(object):
     def startup(self, current_time, persistant):
         """Add variables passed in persistant to the proper attributes and
         set the start time of the State to the current time."""
-
+        self.game._running = True
+        self.done = False
+        if self.previous == "MAINMENU":
+            self.persist['water_level_done'][self.persist['Current_level']] = False
         self.persist = persistant
         self.start_time = current_time
 
     def cleanup(self):
         """Add variables that should persist to the self.persist dictionary.
         Then reset State.done to False."""
+        pygame.display.set_mode((1200, 704))
+        pygame.mixer.music.pause()
         self.done = False
-        return self.persist
+        return tm._State.cleanup(self)
 
     def update(self, surface, keys, current_time, time_delta):
         """Update function for state.  Must be overloaded in children."""
@@ -720,10 +732,11 @@ class water_level(object):
             self.game.on_execute(self.persist['Current_level'])
         else:
             if self.game._win == False:
-                self.next = "LEVELSELECT"
+                self.next = "GAMEOVER"
+                self._running = True
                 self.done = True
             else:
-                self.persist['water_level_done'][self.persist['Current_Level']] = True
+                self.persist['water_level_done'][self.persist['Current_level']] = True
                 self.next = "LEVELSELECT"
                 self.done = True
         pass
