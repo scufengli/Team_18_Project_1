@@ -21,7 +21,6 @@ class Level:
         self.reset = True
 
         #OVERWORLD CONNECTION
-        #self.overworld = Overworld()
         #self.current_level = self.overworld.current_level
         #self.level_data = level_data
         #self.new_max_level =

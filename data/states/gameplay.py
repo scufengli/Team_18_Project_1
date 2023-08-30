@@ -19,7 +19,7 @@ class Gameplay(mt._State):
         level_num = (str(self.persist['Current_level']))
         print(level_dict[level_num])
         print(type(level_dict[level_num]))
-        print(level_dict[level_num])
+        print(f'current level {level_dict[level_num]}')
         self.level = Level(level_dict[level_num], mp.SCREEN)
         # return mt._State.startup(self, current_time, persistant)
 
