@@ -35,7 +35,7 @@ class Gameplay(mt._State):
         self.level.run()
         if self.level.game_over == True:
             if self.level.end_level == True:
-                if self.persist['Current_level'] == 4:
+                if self.persist['Current_level'] == 3:
                     self.next = 'GAMEWIN'
                 else:
                     self.persist['max_level'] +=1
