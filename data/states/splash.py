@@ -11,7 +11,7 @@ class Splash(mt._State):
     def __init__(self):
         mt._State.__init__(self)
         self.next = "MAINMENU" #==== Note 1 ====#
-        self.timeout = 1
+        self.timeout = 5
         self.cover = pg.Surface((mp.screen_size)).convert_alpha()
         self.cover.fill(0)
         self.cover_alpha = 256

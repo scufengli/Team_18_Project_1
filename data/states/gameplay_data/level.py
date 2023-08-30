@@ -11,6 +11,7 @@ class Level:
         self.world_shift = 0
         self.game_over = False
         self.reset = True
+        self.end_level = False
 
         # AUDIO SECTION if we have time
 
@@ -64,6 +65,10 @@ class Level:
         # CONSTRAINTS
         constraint_layout = tm.import_csv_layout(level_data['constraints'])
         self.constraint_sprites = self.create_tile_group(constraint_layout, 'constraints')
+
+        # END_LEVEL
+        end_level_layout = tm.import_csv_layout(level_data['player'])
+        self.end_level_sprites = self.create_tile_group(end_level_layout, 'player')
 
         # DECORATIONS
         self.sky = Sky(8)
@@ -146,6 +151,10 @@ class Level:
                         sprite_group.add(sprite)
 
                     if type == 'constraints':
+                        sprite = Tile(mp.tile_size,x,y)
+                        sprite_group.add(sprite)
+
+                    if type == 'player' and val ==1:
                         sprite = Tile(mp.tile_size,x,y)
                         sprite_group.add(sprite)
 
@@ -324,6 +333,7 @@ class Level:
             for sprite in self.sign_sprite.sprites():
                 sprite.image.set_alpha(255)
                 # print(sprite.image.get_alpha())
+                self.end_level = True
 
         self.jewel_sprite.update(self.world_shift)
         self.jewel_sprite.draw(self.display_surface)
@@ -335,6 +345,9 @@ class Level:
         # GRASS
         self.grass_sprites.update(self.world_shift)
         self.grass_sprites.draw(self.display_surface)
+
+        if self.end_level == True:
+            self.end_level_sprites.update(self.world_shift)
 
         # ENEMIES
         self.enemy_sprites.update(self.world_shift)
