@@ -76,7 +76,7 @@ class Level:
 
     def escaped(self):
         return self.player.collide_rect(self.escape_point)
-    
+
     def remove_entity(self, entity):
         try:
             self.entities.remove(entity)
@@ -94,13 +94,13 @@ class Level:
     def update(self, display_surf):
         for entity in self.entities:
             entity.update(display_surf)
-        
+
         for bubble in self.bubbles:
             if self.player.collide_rect(bubble):
                 self.remove_entity(bubble)
                 self.lives_left = min(PLAYER_LIVES, self.lives_left + 2)
                 bubble.sound.play()
-        
+
         if self.player.collide_rect(self.spear):
             self.remove_entity(self.spear)
             self.player.armed = True

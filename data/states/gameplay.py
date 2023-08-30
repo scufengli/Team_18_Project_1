@@ -9,13 +9,13 @@ class Gameplay(mt._State):
     """This state could represent the actual gameplay phase."""
     def __init__(self,):
         mt._State.__init__(self)
+        self.song = 'Dala'
         self.level = Level(level_dict[str(self.persist['Current_level'])], mp.SCREEN)
 
     def startup(self, current_time, persistant):
         """Load and play the music on scene start."""
-        # pg.mixer.music.load(self.bgm)
-        # pg.mixer.music.play(-1)
         self.persist = persistant
+        mt.Play_Music(self.persist['music_status'], self.song).Play_Pause()
         level_num = (str(self.persist['Current_level']))
         self.level = Level(level_dict[level_num], mp.SCREEN)
         # return mt._State.startup(self, current_time, persistant)

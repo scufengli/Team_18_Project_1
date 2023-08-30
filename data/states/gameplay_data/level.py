@@ -85,6 +85,7 @@ class Level:
         self.jewel_count = 0
 
 
+
     def player_setup(self,layout):
         for row_index, row in enumerate(layout):
             for col_index, val in enumerate(row):
@@ -269,6 +270,7 @@ class Level:
         if self.player.sprite.rect.bottom >= (mp.screen_height + 128):
             self.game_over = True
             self.player.sprite.collision_rect.topleft = (self.play_x, self.play_y)
+
 
 
     def scroll_x(self):

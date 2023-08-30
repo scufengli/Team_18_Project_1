@@ -24,8 +24,6 @@ class Main_Menu(mt._State):
         self.image = pg.transform.scale(self.image,(mp.screen_width, mp.screen_height))
         self.rect = self.image.get_rect(center=mp.SCREEN_RECT.center)
         self.Blist = self.display_menus()
-        self.bgm = mp.MUSIC['main_menu_BG_music']
-
     def draw_text(self, text, font_type, size, x, y, color, display_surface):
         font = pg.font.Font(font_type, size)
         text_surface = font.render(text, True, color)
@@ -35,12 +33,7 @@ class Main_Menu(mt._State):
         return text_rect
 
     def startup(self, current_time, persistant):
-        """Load and play the music on scene start."""
-        self.persist = persistant
-
-        pg.mixer.music.load(self.bgm)
-        pg.mixer.music.play(-1)
-        return mt._State.startup(self, current_time, persistant)
+        """Load and play the music on scene start."""        return mt._State.startup(self, current_time, persistant)
 
     def display_menus(self,):
         StartGameIcon = mt.Button((mp.SW_qrt1-80,20,80), "Cult of the Barnacle", self.title_font, 80, self.yellow, self.yellow, self.display_surface, None)
@@ -85,5 +78,5 @@ class Main_Menu(mt._State):
 
     def cleanup(self):
         """Stop the music when scene is done."""
-        pg.mixer.music.pause()
+        #pg.mixer.music.pause()
         return mt._State.cleanup(self)

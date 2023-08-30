@@ -18,7 +18,7 @@ class Splash(mt._State):
         self.alpha_step  = 2
         self.image = mp.GFX['Splash1']
         self.image = pg.transform.scale(self.image, mp.screen_size)
-        self.logo = mp.GFX['Team_banner']
+        self.logo = mp.GFX['Apalapala']
         self.rect = self.image.get_rect(center=mp.SCREEN_RECT.center)
         self.logo_rect = self.logo.get_rect(center = mp.SCREEN_RECT.center)
 

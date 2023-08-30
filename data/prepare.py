@@ -30,11 +30,12 @@ SCREEN = pg.display.set_mode(screen_size)
 SCREEN_RECT = SCREEN.get_rect()
 
 
+
 #Resource loading (Fonts and music just contain path names).
 
 #===== // // // UNCOMMENT WHEN FOLDERS ARE ORGANIZED PROPERLY // // // =====#
 
-# SFX   = tools.load_all_sfx(os.path.join("resources", "sound"))
+SFX   = tools.load_all_sfx(os.path.join("resources", "sound"))
 
 #===== // // // UNCOMMENT WHEN FOLDERS ARE ORGANIZED PROPERLY // // // =====#
 

@@ -113,13 +113,20 @@ class _State(object):
         self.quit = False
         self.next = None
         self.previous = None
+        self.song = 'main_menu_BG_music'
+        music = pg.mixer.music.load(mp.MUSIC[self.song])
+        pg.mixer.music.set_volume(0.06)
+        pg.mixer.music.play(-1)
+
 
 
 # ========== Inventory Items are going to be placed within the self.persist variable. ==========
 
-        self.persist = {"Current_level": 0, 'max_level': 1, 'water_level_done': [True,False,False,False]}
+        self.persist = {"Current_level": 0, 'max_level': 1, 'water_level_done': [True,False,False,False],"music_status": 'on'}
 
+        #self.Play_Music(self.persist["music"], self.song).run()
 # ========== Inventory Items are going to be placed within the self.persist variable. ==========
+
 
     def get_event(self, event):
         """Processes events that were passed from the main event loop.
@@ -186,7 +193,6 @@ class ImgBtn():
     def check_clicked(self, position):
         return position[0] in range(self.rect.left, self.rect.right) and position[1] in range(self.rect.top, self.rect.bottom)
 
-
 class Enemy(AnimatedTile):
 	def __init__(self,size,x,y):
 		super().__init__(size,x,y,'resources/graphics/level_graphics/enemy/run')
@@ -208,6 +214,20 @@ class Enemy(AnimatedTile):
 		self.animate()
 		self.move()
 		self.reverse_image()
+
+class Play_Music():
+    def __init__(self, status, song):
+            self.status = status
+            music = pg.mixer.music.load(mp.MUSIC[song])
+            pg.mixer.music.set_volume(0.06)
+
+    def Play_Pause(self):
+        if self.status == 'on':
+            self.music = pg.mixer.music.play(-1)
+        else:
+            self.music = pg.mixer.music.pause()
+
+
 
 ### Resource loading functions.
 def load_all_gfx(directory,colorkey=(255,0,255),accept=(".png",".jpg",".bmp")):
@@ -261,7 +281,7 @@ def load_all_sfx(directory, accept=(".wav", ".mp3", ".ogg", ".mdi")):
 
 def load_animations_from_folders(character):
     AnimationsDict = {}
-    folders = os.listdir(os.path.join("resources", "graphics",character))
+    folders = os.listdir(os.path.join("resources", "graphics","character"))
     for folder in folders:
         CharAnimations = []
         for image in os.listdir(os.path.join("resources", "graphics","character", folder)):
