@@ -30,14 +30,12 @@ class Level_select(mt._State):
         self.event = event
         keys = pg.key.get_pressed()
         if keys[pg.K_RETURN] or keys[pg.K_SPACE]:
-            self.persist["Current_level"] = self.overworld.current_level
-            self.next = "GAMEPLAY"
-            self.done = True
-        if keys[pg.K_0]:
-            water = False
-            if water == False:
+            if self.persist['water_level_done'][self.persist['Current_level']] == False and self.persist["Current_level"] != 0:
                 self.next = "WATERLEVEL"
-                water = True
+                self.done = True
+            else:
+                self.persist["Current_level"] = self.overworld.current_level
+                self.next = "GAMEPLAY"
                 self.done = True
 
     def update(self, surface, keys, current_time, time_delta):

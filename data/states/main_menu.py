@@ -24,7 +24,6 @@ class Main_Menu(mt._State):
         self.image = pg.transform.scale(self.image,(mp.screen_width, mp.screen_height))
         self.rect = self.image.get_rect(center=mp.SCREEN_RECT.center)
         self.Blist = self.display_menus()
-
         self.bgm = mp.MUSIC['main_menu_BG_music']
 
     def draw_text(self, text, font_type, size, x, y, color, display_surface):
@@ -37,6 +36,8 @@ class Main_Menu(mt._State):
 
     def startup(self, current_time, persistant):
         """Load and play the music on scene start."""
+        self.persist = persistant
+
         pg.mixer.music.load(self.bgm)
         pg.mixer.music.play(-1)
         return mt._State.startup(self, current_time, persistant)
@@ -54,6 +55,7 @@ class Main_Menu(mt._State):
         self.cover.set_alpha(self.cover_alpha)
         self.cover_alpha = max(self.cover_alpha-self.alpha_step,0)
         surface.blit(self.cover,(0,0))
+        self.persist['water_level_done'] = [False,False,False, False, False]
         mouse_pos = pg.mouse.get_pos()
         pg.draw.circle(self.display_surface,'green',mouse_pos,10)
         self.display_menus()
