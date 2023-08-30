@@ -13,3 +13,8 @@ if __name__ == '__main__':
     main()
     pg.quit()
     sys.exit()
+
+def run():
+    main()
+    pg.quit()
+    sys.exit()

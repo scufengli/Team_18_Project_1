@@ -1,23 +1,23 @@
-from Settings import *
-from AssetsLoader import AssetsLoader
+from .Settings import *
+from .AssetsLoader import AssetsLoader
 
-from Maze import Maze
-from Fish import Fish
-from Block import Block
-from Bubble import Bubble
-from Player import Player
-from Naga import Naga
-from Spear import Spear
-from EscapePoint import EscapePoint
+from .Maze import Maze
+from .Fish import Fish
+from .Block import Block
+from .Bubble import Bubble
+from .Player import Player
+from .Naga import Naga
+from .Spear import Spear
+from .EscapePoint import EscapePoint
 
 class Level:
 
-    def __init__(self):
+    def __init__(self,level):
         animation_loader = AssetsLoader()
         animation_loader.load_animations()
         self.animations = animation_loader.animations
 
-        self.reset(1)
+        self.reset(level)
 
     def reset(self, level):
         self.entities = []

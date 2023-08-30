@@ -1,6 +1,6 @@
 import pygame, os
-from Settings import *
-from Entity import Entity
+from .Settings import *
+from .Entity import Entity
 
 class Bubble(Entity):
     def __init__(self, x = 0, y = 0):

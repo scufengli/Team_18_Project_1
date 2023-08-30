@@ -1,6 +1,6 @@
 import os
-from Settings import *
-from SpriteStripAnim import SpriteStripAnim
+from .Settings import *
+from .SpriteStripAnim import SpriteStripAnim
 
 class AssetsLoader:
     def __init__(self):

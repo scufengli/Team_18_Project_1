@@ -1,4 +1,4 @@
-from Settings import *
+from .Settings import *
 
 class Maze:
     def __init__(self):

@@ -3,6 +3,7 @@ from ... import prepare as mp
 from ... import tools as mt
 import sys
 from .game_data import levels
+from ..Feng_level import main
 
 class Node(pg.sprite.Sprite):
     def __init__(self,pos, lvl, status, icon_speed,):
@@ -17,6 +18,7 @@ class Node(pg.sprite.Sprite):
             self.image = unlocked_img
         self.rect = self.image.get_rect(center = pos)
         self.detection_zone = pg.Rect((self.rect.centerx - icon_speed/4),(self.rect.centery - icon_speed/4),icon_speed,icon_speed)
+
 
 class Icon(pg.sprite.Sprite):
     def __init__(self,pos):
@@ -47,6 +49,7 @@ class Overworld:
         self.moving = False
         self.move_direction = pg.math.Vector2(0,0)
         self.speed = 8
+        self.water_level = [True,True,True]
 
         # SPRITES
         self.setup_nodes()
@@ -109,10 +112,13 @@ class Overworld:
             self.icon.sprite.pos += self.move_direction * self.speed
             target_node = self.nodes.sprites()[self.current_level]
             if target_node.detection_zone.collidepoint(self.icon.sprite.pos):
-
                 self.moving = False
                 self.move_direction = pg.math.Vector2(0,0)
-        pass
+                if self.current_level == 1 and self.water_level[0] == True:
+                    self.water_level[0] = False
+                    if main.run(1)[0] == False and main.run(1)[1] == True:
+                        pass
+
 
     def draw_instructions(self):
         text = ['Press <- or -> to toggle levels', 'Press \'SPACEBAR\' to enter level']

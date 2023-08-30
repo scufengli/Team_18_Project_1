@@ -1,6 +1,6 @@
 import pygame, os
-from Settings import *
-from Character import Character
+from .Settings import *
+from .Character import Character
 
 class Player(Character):
     def __init__(self, x = 0, y = 0):

@@ -1,5 +1,5 @@
 import pygame, os
-from Settings import *
+from .Settings import *
 
 class HealthBar:
     def __init__(self):

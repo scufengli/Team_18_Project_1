@@ -1,4 +1,4 @@
-from Settings import *
+from .Settings import *
 import pygame
 
 class Entity:
