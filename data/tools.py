@@ -122,7 +122,7 @@ class _State(object):
 
 # ========== Inventory Items are going to be placed within the self.persist variable. ==========
 
-        self.persist = {"Current_level": 0, "music_status": 'on'}
+        self.persist = {"Current_level": 0, 'max_level': 1, 'water_level_done': [True,False,False,False],"music_status": 'on'}
 
         #self.Play_Music(self.persist["music"], self.song).run()
 # ========== Inventory Items are going to be placed within the self.persist variable. ==========

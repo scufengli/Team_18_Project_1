@@ -2,6 +2,7 @@
 The gameover when the player loses.
 """
 import pygame as pg
+import sys
 from ..import prepare as mp
 from ..import tools as mt
 

@@ -5,24 +5,26 @@ from math import sin
 class Player(pg.sprite.Sprite):
     def __init__(self,pos):
         super().__init__()
-        self.frame_index = 0
+        self.frame_index = 0 
         self.animation_speed = 0.20
         self.animations = mp.AniDict
         self.image = self.animations['Idle'][self.frame_index]
         self.pos = pos
 
+
         self.CollBox = True
         self.CollBox1 = False
+
+
 
         # PLAYER MOVEMENT
         self.direction = pg.math.Vector2(0,0)
         self.speed = 0
-        self.gravity = 0.8
+        self.gravity = 0.8 
         self.jump_speed = -20
         self.rect = self.image.get_rect(topleft = pos)
         self.x_offset = 24
         self.y_offset = 12
-        
         # self.mask = pg.mask.from_surface(self.image)
         # self.a,self.b,self.c,self.d = self.mask.get_bounding_rects()[0]
         # rects = self.a,self.b,self.c,self.d
@@ -31,18 +33,18 @@ class Player(pg.sprite.Sprite):
         # x,y,w,h = self.rect = self.image.get_bounding_rect()
         x,y,w,h = self.image.get_bounding_rect()
         self.x, self.y = x, y
-        self.h = h
+        self.h = h 
         # self.collision_rect = pg.Rect((self.rect.x, self.rect.y),(w, h))
         # self.collision_rect = pg.Rect((pos[0]+20, pos[1]+20),(w,h+20))
         self.collision_rect = pg.Rect((self.rect.x, self.rect.y),(w, h))
-
+        
 
         # self.collision_rect = self.image.get_clip()
         # self.collision_rect = pg.Rect((pos[0], pos[1]),(w, h))
 
 
 
-        # PLAYER STATUS
+        # PLAYER STATUS 
         self.status = 'Idle'
         self.facing_right = True
         self.on_ground = False
@@ -53,17 +55,17 @@ class Player(pg.sprite.Sprite):
         self.crouch_walk = False
         self.invincible = False
         self.invincibility_duration = 600
-        self.hurt_time = 0
+        self.hurt_time = 0 
 
 
 
     def animate(self):
         animation = self.animations[self.status]
         # self.rect.top = self.collision_rect.top
-    # LOOP OVER FRAME INDEX
+    # LOOP OVER FRAME INDEX 
         self.frame_index += self.animation_speed
         if self.frame_index >= len(animation):
-            self.frame_index = 0
+            self.frame_index = 0 
         self.image = animation[int(self.frame_index)]
 
         # self.rect.bottomright = self.collision_rect.bottomright
@@ -85,7 +87,7 @@ class Player(pg.sprite.Sprite):
                 self.collision_rect.height, self.collision_rect.bottom = self.h, self.collision_rect.bottom - self.y_offset + 12
             self.rect.right = self.collision_rect.right + self.x_offset
             self.rect.bottom = self.collision_rect.bottom + 15
-
+        
         if self.invincible:
             alpha = self.wave_value()
             self.image.set_alpha(alpha)
@@ -104,7 +106,7 @@ class Player(pg.sprite.Sprite):
                     self.status = 'Run'
                 elif self.crouch == True:
                     self.status = "Crouch_Walk"
-            elif self.direction.x == 0:
+            elif self.direction.x == 0: 
                 if self.crouch == True:
                     self.status = "Crouch_Idle"
                 else:

@@ -1,4 +1,4 @@
-from SpriteSheet import SpriteSheet
+from .SpriteSheet import SpriteSheet
 
 # https://www.pygame.org/wiki/Spritesheet
 class SpriteStripAnim(object):

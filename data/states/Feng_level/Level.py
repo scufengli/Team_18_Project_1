@@ -1,23 +1,23 @@
-from Settings import *
-from AssetsLoader import AssetsLoader
+from .Settings import *
+from .AssetsLoader import AssetsLoader
 
-from Maze import Maze
-from Fish import Fish
-from Block import Block
-from Bubble import Bubble
-from Player import Player
-from Naga import Naga
-from Spear import Spear
-from EscapePoint import EscapePoint
+from .Maze import Maze
+from .Fish import Fish
+from .Block import Block
+from .Bubble import Bubble
+from .Player import Player
+from .Naga import Naga
+from .Spear import Spear
+from .EscapePoint import EscapePoint
 
 class Level:
 
-    def __init__(self):
+    def __init__(self,level):
         animation_loader = AssetsLoader()
         animation_loader.load_animations()
         self.animations = animation_loader.animations
 
-        self.reset(1)
+        self.reset(level)
 
     def reset(self, level):
         self.entities = []
@@ -76,7 +76,7 @@ class Level:
 
     def escaped(self):
         return self.player.collide_rect(self.escape_point)
-    
+
     def remove_entity(self, entity):
         try:
             self.entities.remove(entity)
@@ -94,13 +94,13 @@ class Level:
     def update(self, display_surf):
         for entity in self.entities:
             entity.update(display_surf)
-        
+
         for bubble in self.bubbles:
             if self.player.collide_rect(bubble):
                 self.remove_entity(bubble)
                 self.lives_left = min(PLAYER_LIVES, self.lives_left + 2)
                 bubble.sound.play()
-        
+
         if self.player.collide_rect(self.spear):
             self.remove_entity(self.spear)
             self.player.armed = True

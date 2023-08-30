@@ -1,10 +1,10 @@
 import sys, os
 import pygame
-from Settings import *
+from .Settings import *
 from pygame.locals import *
 
-from Level import Level
-from HealthBar import HealthBar
+from .Level import Level
+from .HealthBar import HealthBar
 
 class Game:
     clock = pygame.time.Clock()
@@ -21,15 +21,16 @@ class Game:
         # assign 3 to max_level
         self.max_level = 3
 
-    def on_init(self):
+    def on_init(self, level):
         self.display_surf = pygame.display.set_mode((CAMERA_WIDTH, CAMERA_HEIGHT), pygame.RESIZABLE)
         pygame.display.set_caption('The Cult of Barnacles')
         # refer to the Settings.py
         pygame.mixer.music.load(os.path.join(ROOT_PATH, SOUND_PATH, 'bg_music.mp3'))
+        # pygame.mixer.music.load('data\states\Feng_level\Assets\Sounds\\bg_music.mp3')
         # 1 to loop, start from 0.0
         pygame.mixer.music.play(1, 0.0)
 
-        self.level = Level()
+        self.level = Level(level)
         self.healthbar = HealthBar()
 
         self.ss_success = pygame.image.load(os.path.join(ROOT_PATH, 'splash_pass.png')).convert()
@@ -64,12 +65,14 @@ class Game:
         self.display_surf.blit(self.ss_success, (0, 0))
         self.success_sound.play()
         pygame.display.update()
-        if self.level.cur_level == self.max_level:
-            self._running = False
-        else:
-            pygame.time.wait(3000)
-            self.start_time = pygame.time.get_ticks()
-            self.level.next()
+        self._running = False
+
+        # if self.level.cur_level == self.max_level:
+        #     self._running = False
+        # else:
+        #     pygame.time.wait(3000)
+        #     self.start_time = pygame.time.get_ticks()
+        #     self.level.next()
 
     def on_lose(self):
         self.display_surf.blit(self.ss_failed, (0, 0))
@@ -82,8 +85,8 @@ class Game:
             self.level.lives_left -= 1
             self.start_time = pygame.time.get_ticks()
 
-    def on_execute(self):
-        if self.on_init() is False:
+    def on_execute(self, level):
+        if self.on_init(level) is False:
             self._running = False
 
         while True:

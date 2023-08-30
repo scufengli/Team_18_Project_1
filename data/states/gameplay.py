@@ -17,15 +17,13 @@ class Gameplay(mt._State):
         self.persist = persistant
         mt.Play_Music(self.persist['music_status'], self.song).Play_Pause()
         level_num = (str(self.persist['Current_level']))
-        print(level_dict[level_num])
-        print(type(level_dict[level_num]))
-        print(f'current level {level_dict[level_num]}')
         self.level = Level(level_dict[level_num], mp.SCREEN)
         # return mt._State.startup(self, current_time, persistant)
 
     def cleanup(self):
         """Stop the music when scene is done."""
         # pg.mixer.music.stop()
+        print(self.persist)
         return mt._State.cleanup(self)
 
     def get_event(self, event):
@@ -36,11 +34,16 @@ class Gameplay(mt._State):
         """Update blink timer and draw everything."""
         self.level.run()
         if self.level.game_over == True:
-            if self.level.reset == True:
-                self.next = "GAMEOVER" #REPLACE WITH GAME OVER SCREEN
+            if self.level.end_level == True:
+                if self.persist['Current_level'] == 3:
+                    self.next = 'GAMEWIN'
+                else:
+                    self.persist['max_level'] +=1
+                    self.persist['Current_level'] +=1
+                    self.next = 'LEVELSELECT'
                 self.done = True
             else:
-                self.next = "GAMEOVER" #REPLACE WITH GAME OVER SCREEN
+                self.next = 'GAMEOVER'
                 self.done = True
 
 

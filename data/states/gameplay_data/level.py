@@ -1,16 +1,8 @@
 import pygame as pg
-from ... import prepare as mp
-from ... import tools as mt
-
-import pygame
-from .tilesV2 import *
-from .decorations import *
-from .player import Player
-
-from ..level_select import *
-from ..overworld_data import overworld_class as ovw
-from .. import gameover
-
+from ... import tools as tm
+from .game_data import*
+from .decorations import*
+from .player import*
 
 class Level:
     def __init__(self,level_data, surface):
@@ -19,54 +11,64 @@ class Level:
         self.world_shift = 0
         self.game_over = False
         self.reset = True
+        self.end_level = False
+
+        # AUDIO SECTION if we have time
+
+
+        #PLAYER SET UP
+        player_layout = tm.import_csv_layout(level_data['player'])
+        self.player = pg.sprite.GroupSingle()
+        self.goal = pg.sprite.GroupSingle()
+        self.player_setup(player_layout)
+
+        #USER INTERFACE
+        # self.change_coins = change_coins
 
         #TERRAIN SETUP
-        terrain_layout = mt.import_csv_layout(level_data['terrain'])
+        terrain_layout = tm.import_csv_layout(level_data['terrain'])
         self.terrain_sprites = self.create_tile_group(terrain_layout,'terrain')
 
         # GRASS SETUP
-        grass_layout = mt.import_csv_layout(level_data['grass'])
+        grass_layout = tm.import_csv_layout(level_data['grass'])
         self.grass_sprites = self.create_tile_group(grass_layout,'grass')
 
         # COINS
-        coin_layout = mt.import_csv_layout(level_data['coins'])
+        coin_layout = tm.import_csv_layout(level_data['coins'])
         self.coin_sprites = self.create_tile_group(coin_layout,'coins')
         self.coin_total = 0
 
         # JEWELS
-        jewel_layout = mt.import_csv_layout(level_data['jewels'])
+        jewel_layout = tm.import_csv_layout(level_data['jewels'])
         self.jewel_sprite = self.create_tile_group(jewel_layout,'jewels')
 
         # CRATE
-        crate_layout = mt.import_csv_layout(level_data['crates'])
+        crate_layout = tm.import_csv_layout(level_data['crates'])
         self.crate_sprites = self.create_tile_group(crate_layout,'crates')
 
         # FG PALMS
-        fg_palm_layout = mt.import_csv_layout(level_data['fg palms'])
+        fg_palm_layout = tm.import_csv_layout(level_data['fg palms'])
         self.fg_palm_sprites = self.create_tile_group(fg_palm_layout, 'fg palms')
 
         # BG PALMS
-        bg_palm_layout = mt.import_csv_layout(level_data['bg palms'])
+        bg_palm_layout = tm.import_csv_layout(level_data['bg palms'])
         self.bg_palm_sprites = self.create_tile_group(fg_palm_layout, 'bg palms')
 
         # SIGN
-        sign_layout = mt.import_csv_layout(level_data['sign'])
+        sign_layout = tm.import_csv_layout(level_data['sign'])
         self.sign_sprite = self.create_tile_group(sign_layout, 'sign')
 
         # ENEMIES
-        enemy_layout = mt.import_csv_layout(level_data['enemies'])
+        enemy_layout = tm.import_csv_layout(level_data['enemies'])
         self.enemy_sprites = self.create_tile_group(enemy_layout, 'enemies')
 
         # CONSTRAINTS
-        constraint_layout = mt.import_csv_layout(level_data['constraints'])
+        constraint_layout = tm.import_csv_layout(level_data['constraints'])
         self.constraint_sprites = self.create_tile_group(constraint_layout, 'constraints')
 
-        #PLAYER SET UP
-        player_layout = mt.import_csv_layout(level_data['player'])
-        self.player = pygame.sprite.GroupSingle()
-        self.goal = pygame.sprite.GroupSingle()
-        self.player_setup(player_layout)
-
+        # END_LEVEL
+        end_level_layout = tm.import_csv_layout(level_data['player'])
+        self.end_level_sprites = self.create_tile_group(end_level_layout, 'player')
 
         # DECORATIONS
         self.sky = Sky(8)
@@ -89,11 +91,12 @@ class Level:
             for col_index, val in enumerate(row):
                 x,y = col_index * mp.tile_size, row_index*mp.tile_size
                 if val == '0':
+                    self.play_x, self.play_y = x,y
                     sprite = Player((x,y))
                     self.player.add(sprite)
 
     def create_tile_group(self,layout,type):
-        sprite_group = pygame.sprite.Group()
+        sprite_group = pg.sprite.Group()
 
 
         for row_index, row in enumerate(layout):
@@ -102,13 +105,13 @@ class Level:
                     x,y = col_index * mp.tile_size, row_index*mp.tile_size
 
                     if type == 'terrain':
-                        terrain_tile_list = mt.import_cut_graphic('resources/graphics/level_graphics/terrain/tileset.png')
+                        terrain_tile_list = tm.import_cut_graphic('resources/graphics/level_graphics/terrain/tileset.png')
                         tile_surface = terrain_tile_list[int(val)]
                         sprite = StaticTile(mp.tile_size,x,y, tile_surface)
                         sprite_group.add(sprite)
 
                     if type == 'grass':
-                        grass_tile_list = mt.import_cut_graphic('resources/graphics/level_graphics/decoration/grass/grass.png')
+                        grass_tile_list = tm.import_cut_graphic('resources/graphics/level_graphics/decoration/grass/grass.png')
                         tile_surface = grass_tile_list[int(val)]
                         sprite = StaticTile(mp.tile_size,x,y,tile_surface)
                         sprite_group.add(sprite)
@@ -145,10 +148,14 @@ class Level:
                         sprite_group.add(sprite)
 
                     if type == 'enemies':
-                        sprite = mt.Enemy(mp.tile_size,x,y)
+                        sprite = tm.Enemy(mp.tile_size,x,y)
                         sprite_group.add(sprite)
 
                     if type == 'constraints':
+                        sprite = Tile(mp.tile_size,x,y)
+                        sprite_group.add(sprite)
+
+                    if type == 'player' and val ==1:
                         sprite = Tile(mp.tile_size,x,y)
                         sprite_group.add(sprite)
 
@@ -160,7 +167,7 @@ class Level:
 
     def enemy_collision_reverse(self):
         for enemy in self.enemy_sprites.sprites():
-            if pygame.sprite.spritecollide(enemy,self.constraint_sprites,False):
+            if pg.sprite.spritecollide(enemy,self.constraint_sprites,False):
                 enemy.reverse()
 
     def enemy_speed(self):
@@ -223,14 +230,14 @@ class Level:
 
         for coin in self.coin_sprites.sprites():
             if player.rect.colliderect(coin.rect):
-                pygame.sprite.Sprite.remove(coin, self.coin_sprites)
+                pg.sprite.Sprite.remove(coin, self.coin_sprites)
                 self.coin_total += 1
 
     def jewel_collision(self):
         player = self.player.sprite
         for jewel in self.jewel_sprite.sprites():
             if player.rect.colliderect(jewel.rect):
-                pygame.sprite.Sprite.remove(jewel, self.jewel_sprite)
+                pg.sprite.Sprite.remove(jewel, self.jewel_sprite)
                 self.jewel_count += 1
 
     def check_enemy_collisions(self):
@@ -262,6 +269,8 @@ class Level:
         # print(mp.screen_height)
         if self.player.sprite.rect.bottom >= (mp.screen_height + 128):
             self.game_over = True
+            self.player.sprite.collision_rect.topleft = (self.play_x, self.play_y)
+
 
 
     def scroll_x(self):
@@ -321,11 +330,12 @@ class Level:
         if self.jewel_count == 0:
             for sprite in self.sign_sprite.sprites():
                 sprite.image.set_alpha(0)
-                print(sprite.image.get_alpha())
+                # print(sprite.image.get_alpha())
         if self.jewel_count >= 3:
             for sprite in self.sign_sprite.sprites():
                 sprite.image.set_alpha(255)
-                print(sprite.image.get_alpha())
+                # print(sprite.image.get_alpha())
+                self.end_level = True
 
         self.jewel_sprite.update(self.world_shift)
         self.jewel_sprite.draw(self.display_surface)
@@ -337,6 +347,9 @@ class Level:
         # GRASS
         self.grass_sprites.update(self.world_shift)
         self.grass_sprites.draw(self.display_surface)
+
+        if self.end_level == True:
+            self.end_level_sprites.update(self.world_shift)
 
         # ENEMIES
         self.enemy_sprites.update(self.world_shift)
@@ -352,6 +365,7 @@ class Level:
         # SIGN
         self.sign_sprite.update(self.world_shift)
         self.sign_sprite.draw(self.display_surface)
+
 
         # FG PALMS
         self.fg_palm_sprites.update(self.world_shift)
@@ -378,11 +392,14 @@ class Level:
         self.check_invin()
         self.check_drown()
 
+
+
         keys = pg.key.get_pressed()
         if keys[pg.K_j]:
             self.reset is not self.reset
         if keys[pg.K_o]:
-            print(self.jewel_count)
+            pass
+            # print(self.jewel_count)
         if keys[pg.K_p]:
             pass
         if self.player.sprite.CollBox == True:
