@@ -27,7 +27,7 @@ def main():
                   #"STATE NAME" . <State Module Name>.<State Class()>
                   }
 #======== TEMP CODE =========
-    run_it.setup_states(state_dict, "LEVELSELECT")
+    run_it.setup_states(state_dict, "SPLASH")
     run_it.main()
 
 

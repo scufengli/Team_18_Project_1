@@ -406,7 +406,3 @@ class Level:
             s = pg.Surface((self.player.sprite.collision_rect.width, self.player.sprite.collision_rect.height))
             s.set_alpha(100)
             s.fill((255,0,0))
-            if self.player.sprite.CollBox1 == False:
-                self.display_surface.blit(s, self.player.sprite.collision_rect )
-            else:
-                self.display_surface.blit(s, self.player.sprite.rect )

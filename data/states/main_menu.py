@@ -33,7 +33,8 @@ class Main_Menu(mt._State):
         return text_rect
 
     def startup(self, current_time, persistant):
-        """Load and play the music on scene start."""        return mt._State.startup(self, current_time, persistant)
+        """Load and play the music on scene start."""        
+        return mt._State.startup(self, current_time, persistant)
 
     def display_menus(self,):
         StartGameIcon = mt.Button((mp.SW_qrt1-80,20,80), "Cult of the Barnacle", self.title_font, 80, self.yellow, self.yellow, self.display_surface, None)
@@ -50,7 +51,6 @@ class Main_Menu(mt._State):
         surface.blit(self.cover,(0,0))
         self.persist['water_level_done'] = [False,False,False, False, False]
         mouse_pos = pg.mouse.get_pos()
-        pg.draw.circle(self.display_surface,'green',mouse_pos,10)
         self.display_menus()
 
         for button in self.Blist:
