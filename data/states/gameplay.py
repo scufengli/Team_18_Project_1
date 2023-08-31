@@ -23,7 +23,6 @@ class Gameplay(mt._State):
     def cleanup(self):
         """Stop the music when scene is done."""
         # pg.mixer.music.stop()
-        print(self.persist)
         return mt._State.cleanup(self)
 
     def get_event(self, event):
