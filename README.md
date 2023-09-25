@@ -6,7 +6,7 @@
 *Team Members: Feng Li, Justin Concepcion, Cynthia Obielezie*
 
 ---
-Welcome to Game Ho'omana O Apalapala developed by Team 18 from TechWish Cohort II. In this readme file, we'll provide you with an overview of the game's key features, mechanics, and coding architecture.
+Welcome to Game Ho'omana O Apalapala developed by Team 18 from TechWise Cohort II. In this readme file, we'll provide you with an overview of the game's key features, mechanics, and coding architecture.
 
 **Game Overview:**
 
